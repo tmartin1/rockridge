@@ -31,7 +31,7 @@ Read more about [University of Prosperence on our wiki](https://github.com/prosp
 ## Team
   - __Product Owner__: [Timothy Martin](https://github.com/tmartin1)
   - __Scrum Master__: [Dan Tennery-Spalding](https://github.com/teachrdan)
-  - __Development Team Members__: [Adrian Garza](https://github.com/agarza333) [Michael Staub](https://github.com/mikestaub)
+  - __Development Team Members__: [Adrian Garza](https://github.com/agarza333), [Michael Staub](https://github.com/mikestaub)
 
 ## Requirements
 - Node 0.10.x
