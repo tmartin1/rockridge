@@ -7,7 +7,7 @@ Dev [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/dev.sv
 
 ## Table of Contents
 1. [Summary](#summary)
-1. [Prosperence (beta)](#prosperence-beta)
+1. [Rockridge (beta)](#prosperence-beta)
 1. [University of Prosperence](#university of prosperence)
 1. [Team](#team)
 1. [Requirements](#requirements)
