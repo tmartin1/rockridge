@@ -26,7 +26,7 @@ Throughout all of the initial building of the plan, and forever, no personal/ide
 ## Rockridge University
 The goal for University of Prosperence is to provide a library of resources, that are freely available to everyone, to help bring clarity and understanding to the more complex elements of the financial world. While this will primarily serve as a place to host and organize a series of interactive and dynamic self-learning presentations, this will include a library of external resources of varying degrees of complexity.
 
-Read more about [University of Prosperence on our wiki](https://github.com/prosperence/prosperence/wiki/University-of-Prosperence).
+Read more about [Rockridge University on our wiki](https://github.com/Immortal-Thunder/rockridge/wiki/Rockridge-University).
 
 ## Team
   - __Product Owner__: [Timothy Martin](https://github.com/tmartin1)
