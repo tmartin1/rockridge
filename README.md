@@ -15,7 +15,7 @@ Dev [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/dev.sv
 1. [Road Map](#road-map)
 
 ## Summary
-The goal of Rockridge is to deliver a program that allows a user to build a comprehensive financial plan that is customized for their situation and goals without having any education or knowledge about finance or financial planning. Prosperence will strive to educate the user throughout the process, removing the ambiguity, uncertainty, and stress that typically come from talking to a financial product salesman, planner, or other financial professional.
+The goal of Rockridge is to deliver a program that allows a user to build a comprehensive financial plan that is customized for their situation and goals without having any education or knowledge about finance or financial planning. Rockridge will strive to educate the user throughout the process, removing the ambiguity, uncertainty, and stress that typically come from talking to a financial product salesman, planner, or other financial professional.
 
 ## Rockridge University
 The goal for Rockridge University is to provide a library of resources, that are freely available to everyone, to help bring clarity and understanding to the more complex elements of the financial world. While this will primarily serve as a place to host and organize a series of interactive and dynamic self-learning presentations, this will include a library of external resources of varying degrees of complexity.
