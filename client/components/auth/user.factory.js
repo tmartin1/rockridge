@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('rockridge')
-  .factory('User', function($resource) {
-    //
-  });
+.factory('User', function($resource) {
+  //
+});
