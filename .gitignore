@@ -1,0 +1,14 @@
+node_modules
+dist
+/server/config/local.env.js
+client/bower_components
+
+# Thumbnails
+._*
+
+# Debug log from npm
+npm-debug.log
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes

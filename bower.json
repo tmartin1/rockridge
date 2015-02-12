@@ -1,0 +1,10 @@
+{
+  "name": "rockridge",
+  "version": "1.0.0",
+  "dependencies": {
+    "semantic-ui": "latest",
+    "font-awesome": "latest",
+    "angular": "latest",
+    "angular-ui-router": "latest"
+  }
+}

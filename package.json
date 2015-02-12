@@ -1,0 +1,24 @@
+{
+  "name": "rockridge",
+  "title": "Rockridge",
+  "version": "0.0.1",
+  "description": "A reliable resource for individuals to build a comprehensive financial plan",
+  "main": "server/server.js",
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "express": "^4.11.2",
+    "gulp": "^3.8.11",
+    "method-override": "^2.3.1",
+    "oriento": "^1.1.2"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.4.3",
+    "gulp-jshint": "^1.9.2",
+    "gulp-livereload": "^3.7.0",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-nodemon": "^1.0.5",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.3.0"
+  }
+}
