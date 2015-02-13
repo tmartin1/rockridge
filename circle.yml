@@ -1,11 +1,14 @@
 # Customize the test machine
 machine:
-  # Version of node to use.
+
   node:
     version: 0.10.*
+    
+  environment:
+    NODE_ENV: 'production'
 
 # Customize dependencies
 dependencies:
   pre:
-    - npm install
+    - npm install -g bower
     - bower install
