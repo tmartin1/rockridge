@@ -11,5 +11,6 @@ machine:
 dependencies:
   pre:
     - npm install -g karma
+    - npm install -g browser-sync
     - npm install -g bower
     - bower install
