@@ -1,71 +1,152 @@
-var gulp = require('gulp'); 
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
+// TODO: refactor with gulp-load-plugins
 var annotate = require('gulp-ng-annotate');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var rename = require('gulp-rename');
-var notify = require('gulp-notify');
-var livereload = require('gulp-livereload');
+var browserSync = require('browser-sync');
+var concat = require('gulp-concat');
+var del = require('del');
+var gulp = require('gulp'); 
+var gutil = require('gulp-util');
+var inject = require('gulp-inject');
+var jshint = require('gulp-jshint');
+var karma = require('gulp-karma');
+var minifyCss = require('gulp-minify-css');
+var mocha = require('gulp-mocha');
 var nodemon = require('gulp-nodemon');
+var notify = require('gulp-notify');
+var phantom = require('gulp-phantom');
+var preprocess = require('gulp-preprocess');
+var reload = browserSync.reload;
+var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var wiredep = require('wiredep').stream;
+var runSequence = require('run-sequence');
+var ngHtml2Js = require('gulp-ng-html2js');
+var minifyHtml = require('gulp-minify-html');
 
+// Define commonly used paths for files.
 var paths = {
-  scripts: ['./client/app/**/*.js', '!./client/app/bower_components'],
+  scripts: ['./client/app/**/*.js', '!./client/app/**/*.spec.js', '!./client/bower_components'],
   html: ['./client/**/*.html'],
-  styles: ['./client/**/*.css'],
-  server: ['./**/*.js'],
+  styles: ['./client/app/**/*.css'],
+  server: ['./server/*.js', './server/**/*.js'],
   images: []
 };
 
-// Lint Task
 gulp.task('lint', function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+    .pipe(jshint.reporter('default'))
+    .pipe(reload({stream:true}));
 });
 
-// Concatenate & Minify JS
+gulp.task('clean', function(cb) {
+  del('dist', cb);
+});
+
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
-    .pipe(concat('all.js'))
-    .pipe(gulp.dest('dist'))
-    .pipe(rename('all.min.js'))
+    .pipe(concat('all.min.js'))
     .pipe(annotate()) // (for angular dependency injection)
     .pipe(uglify())
-    .pipe(gulp.dest('dist'))
-    .pipe(livereload())
-    .pipe(notify({message: 'Scripts task complete'}));
-});
-
-gulp.task('html', function() {
-  return gulp.src(paths.html)
-    .pipe(livereload());
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('styles', function() {
   return gulp.src(paths.styles)
-    .pipe(livereload());
+    .pipe(concat('all.min.css'))
+    .pipe(minifyCss())
+    .pipe(gulp.dest('dist'))
 });
 
-// Watch Files For Changes
+gulp.task('html', function() {
+  return gulp.src(paths.html)
+    .pipe(minifyHtml())
+    .pipe(ngHtml2Js())
+    .pipe(gulp.dest('dist/partials'))
+    .pipe(concat('templates.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['lint', 'scripts']);
-  gulp.watch(paths.html);
-  gulp.watch(paths.styles);
-  gulp.watch(paths.server);
+  gulp.watch(paths.scripts, ['lint', 'index']);
+  gulp.watch('./client/bower_components', ['index']);
+  gulp.watch(paths.html, reload({stream: true}));
+  gulp.watch(paths.styles, ['index']);
+  gulp.watch(paths.server, reload({stream: true}));
 });
 
-gulp.task('livereload', function() {
-  livereload.listen();
+gulp.task('browserSync', function() {
+  browserSync.init({
+    proxy: 'http://localhost:8080',
+    port: 3333
+  });
 });
 
-gulp.task('serve', function() {
+// Building the index file with all its dependencies injected
+gulp.task('index', function () {
+  var target = gulp.src('./client/index.html');
+  var all = paths.styles.concat(paths.scripts);
+  // don't actual read the files (speed boost)
+  var sources = gulp.src(all, {read: false});
+  return target.pipe(inject(sources, { ignorePath: '/client/' }))
+    .pipe(wiredep())
+    .pipe(gulp.dest('./client'));
+});
+
+gulp.task('nodemon', function() {
   nodemon({'script': './server/server.js'});
 });
 
-// Build Task
-gulp.task('build', ['scripts', 'lint']);
+// Mocha for back-end tests
+gulp.task('mocha', function() {
+  gulp.src('server/**/*.spec.js')
+  .pipe(mocha({ reporter: 'spec' }));
+});
 
-// Default Task
-gulp.task('default', ['build', 'livereload', 'serve', 'watch']);
+// Karma for front-end tests
+gulp.task('karma', function() {
+  return gulp.src('client/**/*.spec.js')
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      action: 'run'
+    }))
+    .on('error', function(err) { throw err; });
+});
+
+gulp.task('test', ['lint', 'karma', 'mocha']);
+
+// TODO: concat and minify vendor scripts.
+gulp.task('build', ['test'], function() {
+  runSequence('clean', ['scripts', 'styles', 'html'], function(err) {
+    if(err) { console.log('BUILD ERROR:', err); }
+    del('dist/partials');
+    gulp.src('./client/index.html')
+    .pipe(preprocess({context: { NODE_ENV: 'production' }}))
+    .pipe(gulp.dest('dist'));
+    gulp.src('./client/bower_components')
+    .pipe(gulp.dest('dist'));
+    notify({message: 'Build complete'});
+  });
+});
+
+// Run local server instance.
+gulp.task('serve', function() {
+  runSequence('index', // inject bower, css, and js
+              'test', 
+              'nodemon', 
+              'browserSync', 
+              'watch');
+});
+
+// Detects process.env and runs appropriate service.
+gulp.task('default', function(){
+  if(process.env.NODE_ENV === 'production'){
+    runSequence('build');
+  } else {
+    //todo: preprocess index.html?
+    runSequence('serve');
+  }
+});
+
