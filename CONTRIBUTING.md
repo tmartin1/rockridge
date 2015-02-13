@@ -1,5 +1,12 @@
 # Contributing
 
+## Table of Contents
+
+1. [General Workflow](#general-workflow)
+1. [Detailed General](#detailed-general)
+1. [Guidelines](#guidelines)
+1. [References](#references)
+
 ## General Workflow
 
 1. Fork the dev branch of the rockridge repository.
