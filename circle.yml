@@ -4,8 +4,8 @@ machine:
   node:
     version: 0.10.35
     
-  environment:
-    NODE_ENV: 'production'
+  # environment:
+    # NODE_ENV: 'production'
 
 # Customize dependencies
 dependencies:
