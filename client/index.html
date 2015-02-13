@@ -4,28 +4,76 @@
 
   <title>Rockridge</title>
   <base href="/">
+  
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/app/main/main.css">
+  <link rel="stylesheet" href="/app/my-plan/my-plan.css">
+  <link rel="stylesheet" href="/app/plan-builder/plan-builder.css">
+  <!-- endinject -->
 
 </head>
 
 <body ng-app="rockridge">
   
-  <div ng-controller="MainCtrl">
-    <section ui-view></section>
-  </div>
+  <section ui-view></section>
   
-  <!-- Bower components -->
-  <!--<script type="text/javascript" src="bower_components/angular/angular.js"></script>-->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.12/angular.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script> -->
+  <!--TODO: Fix preprocess  -->
+  <!-- @if NODE_ENV='production' -->
+    <script src="all.min.js"></script>
+    <script src="templates.min.js"></script>
+    <link rel="stylesheet" href="all.min.css">
+  <!-- @endif -->
   
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/semantic-ui/dist/semantic.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/json3/lib/json3.js"></script>
+  <!-- endbower -->
   
-  <!-- Load scripts -->
-  <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/main/main.controller.js"></script>
-  <script type="text/javascript" src="app/main/main.js"></script>
-  
+  <!-- @if NODE_ENV!='production' -->
+    <!-- inject:js -->
+
+    <script src="/app/app.js"></script>
+
+    <script src="/app/account/account.js"></script>
+
+    <script src="/app/main/main.controller.js"></script>
+
+    <script src="/app/main/main.js"></script>
+
+    <script src="/app/my-plan/my-plan.controller.js"></script>
+
+    <script src="/app/my-plan/my-plan.js"></script>
+
+    <script src="/app/plan-builder/plan-builder.controller.js"></script>
+
+    <script src="/app/plan-builder/plan-builder.js"></script>
+
+    <script src="/app/account/login/login.controller.js"></script>
+
+    <script src="/app/account/settings/settings.controller.js"></script>
+
+    <script src="/app/account/signup/signup.controller.js"></script>
+
+    <script src="/app/plan-builder/basics/basics.controller.js"></script>
+
+    <script src="/app/plan-builder/msa/msa.controller.js"></script>
+
+    <script src="/app/plan-builder/nws/nws.controller.js"></script>
+
+    <script src="/app/plan-builder/retire/retire.controller.js"></script>
+
+    <script src="/app/plan-builder/risk/risk.controller.js"></script>
+
+    <script src="/app/plan-builder/tax/tax.controller.js"></script>
+
+    <!-- endinject -->
+  <!-- @endif -->
 
 </body>
 </html>

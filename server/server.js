@@ -1,5 +1,8 @@
 'use strict';
 
+// Set default node environment to development
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
@@ -8,11 +11,10 @@ var methodOverride = require('method-override');
 var config = require('./config/config');
 
 // set our port
-var port = config.port; 
+var port = config.port;
+var host = config.host;
 
-// connect to our mongoDB database 
-// (uncomment after you enter in your own credentials in config/db.js)
-// mongoose.connect(db.url); 
+// connect to orientDB database 
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json
@@ -35,10 +37,10 @@ require('./routes')(app); // configure our routes
 
 // start app ===============================================
 // startup our app at http://localhost:8080
-app.listen(port);               
+app.listen(port, host);
 
-// shoutout to the user                     
+// shoutout to the user
 console.log('Server running on port: ' + port);
 
-// expose app           
+// expose app
 exports = module.exports = app;                         
