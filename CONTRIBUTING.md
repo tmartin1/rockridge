@@ -29,7 +29,7 @@
 Use github’s interface to make a fork of the repo. Then clone the fork to your machine. Finally, add the original repo as an upstream remote:
 
 ```
-git remote add upstream https://github.com/Immortal-Thunder/rockridge.git
+$ git remote add upstream https://github.com/Immortal-Thunder/rockridge.git
 ```
 
 #### Checkout the dev branch, if not there already
@@ -39,7 +39,7 @@ These commands will help you do this:
 ``` bash
 
 # Creates your branch and brings you there
-git checkout -b `dev`
+$ git checkout -b `dev`
 ```
 
 #### Create a new feature branch and make commits to this feature branch. 
@@ -47,7 +47,7 @@ git checkout -b `dev`
 ``` bash
 
 # Creates a feature branch
-git checkout -b `#<ISSUE_NUMBER>-MSA-view`
+$ git checkout -b `#<ISSUE_NUMBER>-MSA-view`
 ```
 
 Do not push your commits (yet).
