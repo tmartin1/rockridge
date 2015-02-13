@@ -1,31 +1,38 @@
 # Contributing
 
+## Table of Contents
+
+1. [General Workflow](#general-workflow)
+1. [Detailed General](#detailed-general)
+1. [Guidelines](#guidelines)
+1. [References](#references)
+
 ## General Workflow
 
 1. Fork the dev branch of the rockridge repository.
-1. From your personal fork, create a new branch for the specific issue that you are working on.
-1. Make commits to your feature branch. If the issue you are working on is logged in our Issues, prefix each commit with the issue number:
-  - "#88 Fixed flux capacitor time warp directive."
+1. From your personal fork, create a new branch for the specific issue that you are working on. The name of the branch should be preceded by the GitHub issue number, for example:
+  - "#88 Fixes flux capacitor time warp directive."
+1. Make commits to your issue branch. Commit frequently and with meaningful comments.
 1. When you're ready to make a pull request with your new feature or fix, please ensure the following before submitting:
   - If you are adding a new feature, make sure to have meaningful tests in the feature.spec.js file.
   - Run 'grunt test' from the command line and make sure all tests are passing.
   - Follow the style guide, located here: [STYLE-GUIDE.md](STYLE-GUIDE.md).
-  - Include a relevant and meaninful description of your changes, include screen shots if appropriate.
+  - Include a relevant and meaningful description of your changes, include screen shots if appropriate.
   - Submit a [pull request][] to the dev branch of rockridge.
-1. Your pull request will be reviewed by an admin or owner and determine if the request can be merged in. If your code reviewer requests you make a change you don't understand, don't be afraid to ask clarifying questions.
+1. Your pull request will be reviewed to determine if the request can be merged in. If your code reviewer requests you make a change you don't understand, please ask clarifying questions.
 1. Fix any issues raised by your code reviewer and push your fixes/changes to the appropriate branch on your personal fork.
 
 ## Detailed Workflow
 
-### Fork the repo
+#### Fork the repo
 
-Use github’s interface to make a fork of the repo, then add that repo as an upstream remote:
+Use github’s interface to make a fork of the repo. Then clone the fork to your machine. Finally, add the original repo as an upstream remote:
 
 ```
 git remote add upstream https://github.com/Immortal-Thunder/rockridge.git
 ```
 
-### Checkout the dev branch, if not there already
+#### Checkout the dev branch, if not there already
 
 These commands will help you do this:
 
@@ -35,34 +42,25 @@ These commands will help you do this:
 git checkout -b `dev`
 ```
 
-### Make commits to your feature branch. 
+#### Create a new feature branch and make commits to this feature branch. 
 
-Prefix each commit with the issue number
-  - (#2) Added a new feature
+``` bash
 
-#### Commit Message Guidelines
-
-- Commit messages should be written in the present tense; e.g. "Fix continuous
-  integration script".
-- The first line of your commit message should be a brief summary of what the
-  commit changes. Aim for about 70 characters max. Remember: This is a summary,
-  not a detailed description of everything that changed.
-- If you want to explain the commit in more depth, following the first line should
-  be a blank line and then a more detailed description of the commit. This can be
-  as detailed as you want, so dig into details here and keep the first line short.
-
-### Merge upstream changes into your branch
-
-Once you are done making changes, you can begin the process of getting
-your code merged into the main repo. Step 1 is to merge upstream
-changes to the dev branch into yours by running this command
-from your branch:
-
-```
-git pull upstream dev
+# Creates a feature branch
+git checkout -b `#<ISSUE_NUMBER>-MSA-view`
 ```
 
-If there are conflicting changes, git will start yelling at you part way
+Do not push your commits (yet).
+
+#### Add upstream commits to feature branch
+
+- Make sure you are on your issue branch.
+
+```
+$ git pull --rebase upstream dev
+```
+
+  - If there are conflicting changes, git will start yelling at you part way
 through the merging process. Git will pause merging to allow you to sort
 out the conflicts. You do this the same way you solve merge conflicts,
 by checking all of the files git says have been changed in both histories
@@ -70,21 +68,44 @@ and picking the versions you want. Be aware that these changes will show
 up in your pull request, so try and incorporate upstream changes as much
 as possible.
 
-Once you are done fixing conflicts for a specific commit, run:
+  - Once you are done fixing conflicts for a specific commit, run:
 
 ```
-git commit -m '<YOUR_MESSAGE>'
+$ git commit -m '<YOUR_MESSAGE>'
 ```
 
-Once, you'll have entered your message in quotes, the merging process will continue.
+  - Once you have entered your message in quotes, the merging process will continue.
 Once you are done fixing all conflicts you should run the existing tests to make sure
 you didn’t break anything, then run your new tests (there are new tests, right?) and
 make sure they work also.
 
-If merging broke anything, fix it, then repeat the above process until
+  - If merging broke anything, fix it, then repeat the above process until
 you get here again and nothing is broken and all the tests pass.
 
-### Make a pull request
+```
+$ git --rebase continue
+```
+
+```
+$ git add .
+```
+
+  - After merge conflicts resolves/no conflicts originally.
+
+```
+$ git push origin branch
+```
+
+Update your local master.
+
+```
+$ git pull upstream development
+```
+
+  - If pull requests have been accepted to development while yours was pending, 
+please repeat this step to sync your fork with the Immortal-Thunder developent branch.
+
+#### Make a pull request
 
 Make a clear pull request from your fork and branch to the upstream dev
 branch, detailing exactly what changes you made and what feature this
@@ -102,7 +123,20 @@ else, just repeat again.
 
 Thanks for contributing!
 
-### Guidelines
+## Guidelines
+
+#### Commit Messages
+
+- Commit messages should be written in the present tense; e.g. "Fixes continuous
+  integration script".
+- The first line of your commit message should be a brief summary of what the
+  commit changes. Aim for about 70 characters max. Remember: This is a summary,
+  not a detailed description of everything that changed.
+- If you want to explain the commit in more depth, following the first line should
+  be a blank line and then a more detailed description of the commit. This can be
+  as detailed as you want, so dig into details here and keep the first line short.
+
+#### Writing Code
 
 1. Uphold the current code standard:
     - Keep your code [DRY][].
@@ -113,7 +147,7 @@ Thanks for contributing!
    new, testable behavior.
 1. Your pull request is comprised of a single ([squashed][]) commit.
 
-## Checklist:
+#### Checklist:
 
 This is just to help you organize your process
 
@@ -129,3 +163,8 @@ This is just to help you organize your process
 
 If you follow all of these guidelines and make good changes, you should have
 no problem getting your changes merged in.
+
+
+## References
+
+http://www.thumbtack.com/engineering/linear-git-history/
