@@ -25,10 +25,17 @@ var minifyHtml = require('gulp-minify-html');
 
 // Define commonly used paths for files.
 var paths = {
-  scripts: ['./client/app/**/*.js', '!./client/app/**/*.spec.js', '!./client/bower_components'],
+  scripts: ['./client/app/**/*.js',
+            '!./client/app/**/*.spec.js',
+            './client/components/**/*.js',
+            '!./client/components/**/*.spec.js',
+            '!./client/bower_components'],
   html: ['./client/**/*.html'],
-  styles: ['./client/app/**/*.css'],
-  server: ['./server/*.js', './server/**/*.js'],
+  styles: ['./client/app/**/*.css',
+           '!./client/bower_components'],
+  server: ['./server/*.js',
+           './server/**/*.js'],
+  vendors: ['./client/bower_components/**/*.min.*'],
   images: []
 };
 
@@ -71,10 +78,10 @@ gulp.task('html', function() {
 
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['lint', 'index']);
-  gulp.watch('./client/bower_components', ['index']);
-  gulp.watch(paths.html, reload({stream: true}));
-  gulp.watch(paths.styles, ['index']);
-  gulp.watch(paths.server, reload({stream: true}));
+  gulp.watch(paths.vendors, ['index']);
+  gulp.watch(paths.html, ['index'], reload({stream: true}));
+  gulp.watch(paths.styles, ['index'], reload({stream: true}));
+  gulp.watch(paths.server, ['index'], reload({stream: true}));
 });
 
 gulp.task('browserSync', function() {
@@ -87,7 +94,7 @@ gulp.task('browserSync', function() {
 // Building the index file with all its dependencies injected
 gulp.task('index', function () {
   var target = gulp.src('./client/index.html');
-  var all = paths.styles.concat(paths.scripts);
+  var all = paths.styles.concat(paths.scripts, paths.vendors);
   // don't actual read the files (speed boost)
   var sources = gulp.src(all, {read: false});
   return target.pipe(inject(sources, { ignorePath: '/client/' }))

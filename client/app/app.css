@@ -1,1 +1,124 @@
 /* This style will effect the entire app, edit with great care. */
+
+/* Basic margin classes */
+.margin-sm {
+  margin: 10px;
+}
+
+.margin-md {
+  margin: 20px;
+}
+
+.margin-lg {
+  margin: 30px;
+}
+
+.margin-top-sm {
+  margin-top: 10px;
+}
+
+.margin-top-md {
+  margin-top: 20px;
+}
+
+.margin-top-lg {
+  margin-top: 30px;
+}
+
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+
+.margin-bottom-lg {
+  margin-bottom: 30px;
+}
+
+.margin-left-sm {
+  margin-left: 10px;
+}
+
+.margin-left-md {
+  margin-left: 20px;
+}
+
+.margin-left-lg {
+  margin-left: 30px;
+}
+
+.margin-right-sm {
+  margin-right: 10px;
+}
+
+.margin-right-md {
+  margin-right: 20px;
+}
+
+.margin-right-lg {
+  margin-right: 30px;
+}
+
+
+/* Basic padding classes */
+.pad-sm {
+  padding: 10px;
+}
+
+.pad-md {
+  padding: 20px;
+}
+
+.pad-lg {
+  padding: 30px;
+}
+
+.pad-top-sm {
+  padding-top: 10px;
+}
+
+.pad-top-md {
+  padding-top: 20px;
+}
+
+.pad-top-lg {
+  padding-top: 30px;
+}
+
+.pad-bottom-sm {
+  padding-bottom: 10px;
+}
+
+.pad-bottom-md {
+  padding-bottom: 20px;
+}
+
+.pad-bottom-lg {
+  padding-bottom: 30px;
+}
+
+.pad-left-sm {
+  padding-left: 10px;
+}
+
+.pad-left-md {
+  padding-left: 20px;
+}
+
+.pad-left-lg {
+  padding-left: 30px;
+}
+
+.pad-right-sm {
+  padding-right: 10px;
+}
+
+.pad-right-md {
+  padding-right: 20px;
+}
+
+.pad-right-lg {
+  padding-right: 30px;
+}
