@@ -25,10 +25,15 @@ var minifyHtml = require('gulp-minify-html');
 
 // Define commonly used paths for files.
 var paths = {
-  scripts: ['./client/app/**/*.js', '!./client/app/**/*.spec.js', '!./client/bower_components'],
+  scripts: ['./client/app/**/*.js',
+            '!./client/app/**/*.spec.js',
+            './client/components/**/*.js',
+            '!./client/components/**/*.spec.js',
+            '!./client/bower_components'],
   html: ['./client/**/*.html'],
   styles: ['./client/app/**/*.css'],
-  server: ['./server/*.js', './server/**/*.js'],
+  server: ['./server/*.js',
+           './server/**/*.js'],
   images: []
 };
 
