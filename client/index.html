@@ -6,6 +6,8 @@
   <base href="/">
   
   <!-- inject:css -->
+  <link rel="stylesheet" href="/app/app.css">
+  <link rel="stylesheet" href="/app/about/main.css">
   <link rel="stylesheet" href="/app/main/main.css">
   <link rel="stylesheet" href="/app/my-plan/my-plan.css">
   <link rel="stylesheet" href="/app/plan-builder/plan-builder.css">
@@ -14,6 +16,8 @@
 </head>
 
 <body ng-app="rockridge">
+
+  <div ng-include="'components/navbar/navbar.html'"></div>
   
   <section ui-view></section>
   
@@ -39,6 +43,10 @@
     <!-- inject:js -->
 
     <script src="/app/app.js"></script>
+
+    <script src="/app/about/main.controller.js"></script>
+
+    <script src="/app/about/main.js"></script>
 
     <script src="/app/account/account.js"></script>
 
@@ -71,6 +79,12 @@
     <script src="/app/plan-builder/risk/risk.controller.js"></script>
 
     <script src="/app/plan-builder/tax/tax.controller.js"></script>
+
+    <script src="/components/auth/auth.factory.js"></script>
+
+    <script src="/components/auth/user.factory.js"></script>
+
+    <script src="/components/navbar/navbar.controller.js"></script>
 
     <!-- endinject -->
   <!-- @endif -->
