@@ -1,4 +1,68 @@
 <!-- Navbar HTML Template -->
-<div ng-controller="NavbarCtrl">
-  <!-- Navigation bar stuff -->
+<!-- <div class="ui-grid"> -->
+<div class="row" ng-controller="NavbarCtrl">
+  
+  <div class="ui menu">
+    <a href="/" class="brand item">Rockridge</a>
+    <a
+      class="item"
+      ng-repeat="item in menu"
+      ng-show="{{item.shown}}"
+      ui-sref="{{item.link}}"
+      ng-class="{active: isActive(item.abstractLink || item.link)}">
+      <span class="{{item.class}}"></span>
+      {{item.title}}
+    </a>
+
+    <a
+      ng-show="isAdmin()"
+      href="/admin"
+      ng-class="{active: isActive('admin')}">
+      Admin
+    </a>
+
+    <div class="right menu">
+      <a
+        class="item"
+        ng-hide="isLoggedIn()"
+        ng-class="{active: isActive('signup')}"
+        href="/signup">
+        Sign up
+      </a>
+
+      <a
+        class="item"
+        ng-hide="isLoggedIn()"
+        ng-class="{active: isActive('login')}"
+        href="/login">
+        Login
+      </a>
+
+      <a
+        class="item"
+        ng-show="isLoggedIn()">
+        <p class="navbar-text"> Hello {{getCurrentUser().name}} </p> 
+      </a>
+
+      <a
+        class="item"
+        ng-show="isLoggedIn()"
+        ng-class="{active: isActive('settings')}"
+        href="/settings">
+        <span class="glyphicon glyphicon-cog"></span>
+      </a>
+
+      <a
+        class="item"
+        ng-show="isLoggedIn()"
+        href=""
+        ng-click="logout()">
+        Logout
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
+<!-- </div> -->
