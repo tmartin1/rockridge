@@ -1,37 +1,60 @@
-<!-- Plan-Builder HTML Template -->
-<header>
-  <div>
-    <label>
-      <h1>Plan Builder</h1>
-    </label>
-  </div>
-</header>
+<!-- Header -->
+<center class="ui inverted segment">
+  <label>
+    <h1>Plan Builder: {{heading}}</h1>
+  </label>
+</center>
 
-<!-- Main content and ui-view wrapper -->
-<div>
-  <div>
-    
+<div class="ui grid segment">
+
     <!--Sidebar content-->
-    <div>
-      <h2>Sidebar</h2>
-      <ul>
-        <!-- TODO: Make links disabled until previous sections are completed (allow user to go back and forth between completed sections and the one they're currently working on) -->
-        <li><a ui-sref="plan-builder.start">Introduction</a></li>
-        <li><a ui-sref="plan-builder.nws">Net Worth</a></li>
-        <li><a ui-sref="plan-builder.tax">Tax Projection</a></li>
-        <li><a ui-sref="plan-builder.msa">Budget Analysis</a></li>
-        <li><a ui-sref="plan-builder.risk">Risk Analysis</a></li>
-        <li><a ui-sref="plan-builder.retire">Retirement Savings</a></li>
-      </ul>
+    <div class="ui vertical menu four wide column" style="max-width:250px">
+      <!-- TODO: Make links disabled until previous sections are completed (allow user to go back and forth between completed sections and the one they're currently working on) -->
+
+      <!-- TODO: Insert dynamic sub-menus for each state (Ex: NWS would contain 'fixed assets', 'variable assets', and 'liabilities') -->
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.start">Introduction</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.basics">General Info</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.nws">Net Worth</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.tax">Tax Projection</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.msa">Budget Analysis</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.risk">Risk Analysis</a>
+      <a class="item" ui-sref-active="active" ui-sref="plan-builder.retire">Retirement Savings</a>
     </div>
     
-    <!--Body content-->
-    <div>
+    <!-- Main content (container for plan-builder states) -->
+    <div class="eleven wide column margin-left-md">
       <div ui-view></div>
     </div>
-
-  </div>
 
 </div>
 
 <!-- Plan builder navigation and progress bar -->
+<div class="ui segment bottom attached">
+
+  <center>
+    <div class="margin-bottom-md">
+      <a class="ui button" ng-if="!!previous" ng-href="{{previous}}">
+        <i class="fa fa-chevron-left"></i> Previous
+      </a>
+      <a class="ui button" ng-if="!!next" ng-href="{{next}}">
+        Next <i class="fa fa-chevron-right"></i>
+      </a>
+      <a class="ui primary button" ng-if="!next">Submit</a>
+    </div>
+
+    <!-- TODO: Fix progress bar functionality -->
+    <div class="ui progress" style="width:60%">
+      <div class="bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+  </center>
+
+
+</div>
+
+<div class="margin-right-md">
+  <button class="ui button right floated" ng-click="save()">
+    Save and Exit
+  </button>
+</div>
