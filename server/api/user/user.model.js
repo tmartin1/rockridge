@@ -10,9 +10,7 @@ var db = server.use({
   password: 'admin'
 });
 
-var User = function() {
-  
-};
+var User = function() {};
 
 User.prototype.create = function(email, password, cb) {
   saltAndHash(password, null, function(data) {
@@ -45,6 +43,18 @@ User.prototype.authenticate = function(email, password, cb) {
   });
 };
 
+User.prototype.findById = function(rid, cb) {
+  db.query('select from User where rid=:rid',
+  {
+    params: {
+      rid: rid
+    }
+  })
+  .then(function(user) {
+    cb(user);
+  });
+};
+
 var saltAndHash = function(password, salt, cb) {
   
   var salt = salt || bcrypt.genSaltSync(10);
@@ -61,3 +71,4 @@ var checkPassword = function(rawPassword, user, cb) {
   });
 };
 
+module.exports = User;
