@@ -13,7 +13,7 @@ var User = function() {};
 
 User.prototype.create = function(email, password, cb) {
   saltAndHash(password, null, function(data) {
-    db.query('insert into User (email, password, salt) values (:email, :password, :salt)', 
+    db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)', 
         {
         params: {
           email: email,
@@ -37,7 +37,8 @@ User.prototype.authenticate = function(email, password, cb) {
   })
   .then(function(user) {
     checkPassword(password, user[0], function(passwordMatch) {
-      cb(passwordMatch);
+      var res = passwordMatch ? user[0] : null;
+      cb(res);
     });
   });
 };

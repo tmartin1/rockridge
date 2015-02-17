@@ -12,7 +12,7 @@ angular.module('rockridge')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.post('/auth/local', {
+        $http.post('/auth/login', {
           email: user.email,
           password: user.password
         }).
@@ -62,7 +62,6 @@ angular.module('rockridge')
       getCurrentUser: function() {
         return currentUser;
       },
-
       isLoggedIn: function() {
         return currentUser.hasOwnProperty('role');
       },
