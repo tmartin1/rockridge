@@ -9,9 +9,9 @@ angular.module('rockridge')
     restrict: 'E',
     scope: {
       queries: '=',
-      user: '='
+      plan: '='
     },
-    templateUrl: './questionsTemplate.html'
+    templateUrl: './components/questions/questionsTemplate.html'
   };
 })
 
@@ -31,9 +31,9 @@ angular.module('rockridge')
     transclude: true,
     scope: {
       query: '=',
-      user: '='
+      plan: '='
     },
-    templateUrl: './questionTemplate.html'
+    templateUrl: './components/questions/questionTemplate.html'
   };
 })
 
@@ -59,7 +59,7 @@ angular.module('rockridge')
         questions.push(question);
       };
     },
-    templateUrl: './qmenu.html'
+    templateUrl: './components/questions/qmenu.html'
   };
 })
 
@@ -73,8 +73,9 @@ angular.module('rockridge')
       title: '@'
     },
     link: function(scope, element, attrs, tabsCtrl) {
+      console.log('inside qview directive');
       tabsCtrl.addQuestion(scope);
     },
-    template: '<div class="tab-question" ng-show="selected" ng-transclude></div>'
+    template: '<div ng-show="selected" ng-transclude></div>'
   };
 });
