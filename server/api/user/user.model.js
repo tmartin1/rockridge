@@ -2,29 +2,28 @@ var oriento = require('oriento');
 var config = require('../../config/config');
 var bcrypt = require('bcrypt');
 
-var server = oriento(config.db);
-
-var db = server.use({
-  name: 'rockridge',
-  username: 'admin',
-  password: 'admin'
-});
+var db = oriento(config.db)
+        .use({
+            name: 'rockridge',
+            username: 'admin',
+            password: 'admin'
+        });
 
 var User = function() {};
 
 User.prototype.create = function(email, password, cb) {
   saltAndHash(password, null, function(data) {
-    console.log(data);
     db.query('insert into User (email, password, salt) values (:email, :password, :salt)', 
-      {
+        {
         params: {
           email: email,
           password: data[1],
-          salt: data[0]
+          salt: data[0],
+          role: 'user'
         }
       })
     .then(function(user) {
-      cb(user);
+      cb(user[0]);
     });
   });
 };
@@ -44,14 +43,15 @@ User.prototype.authenticate = function(email, password, cb) {
 };
 
 User.prototype.findById = function(rid, cb) {
-  db.query('select from User where rid=:rid',
+  db.query('select from User where @rid=:rid',
   {
     params: {
       rid: rid
-    }
+    },
+    limit: 1
   })
   .then(function(user) {
-    cb(user);
+    cb(user[0]);
   });
 };
 

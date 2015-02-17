@@ -12,5 +12,5 @@ angular.module('rockridge')
         id: 'me'
       } 
     }
-  })
+  });
 });
