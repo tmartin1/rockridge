@@ -7,18 +7,23 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-
-var config = require('./config/config');
+var cookieParser   = require('cookie-parser');
+//var session        = require('express-session');
+var config         = require('./config/config');
 
 // set our port
 var port = config.port;
 var host = config.host;
 
-// connect to orientDB database 
-
 // get all data/stuff of the body (POST) parameters
 // parse application/json
 app.use(bodyParser.json());
+
+app.use(cookieParser());
+
+// app.use(session({
+//   secret: config.secrets.session
+// }));
 
 // parse application/vnd.api+json as json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));

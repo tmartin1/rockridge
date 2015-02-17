@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('rockridge')
-.controller('NavbarCtrl', function($scope, $state, $location) {
+.controller('NavbarCtrl', function($scope, $state, $location, Auth) {
 
   $scope.menu = [{
     'title': 'Home',
@@ -29,11 +29,14 @@ angular.module('rockridge')
   //   'abstractLink': 'university'
   // }];
 
-  // TODO: Write login/logout logic
   $scope.logout = function() {
     Auth.logout();
     $location.path('/');
   };
+
+    $scope.isLoggedIn = function() {
+      return Auth.isLoggedIn();
+    };
 
       // Sets active class on sidebar.
   $scope.isActive = function(viewLocation) {

@@ -8,5 +8,8 @@ module.exports = {
     port: process.env.ORIENTDB_PORT,
     user: process.env.ORIENTDB_USER,
     password: process.env.ORIENTDB_PASSWORD
+  },
+  secrets: {
+    session: 'our-secret-session'
   }
 }
