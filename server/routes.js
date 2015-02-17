@@ -14,7 +14,7 @@ module.exports = function(app) {
   });
    
   app.route('/*')
-  .then(function(req, res) {
+  .get(function(req, res) {
     res.sendFile('index.html', { root: './client/' });
   });
 };
