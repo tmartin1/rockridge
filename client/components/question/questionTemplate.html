@@ -1,0 +1,21 @@
+<!-- HTML Templates for user inputs. -->
+<!-- NOTE: Use ng-if for all options, not ng-show. -->
+
+<!-- For text queries -->
+<input ng-if="query.type === 'text'" type="text" ng-model="user[query.bind]"/>
+
+<!-- For select option queries -->
+<select ng-if="query.type === 'select'" ng-model="user[query.bind]">
+  <option ng-repeat="option in query.options">{{option}}</option>
+</select>
+
+<!-- For checkbox option queries -->
+
+
+<!-- For radio option queries -->
+
+
+<!-- For button queries -->
+
+
+<!-- For table entry queiries -->

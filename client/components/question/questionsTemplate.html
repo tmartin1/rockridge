@@ -1,0 +1,7 @@
+<!-- HTML Template for Questions, template builder for individual questions -->
+<qmenu>
+  <qview ng-repeat="query in queries" title="{{query.title}}">
+    <h4>{{query.question}}</h4>
+    <question query="query" user="user" ng-model="user[query.bind]"></question>
+  </qview>
+</qmenu>
