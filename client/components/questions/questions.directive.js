@@ -18,6 +18,7 @@ angular.module('rockridge')
 /* Invoked from within the questions directive template.
  * Accepts a single question object as a parameter. Example question object:
  * var query = {
+ *   title: required, string, 1-3 words for the link/accordion header title,
  *   question: required, string, text to display to the user to retreive needed info,
  *   type: required, string, determine type of input to show: text, select, check, radio, buttons, table,
  *   bind: required, string, defines what variable of the plan object the input should bind to,
