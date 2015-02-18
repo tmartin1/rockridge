@@ -23,12 +23,23 @@
         id="chkbx-{{option}}"
         name="{{query.bind}}[]"
         ng-checked="{{query.bind}}.indexOf({{option}}) > -1">
-      <label for="chkbx-{{option}}">{{option}}</label><br>
+      <label for="chkbx-{{option}}">{{option}}</label>
+      <br>
     </div>
   </div>
 
   <!-- For radio option questions -->
-
+  <div ng-if="query.type === 'radio'" ng-repeat="option in query.options">
+    <div class="ui radio">
+      <input
+        type="radio"
+        value="{{option}}"
+        id="radio-{{option}}"
+        ng-model="plan[query.bind]">
+      <label for="radio-{{option}}">{{option}}</label>
+      <br><br>
+    </div>
+  </div>
 
   <!-- For button questions -->
 
