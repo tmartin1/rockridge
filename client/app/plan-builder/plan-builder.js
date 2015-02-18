@@ -15,6 +15,7 @@ angular.module('rockridge')
   .state('plan-builder.start', {
     url: '/start',
     templateUrl: 'app/plan-builder/start/start.html',
+    controller: 'StartCtrl',
     data: {
       title: 'Getting Started'
     }
