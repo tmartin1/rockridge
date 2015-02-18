@@ -45,7 +45,7 @@ angular.module('rockridge')
       bind: 'fromTable',
       type: 'table',
       fields: [
-        { label: 'Column One (string)', type: 'string', textAlign: 'left' },
+        { label: 'Column One (string)', type: 'text', textAlign: 'left' },
         { label: 'Column Two (number)', type: 'number', textAlign: 'right' }
       ]
     }, { // Multi-question example
