@@ -1,6 +1,6 @@
 <!-- HTML Template for Questions, template builder for individual questions -->
 <div class="ui styled fluid accordion">
-  <div ng-repeat="query in queries">
+  <div ng-repeat="query in queries" class="ui form">
     <question query="query" plan="plan" ng-click="select(query)" ng-model="plan[query.bind]"></question>
   </div>
 </div>
