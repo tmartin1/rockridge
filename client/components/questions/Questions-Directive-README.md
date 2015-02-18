@@ -10,7 +10,7 @@ From the html template where this directive is needed, it can be implemented as 
 
 <code>queries</code> is a collection of question objects, in this case (from plan-builder states) this refers to <code>$scope.queries</code> from the respective states' controller.
 
-<code>queries</code> is what the variables within the directive and sub-directives will be bound to. In this case, <code>questions</code> will have input that is bound to <code>$scope.plan</code>.
+<code>plan</code> is what the variables within the directive and sub-directives will be bound to. In this case, <code>questions</code> will have input that is bound to <code>$scope.plan</code>.
 
 
 ### Question Objects
