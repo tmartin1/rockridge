@@ -2,29 +2,95 @@
 <!-- NOTE: Use ng-if for all options, not ng-show. -->
 
 <div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
-<!-- <div class="title">{{query.title}}</div> -->
 
 <div ng-class="{ 'content': true, 'active': query.selected }">
-<!-- <div class="content"> -->
-  <p>{{query.question}}</p>
-  <!-- For text queries -->
-  <input ng-if="query.type === 'text'" type="text" ng-model="plan[query.bind]"/>
+  <p ng-if="query.type !== 'multi'"><label>{{query.question}}</label></p>
 
-  <!-- For select option queries -->
+  <!-- For select option questions -->
   <select ng-if="query.type === 'select'" ng-model="plan[query.bind]">
     <option ng-repeat="option in query.options">{{option}}</option>
   </select>
 
-  <!-- For checkbox option queries -->
+  <!-- For checkbox option questions -->
+  <div ng-if="query.type === 'checkbox'" ng-repeat="option in query.options">
+    <div class="ui checkbox">
+      <input
+        type="checkbox"
+        value="{{option}}"
+        id="chkbx-{{option}}"
+        name="{{query.bind}}[]"
+        ng-checked="{{query.bind}}.indexOf({{option}}) > -1">
+      <label for="chkbx-{{option}}">{{option}}</label>
+      <br>
+    </div>
+  </div>
+
+  <!-- For radio option questions -->
+  <div ng-if="query.type === 'radio'" ng-repeat="option in query.options">
+    <div class="ui radio">
+      <input
+        type="radio"
+        value="{{option}}"
+        id="radio-{{option}}"
+        ng-model="plan[query.bind]">
+      <label for="radio-{{option}}" class="pad-left-sm">{{option}}</label>
+      <br><br>
+    </div>
+  </div>
+
+  <!-- For button questions -->
+  <!-- TODO: Define exact purpose of button option, invoking functions? Or like radio options? -->
+  <div ng-if="query.type === 'button'" style="min-width:500px">
+    <div ng-repeat="option in query.options">
+      <button class="ui button" style="width:100%">
+        {{option}}
+      </button>
+      <br><br>
+    </div>
+  </div>
+
+  <!-- For table entry questions -->
+  <div ng-if="query.type === 'table'">
+    <table>
+      <tr>
+        <th ng-repeat="field in query.fields" style="text-align:{{field.textAlign}}; padding-left:10px;">{{field.label}}</th>
+      </tr>
+      <tr>
+        <td ng-repeat="field in query.fields">
+          <input type="{{field.type}}" style="text-align:{{field.textAlign}}; margin:10px; padding:5px" />
+        </td>
+      </tr>
+    </table>
+    <br>
+    <button class="ui button">Add More</button>
+  </div>
+
+  <!-- For multi-question slides -->
+  <!-- TODO: Currently, multi can only support basic input types (text, date, etc. - NOT select, checkboxes, radio). Refacor so that multi can handle any type of input request -->
+  <div ng-if="query.type === 'multi'">
+    <div ng-repeat="item in query.subqueries">
+      <label>{{item.question}}</label>
+      <input type="{{item.type}}" ng-model="plan[item.bind]"/>
+      <br><br>
+    </div>
+  </div>
+
+  <!-- For prescreen questions (Yes/No questions that will determine the next question to show) -->
+  <div ng-if="query.type === 'prescreen'">
+    <!-- TODO: Figure this out -->
+  </div>
+
+  <!-- For the review slide, the final slide in the section -->
+  <!-- NOTE: this will accept an html template and is intended to dislay a snapshot of what the user entered in current section -->
+  <div ng-if="query.type === 'review'">
+    <!-- TODO: Figure this out -->
+  </div>
 
 
-  <!-- For radio option queries -->
-
-
-  <!-- For button queries -->
-
-
-  <!-- For table entry queiries -->
-
+  <!-- For everything else -->
+  <input
+    ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) === -1"
+    type="{{query.type}}"
+    ng-model="plan[query.bind]"/>
 
 </div>

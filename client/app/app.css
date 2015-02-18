@@ -1,6 +1,8 @@
 /* This style will effect the entire app, edit with great care. */
 
-/* Basic margin classes */
+/*
+ * Basic margin classes
+*/
 .margin-sm {
   margin: 10px;
 }
@@ -61,8 +63,9 @@
   margin-right: 30px;
 }
 
-
-/* Basic padding classes */
+/*
+ * Basic padding classes 
+*/
 .pad-sm {
   padding: 10px;
 }
