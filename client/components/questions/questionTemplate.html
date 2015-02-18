@@ -4,10 +4,7 @@
 <div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
 
 <div ng-class="{ 'content': true, 'active': query.selected }">
-  <p><label>{{query.question}}</label></p>
-
-  <!-- For text questions -->
-  <input ng-if="query.type === 'text'" type="text" ng-model="plan[query.bind]"/>
+  <p ng-if="query.type !== 'multi'"><label>{{query.question}}</label></p>
 
   <!-- For select option questions -->
   <select ng-if="query.type === 'select'" ng-model="plan[query.bind]">
@@ -36,14 +33,14 @@
         value="{{option}}"
         id="radio-{{option}}"
         ng-model="plan[query.bind]">
-      <label for="radio-{{option}}">{{option}}</label>
+      <label for="radio-{{option}}" class="pad-left-sm">{{option}}</label>
       <br><br>
     </div>
   </div>
 
   <!-- For button questions -->
   <!-- TODO: Define exact purpose of button option, invoking functions? Or like radio options? -->
-  <div ng-if="query.type === 'button'" style="width:50%; min-width:500px">
+  <div ng-if="query.type === 'button'" style="min-width:500px">
     <div ng-repeat="option in query.options">
       <button class="ui button" style="width:100%">
         {{option}}
@@ -60,7 +57,7 @@
       </tr>
       <tr>
         <td ng-repeat="field in query.fields">
-          <input type="query.field.type" style="text-align:{{field.textAlign}}" />
+          <input type="{{query.field.type}}" style="text-align:{{field.textAlign}}" />
         </td>
       </tr>
     </table>
@@ -69,14 +66,30 @@
   </div>
 
   <!-- For multi-question slides -->
-
+  <!-- TODO: Currently, multi can only support basic input types (text, date, etc. - NOT select, checkboxes, radio). Refacor so that multi can handle any type of input request -->
+  <div ng-if="query.type === 'multi'">
+    <div ng-repeat="item in query.subqueries">
+      <label>{{item.question}}</label>
+      <input type="{{item.type}}" ng-model="plan[item.bind]"/>
+      <br><br>
+    </div>
+  </div>
 
   <!-- For prescreen questions (Yes/No questions that will determine the next question to show) -->
+  <div ng-if="query.type === 'prescreen'">
+    <!-- TODO: Figure this out -->
+  </div>
+
+  <!-- For the review slide, the final slide in the section -->
+  <!-- NOTE: this will accept an html template and is intended to dislay a snapshot of what the user entered in current section -->
+  <div ng-if="query.type === 'review'">
+    <!-- TODO: Figure this out -->
+  </div>
 
 
   <!-- For everything else -->
   <input
-    ng-if="['text','select','checkbox','radio','button','table','multi'].indexOf(query.type) === -1"
+    ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) === -1"
     type="{{query.type}}"
     ng-model="plan[query.bind]"/>
 
