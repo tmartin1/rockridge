@@ -8,7 +8,7 @@ angular.module('rockridge')
   // the user. Question objects have a specific format that must be followed. For more info, see 
   // client/components/question/questions.directive.js
   $scope.queries = [
-    { question:'What is your name?', type:'text', bind:'name', options:null, next:null },
-    { question:'Are you married?', type:'select', bind:'married', options:['Yes','No'], next:function($scope){ return $scope.plan.married ? 2 : 6 } } // Example, if married, go to question 3, else skip to question 6.
+    { title:'Name', question:'What is your name?', type:'text', bind:'name', options:null, next:null },
+    { title:'Marital Status', question:'Are you married?', type:'select', bind:'married', options:['Yes','No'], next:function($scope){ return $scope.plan.married ? 2 : 6 } } // Example, if married, go to question 3, else skip to question 6.
   ];
 });
