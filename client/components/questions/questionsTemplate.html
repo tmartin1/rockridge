@@ -1,7 +1,6 @@
 <!-- HTML Template for Questions, template builder for individual questions -->
-<qmenu>
-  <qview ng-repeat="query in queries" title="{{query.title}}">
-    <h4>{{query.question}}</h4>
-    <question query="query" plan="plan" ng-model="plan[query.bind]"></question>
-  </qview>
-</qmenu>
+<div class="ui styled fluid accordion">
+  <div ng-repeat="query in queries">
+    <question query="query" plan="plan" ng-click="select(query)" ng-model="plan[query.bind]"></question>
+  </div>
+</div>

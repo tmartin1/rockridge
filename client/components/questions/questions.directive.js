@@ -11,6 +11,14 @@ angular.module('rockridge')
       queries: '=',
       plan: '='
     },
+    controller: function($scope) {
+      $scope.select = function(question) {
+        angular.forEach($scope.queries, function(question) {
+          question.selected = false;
+        });
+        question.selected = true;
+      };
+    },
     templateUrl: './components/questions/questionsTemplate.html'
   };
 })
@@ -37,46 +45,3 @@ angular.module('rockridge')
     templateUrl: './components/questions/questionTemplate.html'
   };
 })
-
-// Displays the menu and links to questions within the current plan-builder state.
-// TODO: Make this display the sub-sections in an accordion style on the screen.
-.directive('qmenu', function() {
-  return {
-    restrict: 'E',
-    transclude: true,
-    scope: {},
-    controller: function($scope) {
-      var questions = $scope.questions = [];
-      $scope.select = function(question) {
-        angular.forEach(questions, function(question) {
-          question.selected = false;
-        });
-        question.selected = true;
-      };
-      this.addQuestion = function(question) {
-        if (questions.length === 0) {
-          $scope.select(question);
-        }
-        questions.push(question);
-      };
-    },
-    templateUrl: './components/questions/qmenu.html'
-  };
-})
-
-// Directive for each individual question view. Visible only when "selected".
-.directive('qview', function() {
-  return {
-    require: '^qmenu',
-    restrict: 'E',
-    transclude: true,
-    scope: {
-      title: '@'
-    },
-    link: function(scope, element, attrs, tabsCtrl) {
-      console.log('inside qview directive');
-      tabsCtrl.addQuestion(scope);
-    },
-    template: '<div ng-show="selected" ng-transclude></div>'
-  };
-});
