@@ -42,16 +42,10 @@ angular.module('rockridge')
         $scope.plan[property] = $scope.plan[property] || [];
         $scope.plan[property].push({});
       };
-
       // Delete target row for table type inputs.
-      $scope.deleteRow = function() {
-        //
+      $scope.deleteRow = function(index, property) {
+        $scope.plan[property].splice(index, 1);
       };
-
-      // Submit form for table inputs to bind them to their respective plan property.
-      $scope.submit = function(form) {
-        console.log(form);
-      }
     },
     templateUrl: './components/questions/questionTemplate.html'
   };
