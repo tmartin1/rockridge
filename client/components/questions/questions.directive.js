@@ -31,6 +31,7 @@ angular.module('rockridge')
  *   type: required, string, determine type of input to show: text, select, check, radio, buttons, table,
  *   bind: required, string, defines what variable of the plan object the input should bind to,
  *   options: required if select, check, radio, buttons, array of strings for option labels (will also be their value),
+ *   fields: required if table, array of objects each with three arguments: { column label (string), column input type (string), collumn width (string: 'small', 'med', or 'large') },
  *   next: not required, function, return index of next question, if undefined, then the next question in the array will be displayed
  * }
  */
