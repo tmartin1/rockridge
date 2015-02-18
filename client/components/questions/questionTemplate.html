@@ -51,13 +51,13 @@
 
   <!-- For table entry questions -->
   <div ng-if="query.type === 'table'">
-    <table style="width:100%">
+    <table>
       <tr>
-        <th ng-repeat="field in query.fields" style="text-align:{{field.textAlign}}">{{field.label}}</th>
+        <th ng-repeat="field in query.fields" style="text-align:{{field.textAlign}}; padding-left:10px;">{{field.label}}</th>
       </tr>
       <tr>
         <td ng-repeat="field in query.fields">
-          <input type="{{query.field.type}}" style="text-align:{{field.textAlign}}" />
+          <input type="{{field.type}}" style="text-align:{{field.textAlign}}; margin:10px; padding:5px" />
         </td>
       </tr>
     </table>
