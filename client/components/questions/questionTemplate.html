@@ -42,7 +42,15 @@
   </div>
 
   <!-- For button questions -->
-
+  <!-- TODO: Define exact purpose of button option, invoking functions? Or like radio options? -->
+  <div ng-if="query.type === 'button'" style="width:50%; min-width:500px">
+    <div ng-repeat="option in query.options">
+      <button class="ui button" style="width:100%">
+        {{option}}
+      </button>
+      <br><br>
+    </div>
+  </div>
 
   <!-- For table entry questions -->
   <div ng-if="query.type === 'table'">
@@ -68,7 +76,7 @@
 
   <!-- For everything else -->
   <input
-    ng-if="['text','select','checkbox','radio','table','multi'].indexOf(query.type) === -1"
+    ng-if="['text','select','checkbox','radio','button','table','multi'].indexOf(query.type) === -1"
     type="{{query.type}}"
     ng-model="plan[query.bind]"/>
 
