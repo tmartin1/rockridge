@@ -4,7 +4,7 @@
 <div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
 
 <div ng-class="{ 'content': true, 'active': query.selected }">
-  <p>{{query.question}}</p>
+  <p><label>{{query.question}}</label></p>
 
   <!-- For text questions -->
   <input ng-if="query.type === 'text'" type="text" ng-model="plan[query.bind]"/>
@@ -15,7 +15,17 @@
   </select>
 
   <!-- For checkbox option questions -->
-
+  <div ng-if="query.type === 'checkbox'" ng-repeat="option in query.options">
+    <div class="ui checkbox">
+      <input
+        type="checkbox"
+        value="{{option}}"
+        id="chkbx-{{option}}"
+        name="{{query.bind}}[]"
+        ng-checked="{{query.bind}}.indexOf({{option}}) > -1">
+      <label for="chkbx-{{option}}">{{option}}</label><br>
+    </div>
+  </div>
 
   <!-- For radio option questions -->
 
@@ -42,9 +52,13 @@
   <!-- For multi-question slides -->
 
 
-  <!-- For prescreen questions (Yes/No questions that will determine the next question slide to show) -->
+  <!-- For prescreen questions (Yes/No questions that will determine the next question to show) -->
+
 
   <!-- For everything else -->
-  <input ng-if="['text','select','checkbox','radio','table','multi'].indexOf(query.type) === -1" type="{{query.type}}" ng-model="plan[query.bind]"/>
+  <input
+    ng-if="['text','select','checkbox','radio','table','multi'].indexOf(query.type) === -1"
+    type="{{query.type}}"
+    ng-model="plan[query.bind]"/>
 
 </div>
