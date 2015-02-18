@@ -36,6 +36,23 @@ angular.module('rockridge')
       query: '=',
       plan: '='
     },
+    controller: function($scope) {
+      // Add new row for table type inputs.
+      $scope.addRow = function(property) {
+        $scope.plan[property] = $scope.plan[property] || [];
+        $scope.plan[property].push({});
+      };
+
+      // Delete target row for table type inputs.
+      $scope.deleteRow = function() {
+        //
+      };
+
+      // Submit form for table inputs to bind them to their respective plan property.
+      $scope.submit = function(form) {
+        console.log(form);
+      }
+    },
     templateUrl: './components/questions/questionTemplate.html'
   };
 })
