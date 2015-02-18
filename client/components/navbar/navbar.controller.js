@@ -20,14 +20,13 @@ angular.module('rockridge')
     'link': 'plan-builder.start',
     'shown': '!isLoggedIn()',
     'abstractLink': 'plan-builder'
+  }, {
+    'title': 'Rockridge University',
+    'class': 'fa fa-graduation-cap',
+    'link': 'university.welcome',
+    'shown': true,
+    'abstractLink': 'university'
   }];
-  // , {
-  //   'title': 'Rockridge University',
-  //   'class': 'fa fa-graduation-cap',
-  //   'link': 'university.welcome',
-  //   'shown': true,
-  //   'abstractLink': 'university'
-  // }];
 
   $scope.logout = function() {
     Auth.logout();
