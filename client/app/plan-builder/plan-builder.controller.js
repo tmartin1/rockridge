@@ -5,7 +5,7 @@ angular.module('rockridge')
 
   // Define plan object that will be used and accessed by the different planning states.
   // TODO: If plan is partially complete, this should fetch previously entered data from DB.
-  var plan = {};
+  $scope.plan = {};
 
 	$scope.previous, $scope.next;
   $scope.isCollapsed = true;

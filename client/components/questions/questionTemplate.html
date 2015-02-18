@@ -1,0 +1,30 @@
+<!-- HTML Templates for plan inputs. -->
+<!-- NOTE: Use ng-if for all options, not ng-show. -->
+
+<div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
+<!-- <div class="title">{{query.title}}</div> -->
+
+<div ng-class="{ 'content': true, 'active': query.selected }">
+<!-- <div class="content"> -->
+  <p>{{query.question}}</p>
+  <!-- For text queries -->
+  <input ng-if="query.type === 'text'" type="text" ng-model="plan[query.bind]"/>
+
+  <!-- For select option queries -->
+  <select ng-if="query.type === 'select'" ng-model="plan[query.bind]">
+    <option ng-repeat="option in query.options">{{option}}</option>
+  </select>
+
+  <!-- For checkbox option queries -->
+
+
+  <!-- For radio option queries -->
+
+
+  <!-- For button queries -->
+
+
+  <!-- For table entry queiries -->
+
+
+</div>

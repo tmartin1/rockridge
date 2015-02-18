@@ -1,9 +1,9 @@
 # Rockridge
 Rockridge empowers individuals to take control of their future by providing the tools and the education to build a comprehensive financial plan with independence and confidence.
 
-Production [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/production.svg?style=svg)](https://circleci.com/gh/Immortal-Thunder/rockridge/1)
+Production: [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/production.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/Immortal-Thunder/rockridge/1)
 
-Dev [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/dev.svg?style=svg)](https://circleci.com/gh/Immortal-Thunder/rockridge/2)
+Development: [![Circle CI](https://circleci.com/gh/Immortal-Thunder/rockridge/tree/dev.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/Immortal-Thunder/rockridge/2)
 
 ## Table of Contents
 1. [Summary](#summary)
