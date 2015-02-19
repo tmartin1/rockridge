@@ -15,12 +15,19 @@ angular.module('rockridge')
       plan: '='
     },
     controller: function($scope) {
+      // By default, the first question in the series is selected.
+      $scope.queries[0].selected = true;
+
+      // Set selected subsection to active.
       $scope.select = function(question) {
         angular.forEach($scope.queries, function(question) {
           question.selected = false;
         });
         question.selected = true;
       };
+
+      // TODO: Fix the 'Previous' and 'Next' buttons so that they navigate to different sub-sections
+      // if the user isn't at the first or last question.
     },
     templateUrl: './components/questions/questionsTemplate.html'
   };
@@ -39,13 +46,17 @@ angular.module('rockridge')
     controller: function($scope) {
       // Add new row for table type inputs.
       $scope.addRow = function(property) {
-        $scope.plan[property] = $scope.plan[property] || [];
+        $scope.plan[property] = $scope.plan[property] || [{}];
         $scope.plan[property].push({});
       };
       // Delete target row for table type inputs.
       $scope.deleteRow = function(index, property) {
         $scope.plan[property].splice(index, 1);
       };
+      // If property is empty and input type is a table, start with an empty row.
+      if ($scope.query.type === 'table') {
+        $scope.plan[$scope.query.bind] = $scope.plan[$scope.query.bind] || [{}];
+      }
     },
     templateUrl: './components/questions/questionTemplate.html'
   };
