@@ -1,24 +1,29 @@
 <h2 class="ui top attached header">Rockridge University</h2>
 
 <div class="ui attached segment">
-  <!-- In progress tutorials  -->
-  <h4>In Progress</h4>
-  <ul>
-    <li>stuff...</li>
-    <li>stuff...</li>
-  </ul>
 
-  <!-- Favorited/bookmarked tutorials -->
-  <h4>Favorites</h4>
-  <ul>
-    <li>stuff...</li>
-    <li>stuff...</li>
-  </ul>
+  <div class="ui top attached tabular menu">
+    <a
+      ng-class="{ 'active':filter==='in-progress', 'item':true }"
+      ng-click="filter = 'in-progress'">
+      In Progress
+    </a>
+    <a
+      ng-class="{ 'active':filter==='favorites', 'item':true }"
+      ng-click="filter = 'favorites'">
+      Favorites
+    </a>
+    <a
+      ng-class="{ 'active':filter==='recommended', 'item':true }"
+      ng-click="filter = 'recommended'">
+      Recommended
+    </a>
+  </div>
 
-  <!-- Recommended tutorials -->
-  <h4>Recommended</h4>
-  <ul>
-    <li>stuff...</li>
-    <li>stuff...</li>
-  </ul>
+  <div class="ui bottom attached segment">
+    Stuff
+    <!-- TODO: Rather than create different states for tutorials, I think this would be implemented most effectively by using a simple Angular filter. Something like:-->
+    <!-- <div ng-repeat="course in courses | filter:in-progress"></div> -->
+  </div>
+
 </div>
