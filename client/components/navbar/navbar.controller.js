@@ -12,8 +12,8 @@ angular.module('rockridge')
     'link': 'about',
     'shown': true
   }, {
-    'title': 'My Plan',
-    'link': 'my-plan',
+    'title': 'Dashboard',
+    'link': 'dashboard',
     'shown': 'isLoggedIn()'
   }, {
     'title': 'Start Planning',
