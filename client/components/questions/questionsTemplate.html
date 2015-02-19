@@ -4,7 +4,7 @@
 // Pease read the Question-Directive-README.md before editing this file.
 **************************************************************************** -->
 
-<div class="ui styled fluid accordion">
+<div class="ui styled fluid accordion" style="margin-top:-14px">
   <div ng-repeat="query in queries" class="ui form">
     <question query="query" plan="plan" ng-click="select(query)" ng-model="plan[query.bind]"></question>
   </div>
