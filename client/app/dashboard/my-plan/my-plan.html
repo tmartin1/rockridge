@@ -3,4 +3,16 @@
 <div class="ui attached segment">
   <!-- TODO: ng-repeat to display plan sections as nav-tabs -->
   <!-- TODO: build presentation of financial plan -->
+  <div class="ui top attached tabular menu">
+    <a class="active item">Overview</a>
+    <a class="item" ng-repeat="section in user.plan">{{section}}</a>
+    <a class="item">+</a> <!-- Will display other tools they can add to their plan -->
+  </div>
+  <div class="ui bottom attached segment">
+    See overview of their plan on this tab.<br>
+    Click on other tabs to update inputs.<br>
+    Click on '+' tab to add new tools to their plan (college savings, etc.)
+    <!-- TODO: This will need to dynamically display aspects of their plan. Likely with nested states within my-plan. -->
+    <!-- <div ng-view></div> -->
+  </div>
 </div>
