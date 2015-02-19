@@ -1,5 +1,8 @@
 <!-- HTML Templates for plan inputs. -->
-<!-- NOTE: Use ng-if for all options, not ng-show. -->
+
+<!-- ****************************************************************************
+// Pease read the Question-Directive-README.md before editing this file.
+**************************************************************************** -->
 
 <div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
 
@@ -19,7 +22,7 @@
         value="{{option}}"
         id="chkbx-{{option}}"
         name="{{query.bind}}[]"
-        ng-checked="{{query.bind}}.indexOf({{option}}) > -1">
+        ng-checked="{{query.bind}}.indexOf('{{option}}') > -1">
       <label for="chkbx-{{option}}">{{option}}</label>
       <br>
     </div>
@@ -51,18 +54,50 @@
 
   <!-- For table entry questions -->
   <div ng-if="query.type === 'table'">
-    <table>
-      <tr>
-        <th ng-repeat="field in query.fields" style="text-align:{{field.textAlign}}; padding-left:10px;">{{field.label}}</th>
-      </tr>
-      <tr>
-        <td ng-repeat="field in query.fields">
-          <input type="{{field.type}}" style="text-align:{{field.textAlign}}; margin:10px; padding:5px" />
-        </td>
-      </tr>
-    </table>
-    <br>
-    <button class="ui button">Add More</button>
+    <form class="ui form">
+      <table ng-class="{ 'two fields': query.fields.length === 2,
+                         'three fields': query.fields.length === 3,
+                         'four fields': query.fields.length === 4,
+                         'five fields': query.fields.length === 5 }">
+        
+        <!-- Build column headers -->
+        <tr>
+          <th
+            ng-class="{ 'four wide': field.type === 'number', 'field': true }"
+            ng-repeat="field in query.fields"
+            style="text-align:{{field.textAlign}}">
+            <label>{{field.label}}</label>
+          </th>
+          <th></th> <!-- Spaceholder for row delete button -->
+        </tr>
+
+        <!-- Load existing items if present -->
+        <tr ng-repeat="items in plan[query.bind]">
+          <td
+            ng-class="{ 'three wide': field.type === 'number', 'field': true }"
+            ng-repeat="field in query.fields">
+            <input
+              ng-model="item[field.label]"
+              type="{{field.type}}"
+              style="margin:5px auto; text-align:{{field.textAlign}}"/>
+          </td>
+          <td>
+            <button
+              class="mini circular ui icon button"
+              ng-click="deleteRow($index, query.bind)">
+              <i class="fa fa-times"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </form><br>
+    
+    <!-- Allow new items to be added -->
+    <button
+      class="ui button"
+      ng-click="addRow(query.bind)">
+      Add Item
+    </button>
   </div>
 
   <!-- For multi-question slides -->
