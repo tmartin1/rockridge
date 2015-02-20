@@ -3,11 +3,11 @@
   <div class="ui checkbox">
     <input
       type="checkbox"
-      value="{{option}}"
+      value="{{option.value}}"
       id="chkbx-{{option}}"
       name="{{query.bind}}[]"
       ng-checked="{{query.bind}}.indexOf('{{option}}') > -1">
-    <label for="chkbx-{{option}}">{{option}}</label>
+    <label for="chkbx-{{option}}">{{option.text}}</label>
     <br>
   </div>
 </div>
