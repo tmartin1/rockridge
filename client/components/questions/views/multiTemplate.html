@@ -1,7 +1,7 @@
 <!-- For multi-question slides -->
 <!-- TODO: Currently, multi can only support basic input types (text, date, etc. - NOT select, checkboxes, radio). Refacor so that multi can handle any type of input request -->
 
-<div ng-repeat="item in query.subqueries" ng-if="plan[item.condition] === 'Yes' || plan[item.condition] === undefined">
+<div ng-repeat="item in query.subqueries" ng-if="plan[item.condition] === true || plan[item.condition] === undefined">
   <label>{{item.question}}</label>
   <input type="{{item.type}}" ng-model="plan[item.bind]"/>
   <br><br>
