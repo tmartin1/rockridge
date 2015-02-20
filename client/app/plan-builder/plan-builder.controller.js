@@ -7,6 +7,8 @@ angular.module('rockridge')
   // TODO: If plan is partially complete, this should fetch previously entered data from DB.
   $scope.plan = {};
 
+  // TODO: Create method to set default values of $scope.plan if not already defined.
+
 	$scope.previous, $scope.next;
   $scope.isCollapsed = true;
   $scope.user = {};
