@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('rockridge')
-.controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state) {
+.controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state, Auth) {
 
   // Define plan object that will be used and accessed by the different planning states.
   // TODO: If plan is partially complete, this should fetch previously entered data from DB.
@@ -9,7 +9,14 @@ angular.module('rockridge')
 
 	$scope.previous, $scope.next;
   $scope.isCollapsed = true;
-  // $scope.getCurrentUser = Auth.getCurrentUser;
+  $scope.user = {};
+  $scope.signup = function(){
+    $('.ui.modal').modal('hide');
+    Auth.createUser($scope.user)
+    .then(function(user){
+      //todo: save plan data to db
+    });
+  };
 
   // Defines the order of how pages are displayed to the user.
   var order = [
@@ -41,8 +48,8 @@ angular.module('rockridge')
     }
   );
 
-  // Save all changes on form inputs.
-  $scope.save = function(route) {
-    console.log('saving');
+  // prompt user to signup and save
+  $scope.showModal = function() {
+    $('.ui.modal').modal('show');
   };
 });

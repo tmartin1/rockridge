@@ -3,7 +3,7 @@ var annotate = require('gulp-ng-annotate');
 var browserSync = require('browser-sync');
 var concat = require('gulp-concat');
 var del = require('del');
-var gulp = require('gulp'); 
+var gulp = require('gulp');
 var gutil = require('gulp-util');
 var inject = require('gulp-inject');
 var jshint = require('gulp-jshint');
@@ -32,6 +32,7 @@ var paths = {
             '!./client/bower_components'],
   html: ['./client/**/*.html'],
   styles: ['./client/app/**/*.css',
+           './client/components/**/*.css',
            '!./client/bower_components'],
   server: ['./server/*.js',
            './server/**/*.js'],
@@ -140,10 +141,9 @@ gulp.task('build', ['test'], function() {
 
 // Run local server instance.
 gulp.task('serve', function() {
-  runSequence('index', // inject bower, css, and js
-              'test', 
-              'nodemon', 
-              'browserSync', 
+  runSequence('test',
+              'nodemon',
+              'browserSync',
               'watch');
 });
 
@@ -156,4 +156,3 @@ gulp.task('default', function(){
     runSequence('serve');
   }
 });
-

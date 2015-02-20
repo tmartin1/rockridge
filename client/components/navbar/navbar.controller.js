@@ -28,17 +28,37 @@ angular.module('rockridge')
     'abstractLink': 'university'
   }];
 
+  $scope.user = {};
+
   $scope.logout = function() {
     Auth.logout();
     $location.path('/');
   };
 
-    $scope.isLoggedIn = function() {
-      return Auth.isLoggedIn();
-    };
+  $scope.signup = function() {
+    $('.ui.modal').modal('hide');
+    Auth.createUser()
+    .then(function(user){});
+  };
 
-      // Sets active class on sidebar.
+  $scope.login = function() {
+    $('.ui.modal').modal('hide');
+    Auth.login()
+    .then(function(user){});
+  };
+
+  $scope.isLoggedIn = function() {
+    return Auth.isLoggedIn();
+  };
+
+  // Sets active class on sidebar.
   $scope.isActive = function(viewLocation) {
     return $state.includes(viewLocation);
   };
+
+  $scope.showModal = function(type) {
+    $scope.modalType = type;
+    $('.ui.modal').modal('show');
+  };
+
 });

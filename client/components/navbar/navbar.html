@@ -1,6 +1,6 @@
 <!-- Navbar HTML Template -->
 <div class="row" ng-controller="NavbarCtrl">
-  
+
   <div class="ui menu">
     <a href="/" class="brand item">Rockridge</a>
     <a
@@ -26,7 +26,7 @@
         class="item"
         ng-hide="isLoggedIn()"
         ng-class="{active: isActive('signup')}"
-        href="/signup">
+        ng-click="showModal('signup')">
         Sign up
       </a>
 
@@ -34,14 +34,14 @@
         class="item"
         ng-hide="isLoggedIn()"
         ng-class="{active: isActive('login')}"
-        href="/login">
+        ng-click="showModal('login')">
         Login
       </a>
 
       <a
         class="item"
         ng-show="isLoggedIn()">
-        <p class="navbar-text"> Hello {{getCurrentUser().name}} </p> 
+        <p class="navbar-text"> Hello {{getCurrentUser().name}} </p>
       </a>
 
       <a
@@ -64,4 +64,34 @@
 
   </div> <!-- End ui menu class div -->
 
+  <div class="ui small modal">
+    <i class="close icon"></i>
+    <div class="ui two column centered grid hidden basic segment">
+      <form class="ui form" ng-submit="signup()" novalidate>
+
+        <div class="required field">
+          <label>Email Address</label>
+          <div class="ui icon input">
+            <input type="text" placeholder="you@email.com" ng-model="user.email" required>
+            <i class="user icon"></i>
+          </div>
+        </div>
+
+        <div class="required field">
+          <label>Password</label>
+          <div class="ui icon input">
+            <input type="password" placeholder='password' ng-model="user.password" required>
+            <i class="lock icon"></i>
+          </div>
+        </div>
+
+        <div class='margin-top-md'>
+          <button class="ui primary button" type="submit">
+            {{ modalType }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div> <!-- End NavbarCtrl div -->
