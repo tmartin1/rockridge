@@ -1,11 +1,20 @@
 'use strict';
 
+/*
+Needed information:
+  * fixed assets (checking/savings accounts, CDs, cash)
+  * variable assets (401Ks, IRAs, non-retirement accounts)
+  * personal assets (home value, car value, etc.)
+  * liabilities (mortgage, auto loan, student loans, etc.)
+    - for each liability, we need the balance, interest rate, min payment, current payment (may be more than min), expected change in interest rate (if it was an intro rate and it will jump to 24% in 5 months, etc.)
+*/
+
 angular.module('rockridge')
 .controller('NwsCtrl', function($scope) {
   // assign collected info to $scope.plan, defined in parent state: plan-builder.controller.js
 
-  // $scope.queries must be an array of question objects in the order that they should appear to 
-  // the user. Question objects have a specific format that must be followed. For more info, see 
+  // $scope.queries must be an array of question objects in the order that they should appear to
+  // the user. Question objects have a specific format that must be followed. For more info, see
   // client/components/question/questions.directive.js
   $scope.queries = [
     {

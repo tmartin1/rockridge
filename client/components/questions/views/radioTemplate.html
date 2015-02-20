@@ -1,0 +1,12 @@
+<!-- For radio option questions -->
+<div ng-repeat="option in query.options">
+  <div class="ui radio">
+    <input
+      type="radio"
+      value="{{option.value}}"
+      id="radio-{{option}}"
+      ng-model="plan[query.bind]">
+    <label for="radio-{{option}}" class="pad-left-sm">{{option.text}}</label>
+    <br><br>
+  </div>
+</div>
