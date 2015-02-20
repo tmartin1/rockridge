@@ -1,0 +1,35 @@
+<!-- Dashboard HTML Template -->
+<center class="ui inverted segment">
+  <label>
+    <h1 ng-if="user.name">{{user.name}}'s Dashboard</h1>
+    <h1 ng-if="!user.name">Dashboard</h1>
+  </label>
+</center>
+
+<div ui-view></div>
+
+<div> <!-- Content wrapper -->
+
+    <div class="ui two column grid hidden basic segment">
+      
+      <div class="column">
+        <!-- <div class="ui segment"> -->
+          <div ui-view="goals"></div>
+        <!-- </div> -->
+      </div>
+
+      <div class="column">
+        <!-- <div class="ui segment"> -->
+          <div ui-view="tutorials"></div>
+        <!-- </div> -->
+      </div>
+
+    </div>
+
+    <div class="ui hidden basic segment">
+      <!-- <div class="ui segment"> -->
+        <div ui-view="my-plan"></div>
+      <!-- </div> -->
+    </div>
+
+</div>
