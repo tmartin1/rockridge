@@ -7,18 +7,21 @@
 <div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
 
 <div ng-class="{ 'content': true, 'active': query.selected }">
-  <p ng-if="query.type !== 'multi'"><label>{{query.question}}</label></p>
 
-  <!-- For select, checkbox, radio, button, table, multi, and review questions -->
-  <div
-    ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) !== -1"
-    ng-include="'components/questions/views/'+query.type+'Template.html'">
+  <div ng-if="plan[query.condition] === 'true' || query.condition === undefined">
+    <p ng-if="query.type !== 'multi'"><label>{{query.question}}</label></p>
+
+    <!-- For select, checkbox, radio, button, table, multi, and review questions -->
+    <div
+      ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) !== -1"
+      ng-include="'components/questions/views/'+query.type+'Template.html'">
+    </div>
+
+    <!-- For everything else -->
+    <input
+      ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) === -1"
+      type="{{query.type}}"
+      ng-model="plan[query.bind]"/>
   </div>
-
-  <!-- For everything else -->
-  <input
-    ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(query.type) === -1"
-    type="{{query.type}}"
-    ng-model="plan[query.bind]"/>
 
 </div>
