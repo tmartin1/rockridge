@@ -1,81 +1,73 @@
 <!-- For multi-question slides -->
 <!-- TODO: Currently, multi can only support basic input types (text, date, etc. - NOT select, checkboxes, radio). Refacor so that multi can handle any type of input request -->
 
-<div ng-repeat="item in query.subqueries" ng-if="plan[item.condition] === true || plan[item.condition] === undefined">
+<div ng-repeat="item in query.subqueries" ng-if="plan[item.condition] === 'true' || item.condition === undefined">
   <label>{{item.question}}</label>
+  <!-- TODO: For select, checkbox, radio, button, table, multi, and review questions -->
+  <!-- <div
+    ng-if = "['select','checkbox','radio','button','table','multi','review'].indexOf(item.type) !== -1"
+    query = "item",
+    ng-include = "'components/questions/views/'+item.type+'Template.html'">
+  </div> -->
 
-  <div ng-if="item.type !== 'select' && item.type !== 'table'">
-        <input type="{{item.type}}" ng-model="plan[item.bind]"/>
-      </div>
+  <!-- For select option questions -->
+  <select ng-if="item.type === 'select'" ng-model="plan[item.bind]">
+    <option ng-repeat="option in item.options" value="{{option.value}}">{{option.text}}</option>
+  </select>
 
-      <div ng-if="item.type === 'select'" ng-model="plan[item.bind]">
-        <select>
-          <option ng-repeat="option in item.options " value="{{option.value}}">{{option.text}}</option>
-        </select>
-      </div>
+  <!-- For table entry questions -->
+  <div ng-if="item.type === 'table'">
+    <form class="ui form">
+      <table ng-class="{ 'two fields': item.fields.length === 2,
+                         'three fields': item.fields.length === 3,
+                         'four fields': item.fields.length === 4,
+                         'five fields': item.fields.length === 5 }">
 
-      <div ng-if="item.type === 'table'" ng-model="plan[item.bind]">
+        <!-- Build column headers -->
+        <tr>
+          <th
+            ng-class="{ 'four wide': field.type === 'number' || field.type === 'date', 'field': true }"
+            ng-repeat="field in item.fields"
+            style="text-align:{{field.textAlign}}; padding:5px;">
+            <label>{{field.label}}</label>
+          </th>
+          <th></th> <!-- Spaceholder for row delete button -->
+        </tr>
 
-      	<!-- For table entry questions -->
-				<form class="ui form">
-				  <table ng-class="{ 'two fields': item.fields.length === 2,
-				                     'three fields': item.fields.length === 3,
-				                     'four fields': item.fields.length === 4,
-				                     'five fields': item.fields.length === 5 }">
+        <!-- Load existing items if present -->
+        <tr ng-repeat="subitem in plan[item.bind]">
+          <td
+            ng-class="{ 'three wide': field.type === 'number', 'field': true }"
+            ng-repeat="field in item.fields"
+            style="padding:5px">
+            <input
+              ng-model="subitem[field.label]"
+              type="{{field.type}}"
+              style="text-align:{{field.textAlign}}"/>
+          </td>
+          <td>
+            <button
+              class="mini circular ui icon button"
+              ng-click="deleteRow($index, item.bind)">
+              <i class="fa fa-times"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </form><br>
 
-				    <!-- Build column headers -->
-				    <tr>
-				      <th
-				        ng-class="{ 'four wide': field.type === 'number', 'field': true }"
-				        ng-repeat="field in item.fields"
-				        style="text-align:{{field.textAlign}}">
-				        <label>{{field.label}}</label>
-				      </th>
-				      <th></th> <!-- Spaceholder for row delete button -->
-				    </tr>
-
-				    <!-- Load existing items if present -->
-				    <tr ng-repeat="items in plan[item.bind]">
-				      <td
-				        ng-class="{ 'three wide': field.type === 'number', 'field': true }"
-				        ng-repeat="field in item.fields">
-				        <input
-				          ng-model="item[field.label]"
-				          type="{{field.type}}"
-				          style="margin:5px auto; text-align:{{field.textAlign}}"/>
-				      </td>
-				      <td>
-				        <button
-				          class="mini circular ui icon button"
-				          ng-click="deleteRow($index, item.bind)">
-				          <i class="fa fa-times"></i>
-				        </button>
-				      </td>
-				    </tr>
-				  </table>
-				</form><br>
-
-				<!-- Allow new items to be added -->
-				<button
-				  class="ui button"
-				  ng-click="addRow(item.bind)">
-				  Add Item
-				</button>
-
-      </div>
-  <br><br>
-</div>
-
-
- <!--  TODO: Refactor to point to the different views 
-  <div
-    ng-if="['select','checkbox','radio','button','multi','table','review'].indexOf(item.type) !== -1"
-    ng-include="'components/questions/views/'+item.type+'Template.html'">
+    <!-- Allow new items to be added -->
+    <button
+      class="ui button"
+      ng-click="addRow(item.bind)">
+      Add Item
+    </button>
   </div>
 
-  
+  <!-- For everything else -->
   <input
-    ng-if="['select','checkbox','radio','button','multi','table','review'].indexOf(item.type) === -1"
+    ng-if="['select','checkbox','radio','button','table','multi','review'].indexOf(item.type) === -1"
     type="{{item.type}}"
     ng-model="plan[item.bind]"/>
- -->
+  <br><br>
+</div>
