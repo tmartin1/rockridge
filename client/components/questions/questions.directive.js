@@ -46,7 +46,7 @@ angular.module('rockridge')
     controller: function($scope) {
       // Add new row for table type inputs.
       $scope.addRow = function(property) {
-        $scope.plan[property] = $scope.plan[property] || [{}];
+        $scope.plan[property] = $scope.plan[property] || [];
         $scope.plan[property].push({});
       };
       // Delete target row for table type inputs.

@@ -26,23 +26,24 @@
         <!-- Build column headers -->
         <tr>
           <th
-            ng-class="{ 'four wide': field.type === 'number', 'field': true }"
+            ng-class="{ 'four wide': field.type === 'number' || field.type === 'date', 'field': true }"
             ng-repeat="field in item.fields"
-            style="text-align:{{field.textAlign}}">
+            style="text-align:{{field.textAlign}}; padding:5px;">
             <label>{{field.label}}</label>
           </th>
           <th></th> <!-- Spaceholder for row delete button -->
         </tr>
 
         <!-- Load existing items if present -->
-        <tr ng-repeat="items in plan[item.bind]">
+        <tr ng-repeat="subitem in plan[item.bind]">
           <td
             ng-class="{ 'three wide': field.type === 'number', 'field': true }"
-            ng-repeat="field in item.fields">
+            ng-repeat="field in item.fields"
+            style="padding:5px">
             <input
-              ng-model="item[field.label]"
+              ng-model="subitem[field.label]"
               type="{{field.type}}"
-              style="margin:5px auto; text-align:{{field.textAlign}}"/>
+              style="text-align:{{field.textAlign}}"/>
           </td>
           <td>
             <button
