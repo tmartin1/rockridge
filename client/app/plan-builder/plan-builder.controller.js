@@ -11,12 +11,13 @@ angular.module('rockridge')
 
 	$scope.previous, $scope.next;
   $scope.isCollapsed = true;
+  $scope.pctComplete = 40;
   $scope.user = {};
   $scope.signup = function(){
     $('.ui.modal').modal('hide');
     Auth.createUser($scope.user)
     .then(function(user){
-      //todo: save plan data to db
+      //TODO: save plan data to db
     });
   };
 
@@ -31,6 +32,41 @@ angular.module('rockridge')
     'plan-builder.retire'
   ];
 
+  // data that controls the semantic-ui steps element
+  $scope.steps = [
+    {icon: 'fa fa-play icon', title: 'start',
+      isActive: 'active', isComplete: false, key: order[0]},
+    {icon: 'fa fa-question icon', title: 'basic',
+      isActive: 'disabled', isComplete: false, key: order[1]},
+    {icon: 'dollar icon', title: 'net worth',
+      isActive: 'disabled', isComplete: false, key: order[2]},
+    {icon: 'fa fa-university icon', title: 'taxes',
+      isActive: 'disabled', isComplete: false, key: order[3]},
+      //TODO: why does pie char icon not work??
+    {icon: 'bar chart icon', title: 'budget',
+      isActive: 'disabled', isComplete: false, key: order[4]},
+    {icon: 'fa fa-exclamation-triangle icon', title: 'risk',
+      isActive: 'disabled', isComplete: false, key: order[5]},
+    {icon: 'smile icon', title: 'retire',
+      isActive: 'disabled', isComplete: false, key: order[6]}
+  ];
+
+  $scope.navToStep = function(step, fromState){
+    angular.forEach($scope.steps, function(item){
+      if(fromState && fromState.name === item.key){
+        item.isComplete = true;
+      }
+      if(item.title === step.title || item.key === step.name){
+        item.isActive = 'active';
+      } else if(item.isComplete){
+        item.isActive = '';
+      } else {
+        item.isActive = 'disabled';
+      }
+    });
+  };
+
+
   // Sets the title, progress bar, and the 'previous' and 'next' links.
   var updateRelationals = function(focus) {
     $scope.heading = focus.data.title;
@@ -38,7 +74,14 @@ angular.module('rockridge')
     // ui-router does not currently support dynamic sref: https://github.com/angular-ui/ui-router/issues/1208
     $scope.previous = order[index - 1] ? order[index - 1].replace('.', '/') : false;
     $scope.next = order[index + 1] ? order[index + 1].replace('.', '/') : false;
-    $scope.progress = Math.max(.05, (index / order.length - 1)) * 100 + '%';
+    // set all previous steps to complete
+    angular.forEach($scope.steps, function(item, i){
+      if(i < index){
+        item.isComplete = true;
+      }
+    });
+    $scope.navToStep(focus);
+
   };
   updateRelationals($state.current);
 
@@ -46,7 +89,10 @@ angular.module('rockridge')
   // From docs: https://github.com/angular-ui/ui-router/wiki#wiki-state-change-events
   $scope.$on('$stateChangeStart',
     function(event, toState, toParams, fromState, fromParams) {
-      if (order.indexOf(toState.name) >= 0) updateRelationals(toState);
+      if (order.indexOf(toState.name) >= 0){
+        updateRelationals(toState);
+        $scope.navToStep(toState, fromState);
+      }
     }
   );
 
