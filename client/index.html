@@ -4,12 +4,12 @@
 
   <title>Rockridge</title>
   <base href="/">
-  
+
   <!-- inject:css -->
   <link rel="stylesheet" href="/app/app.css">
   <link rel="stylesheet" href="/app/about/about.css">
-  <link rel="stylesheet" href="/app/main/main.css">
   <link rel="stylesheet" href="/app/dashboard/dashboard.css">
+  <link rel="stylesheet" href="/app/main/main.css">
   <link rel="stylesheet" href="/app/plan-builder/plan-builder.css">
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/bower_components/semantic-ui/dist/semantic.min.css">
@@ -64,16 +64,16 @@
 <body ng-app="rockridge">
 
   <div ng-include="'components/navbar/navbar.html'"></div>
-  
+
   <section ui-view></section>
-  
+
   <!--TODO: Fix preprocess  -->
   <!-- @if NODE_ENV='production' -->
     <script src="all.min.js"></script>
     <script src="templates.min.js"></script>
     <link rel="stylesheet" href="all.min.css">
   <!-- @endif -->
-  
+
   <!-- bower:js -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/semantic-ui/dist/semantic.js"></script>
@@ -84,7 +84,7 @@
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="bower_components/json3/lib/json3.js"></script>
   <!-- endbower -->
-  
+
   <!-- @if NODE_ENV!='production' -->
     <!-- inject:js -->
 
@@ -96,13 +96,13 @@
 
     <script src="/app/account/account.js"></script>
 
-    <script src="/app/main/main.controller.js"></script>
-
-    <script src="/app/main/main.js"></script>
-
     <script src="/app/dashboard/dashboard.controller.js"></script>
 
     <script src="/app/dashboard/dashboard.js"></script>
+
+    <script src="/app/main/main.controller.js"></script>
+
+    <script src="/app/main/main.js"></script>
 
     <script src="/app/plan-builder/plan-builder.controller.js"></script>
 
