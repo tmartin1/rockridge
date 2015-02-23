@@ -6,11 +6,13 @@
 */
 angular.module('rockridge')
 .controller('MyPlanCtrl', function($rootScope, $scope, $state) {
-  
-  // Demo for the example, this will have to be dynamic (allow user to add tab for college savings, etc.) 
+
+  // Demo for the example, this will have to be dynamic (allow user to add tab for college savings, etc.)
+  console.log($scope.plan)
   $scope.user = $scope.user || {};
+  $scope.plan = $scope.plan || {};
   $scope.user.plan = ['Net Worth', 'Budget', 'Insurance', 'Retirement'];
-  
+
   // Default my-plan view to 'overview'
   $scope.currentView = 'Overview';
 
