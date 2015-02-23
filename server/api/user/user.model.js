@@ -64,13 +64,8 @@ User.prototype.findByEmail = function(email, cb) {
 };
 
 User.prototype.findById = function(rid, cb) {
-  db.query('select from User where @rid=:rid',
-  {
-    params: {
-      rid: rid
-    },
-    limit: 1
-  })
+  var query = 'select from User where @rid=' + rid;
+  db.query(query)
   .then(function(user) {
     cb(user[0]);
   });
