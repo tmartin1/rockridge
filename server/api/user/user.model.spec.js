@@ -1,9 +1,15 @@
 var chai = require('chai');
-var should = chai.should();
 var expect = chai.expect;
-
 var User = require('./user.model');
 
+var oriento = require('oriento');
+var config = require('../../config/config');
+var server = oriento(config.db);
+var db = server.use({
+      name: 'rockridge',
+      username: 'admin',
+      password: 'admin'
+    });
 
 // Test user functions
 var user = new User();

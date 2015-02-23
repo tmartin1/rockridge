@@ -48,4 +48,11 @@ app.listen(port, host);
 console.log('Server running on port: ' + port);
 
 // expose app
-exports = module.exports = app;                         
+exports = module.exports = app;
+
+global.db = oriento(config.db)
+            .use({
+                name: 'rockridge',
+                username: 'admin',
+                password: 'admin'
+            });
