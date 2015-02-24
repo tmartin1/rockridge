@@ -31,11 +31,13 @@ var testUser = {
   hasPrimaryResidence: "true",
   lastname: "User",
   maritalStatus: "true",
-  mortgageCurrentBalance: 300000,
-  mortgageCurrentRate: 3.9,
-  mortgageCurrentTerms: 30,
-  mortgageInitialBalance: 400000,
-  mortgageStartDate: Sun Aug 01 2010 00:00:00 GMT-0700 (PDT),
+  mortgage: {
+    currentBalance: 300000,
+    currentRate: 3.9,
+    currentTerms: 30,
+    initialBalance: 400000,
+    startDate: Sun Aug 01 2010 00:00:00 GMT-0700 (PDT)
+  },
   mortgages: [
     { asset: 'Mortgage', rate: 3.9, balance: 400000 }
   ],
