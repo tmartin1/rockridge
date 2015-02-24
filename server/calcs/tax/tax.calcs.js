@@ -3,6 +3,7 @@
 
 var federal = require('../federal.variables');
 var local = require('../local.variables');
+var finance = require('../finance');
 // var calculate = require('./tax.util');
 
 // Requires a plan object as a parameter
@@ -85,7 +86,18 @@ module.exports.projection = function(plan) {
   // Calculate the portion of the current years' mortgage payment that is interest.
   function mortgageInterest() {
     var mortgage = plan.mortgage;
-    // TODO: Calculate how much of the current years' mortgage payments are going towrds interest.
+    // Create an amortization schedule. Takes four parameters: principle amount, months, interest rate (percent), start date (Date object).
+    // Returns an array of payment objects { principle, interest, payment, paymentToPrincipal, paymentToInterest, date }
+    var amortTable = finance.calculateAmortization(plan.mortgage.initialBalance, plan.mortgage.currentTerm*12, plan.mortgage.currentRate, plan.mortgage.startDate);
+
+    // Total up how much of the payment will go to interest over the current year.
+    var current = new Date(new Date().getFullYear(), 00); // Date object for current year.
+    var start = (current.getFullYear() - plan.mortgage.startDate.getFullYear())*12 + (12 - plan.mortgage.startDate.getMonth());
+    var end = start + 12;
+    var interestPayment = 0;
+    for (var i=start; i<end; i++) {
+      interestPayment += amortTable[i].paymentToInterest;
+    }
   }
 
   // Determine the user's maximum allowable deduction (greater between standard and itemized).

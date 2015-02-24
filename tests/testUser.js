@@ -34,7 +34,7 @@ var testUser = {
   mortgage: {
     currentBalance: 300000,
     currentRate: 3.9,
-    currentTerms: 30,
+    currentTerm: 30,
     initialBalance: 400000,
     startDate: Sun Aug 01 2010 00:00:00 GMT-0700 (PDT)
   },
