@@ -1,13 +1,4 @@
-var oriento = require('oriento');
-var config = require('../../config/config');
 var bcrypt = require('bcrypt');
-
-var db = oriento(config.db)
-  .use({
-      name: 'rockridge',
-      username: 'admin',
-      password: 'admin'
-  });
 
 // Create methods for Plans
 var Plan = function() {};
