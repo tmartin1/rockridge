@@ -41,18 +41,8 @@ describe('User Methods', function() {
 
   var testUser;
 
-  describe('find user by email', function() {
-    it('should find a user by email', function() {
-      user.findByEmail('testuser@gmail.com', function(val) {
-        testUser = val;
-        result = val.email;
-        expect(result).to.equal('testuser@gmail.com');
-      });
-    });
-  });
 
-
-  describe('find user by rid', function() {
+  describe('find user', function() {
     var testRid;
 
     before(function(done) {
@@ -62,14 +52,19 @@ describe('User Methods', function() {
       });
     });
 
-    it('should find a user by id', function() {
+    it('should find a user by their RID', function() {
       user.findById(testRid, function(user) {
         var idResult = user.email;
         expect(idResult).to.equal('testuser@gmail.com');
       });
     });
-  });
 
+    it('should find a user by their email', function() {
+      user.findByEmail('testuser@gmail.com', function(val) {
+        expect(val.email).to.equal('testuser@gmail.com');
+      });
+    });
+  });
 
   describe('delete user', function() {
     before(function(done) {
@@ -78,7 +73,7 @@ describe('User Methods', function() {
       });
     });
 
-    it('should delete a user', function(done) {
+    it('should delete a user by their email', function(done) {
       user.findByEmail('testuser@gmail.com', function(val) {
         expect(val).to.equal(undefined);
         done();
