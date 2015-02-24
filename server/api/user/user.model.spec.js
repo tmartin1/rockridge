@@ -52,16 +52,12 @@ describe('User Methods', function() {
   });
 
 
-
   describe('find user by rid', function() {
     var testRid;
 
     before(function(done) {
       user.findByEmail('testuser@gmail.com', function(val) {
-        testRid = val['@rid'];
-        testRid = JSON.stringify(testRid);
-        var re = /cluster: (\d+), position: (\d+)/;
-        testRid = testRid.replace(re, "#$1:$2");
+        testRid = '#' + val['@rid']['cluster'] + ':' + val['@rid']['position'];
         done();
       });
     });
