@@ -144,9 +144,9 @@ gulp.task('build', ['test'], function() {
 // Run local server instance.
 gulp.task('serve', function() {
   runSequence('index', // inject bower, css, and js
-              'test', 
-              'nodemon', 
-              'browserSync', 
+              'test',
+              'nodemon',
+              'browserSync',
               'watch');
 });
 
