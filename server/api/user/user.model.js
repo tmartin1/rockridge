@@ -75,7 +75,7 @@ User.prototype.deleteByEmail = function(email, cb) {
   var query = 'delete vertex User where email="' + email + '"';
   db.query(query)
   .then(function(data) {
-    cb(data[0]);
+    cb(data);
   });
 };
 
@@ -94,5 +94,3 @@ var checkPassword = function(rawPassword, user, cb) {
 };
 
 module.exports = User;
-
-var user = new User();
