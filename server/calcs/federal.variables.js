@@ -31,6 +31,11 @@ module.exports = {
       married: 12600,
       headOfHouse: 9250
     },
+    phaseoutStart: {
+      single: 258250,
+      married: 309900,
+      headOfHouse: 284050
+    },
     itemizedReductionRate: 0.03
   }
 
@@ -60,7 +65,8 @@ module.exports = {
     additionalMedicareLiability: {
       // Actual add'l medicare liability does depend on marital status.
       single: 200000,
-      married: 250000
+      married: 250000,
+      headOfHouse: 200000
     }
   },
 
