@@ -25,10 +25,10 @@ var user = new User();
 describe('Plan Methods', function() {
   var testUser;
   var testUserRid;
-  var planData = {};
-  planData.name = 'Test fund';
   var result = null;
   var edge = null;
+  var planData = {};
+  planData.name = 'Test fund';
 
   before(function(done) {
     user.create('planTest@gmail.com', 'test', function(user) {
@@ -83,7 +83,7 @@ describe('Plan Methods', function() {
 
 
   // Test delete methods
-  describe('Delete methods', function() {
+  describe('Delete method', function() {
     before(function(done) {
       var expandedUserRid = testUser['@rid'];
       plan.deleteByUserRid(expandedUserRid, function(total) {
@@ -99,21 +99,6 @@ describe('Plan Methods', function() {
       });
     });
   });
-
-  result = null;
-
-  before(function(done) {
-    plan.create(testUserRid, planData, function(thisPlan) {
-      console.log('thisPlan', thisPlan);
-      result = thisPlan;
-      console.log('result', result);
-    });
-    plan.deleteByPlanRid(result['@rid'], function(total) {
-      console.log('deleted ' + total);
-    });
-    done();
-  });
-
 
   // Cleanup: Delete test user
   after(function() {
