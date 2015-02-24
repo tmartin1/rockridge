@@ -45,6 +45,4 @@ Plan.prototype.deleteByUserRid = function(userRid, cb) {
   });
 };
 
-};
-
 module.exports = Plan;
