@@ -28,8 +28,7 @@ module.exports.projection = function(plan) {
   result.deductions.itemized = {};
   // TODO: Refactor local taxes to account for living and working in different states.
   result.deductions.itemized.localTaxes = stateTax();
-  // TODO: Add calculations and data for property tax estimates.
-  result.deductions.itemized.propertyTaxes = 0000;
+  result.deductions.itemized.propertyTaxes = propertyTax();
   result.deductions.itemized.mortgageInterest = mortgageInterest();
   result.deductions.itemized.miscDeduction = plan.otherDeductions; // This is just a user input right now
   result.deductions.maxApplicable = maxDeduction();
@@ -72,7 +71,7 @@ module.exports.projection = function(plan) {
 
   // Calculate approximate property tax for primary residence.
   function propertyTax() {
-    // TODO: Get info and write calculations for property tax (base off state average property tax for now).
+    return ( plan.mortgage.homeValue * local.statePropertyTax[plan.stateResident] );
   }
 
   // Calculate state income tax liability.

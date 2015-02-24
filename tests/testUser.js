@@ -32,6 +32,7 @@ var testUser = {
   lastname: "User",
   maritalStatus: "true",
   mortgage: {
+    homeValue: 500000
     currentBalance: 300000,
     currentRate: 3.9,
     currentTerm: 30,
