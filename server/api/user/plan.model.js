@@ -41,8 +41,10 @@ Plan.prototype.findByUserRid = function(userRid, cb) {
 Plan.prototype.deleteByUserRid = function(userRid, cb) {
   db.query('delete vertex Plan where in_ = ' + userRid)
   .then(function (total) {
-    cb(total);    
+    cb(total);
   });
+};
+
 };
 
 module.exports = Plan;

@@ -31,10 +31,6 @@ User.prototype.create = function(email, password, cb) {
   });
 };
 
-// db.on("endQuery", function(obj) {
-//   console.log('obj', obj);
-// });
-
 User.prototype.authenticate = function(email, password, cb) {
   db.query('select from User where email=:email',
   {

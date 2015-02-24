@@ -85,7 +85,6 @@ describe('Plan Methods', function() {
   // Test delete methods
   describe('Delete methods', function() {
     before(function(done) {
-      result = null;
       var expandedUserRid = testUser['@rid'];
       plan.deleteByUserRid(expandedUserRid, function(total) {
         // console.log('deleted ' + total + ' plans');
@@ -101,14 +100,24 @@ describe('Plan Methods', function() {
     });
   });
 
+  result = null;
+
+  before(function(done) {
+    plan.create(testUserRid, planData, function(thisPlan) {
+      console.log('thisPlan', thisPlan);
+      result = thisPlan;
+      console.log('result', result);
+    });
+    plan.deleteByPlanRid(result['@rid'], function(total) {
+      console.log('deleted ' + total);
+    });
+    done();
+  });
+
 
   // Cleanup: Delete test user
-  after(function(done) {
-    user.deleteByEmail('planTest@gmail.com', function(val) {
-      console.log('deleted', val);
-    });
-    // plan.deleteByRid(resultPlan['@rid']);
-    done();
+  after(function() {
+    user.deleteByEmail('planTest@gmail.com', function(val) {});
   });
 
 });
