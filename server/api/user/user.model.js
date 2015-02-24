@@ -1,14 +1,4 @@
-var oriento = require('oriento');
-var config = require('../../config/config');
 var bcrypt = require('bcrypt');
-
-var server = oriento(config.db);
-var db = server.use({
-  name: 'rockridge',
-  username: 'admin',
-  password: 'admin'
-});
-
 
 var User = function() {};
 
