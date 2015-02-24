@@ -1,29 +1,22 @@
-var oriento = require('oriento');
-var config = require('../../config/config');
 var bcrypt = require('bcrypt');
-
-var db = oriento(config.db)
-        .use({
-            name: 'rockridge',
-            username: 'admin',
-            password: 'admin'
-        });
 
 var User = function() {};
 
 User.prototype.create = function(email, password, cb) {
   saltAndHash(password, null, function(data) {
-    db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)', 
-        {
+    db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)',
+      {
         params: {
           email: email,
           password: data[1],
           salt: data[0],
           role: 'user'
         }
-      })
-    .then(function(user) {
-      cb(user[0]);
+      }
+    ).then(function(userArr) {
+      cb(userArr[0]);
+    }).catch(function(err) {
+      console.log('error', err);
     });
   });
 };
@@ -43,11 +36,11 @@ User.prototype.authenticate = function(email, password, cb) {
   });
 };
 
-User.prototype.findById = function(rid, cb) {
-  db.query('select from User where @rid=:rid',
+User.prototype.findByEmail = function(email, cb) {
+  db.query('select from User where email=:email',
   {
     params: {
-      rid: rid
+      email: email
     },
     limit: 1
   })
@@ -56,17 +49,31 @@ User.prototype.findById = function(rid, cb) {
   });
 };
 
+User.prototype.findById = function(rid, cb) {
+  var query = 'select from User where @rid=' + rid;
+  db.query(query)
+  .then(function(user) {
+    cb(user[0]);
+  });
+};
+
+User.prototype.deleteByEmail = function(email, cb) {
+  var query = 'delete vertex User where email="' + email + '"';
+  db.query(query)
+  .then(function(data) {
+    cb(data);
+  });
+};
+
 var saltAndHash = function(password, salt, cb) {
-  
   var salt = salt || bcrypt.genSaltSync(10);
   var hashedPassword = bcrypt.hashSync(password, salt);
-
   cb([salt, hashedPassword]);
 };
 
 var checkPassword = function(rawPassword, user, cb) {
   var tempArr = [];
-  
+
   saltAndHash(rawPassword, user.salt, function(data) {
     cb(user.password === data[1]);
   });
