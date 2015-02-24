@@ -1,19 +1,19 @@
 // Testing
 var chai = require('chai');
 var expect = chai.expect;
-var User = require('./user.model');
 
 // OrientDB
 var oriento = require('oriento');
 var config = require('../../config/config');
 var server = oriento(config.db);
-var db = server.use({
+db = server.use({
       name: 'rockridge',
       username: 'admin',
       password: 'admin'
     });
 
 // Containers for methods
+var User = require('./user.model');
 var user = new User();
 
 // Variables for testing

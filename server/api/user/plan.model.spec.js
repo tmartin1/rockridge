@@ -2,19 +2,19 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-// User and Plan methods
-var Plan = require('./plan.model');
-var User = require('./user.model');
-
 // OrientDB
 var oriento = require('oriento');
 var config = require('../../config/config');
 var server = oriento(config.db);
-var db = server.use({
+db = server.use({
       name: 'rockridge',
       username: 'admin',
       password: 'admin'
     });
+
+// User and Plan methods
+var Plan = require('./plan.model');
+var User = require('./user.model');
 
 // Containers for methods
 var plan = new Plan();
