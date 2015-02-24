@@ -1,7 +1,9 @@
+// Testing
 var chai = require('chai');
 var expect = chai.expect;
 var User = require('./user.model');
 
+// OrientDB
 var oriento = require('oriento');
 var config = require('../../config/config');
 var server = oriento(config.db);
@@ -11,10 +13,15 @@ var db = server.use({
       password: 'admin'
     });
 
-// Test user functions
+// Containers for methods
 var user = new User();
-var result;
 
+// Variables for testing
+var testUser;
+var testRid;
+
+
+// Test user methods
 describe('User Methods', function() {
 
   before(function(done) {
@@ -23,28 +30,22 @@ describe('User Methods', function() {
     });
   });
 
-  var account;
-
   describe('create user', function() {
     before(function(done) {
       user.create('testuser@gmail.com', 'testPass', function(user) {
-        account = user;
+        testUser = user;
         done();
       });
     });
 
     it('should create a new user', function() {
-        result = account.email;
-        expect(result).to.equal('testuser@gmail.com');
+      expect(testUser.email).to.equal('testuser@gmail.com');
     });
   });
 
-  var testUser;
 
-
+  // Test find user methods
   describe('find user', function() {
-    var testRid;
-
     before(function(done) {
       user.findByEmail('testuser@gmail.com', function(val) {
         testRid = '#' + val['@rid']['cluster'] + ':' + val['@rid']['position'];
@@ -54,8 +55,7 @@ describe('User Methods', function() {
 
     it('should find a user by their RID', function() {
       user.findById(testRid, function(user) {
-        var idResult = user.email;
-        expect(idResult).to.equal('testuser@gmail.com');
+        expect(user.email).to.equal('testuser@gmail.com');
       });
     });
 
@@ -66,10 +66,12 @@ describe('User Methods', function() {
     });
   });
 
+
+  // Test delete user method
   describe('delete user', function() {
     before(function(done) {
       user.deleteByEmail('testuser@gmail.com', function(val) {
-      done();
+        done();
       });
     });
 

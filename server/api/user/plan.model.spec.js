@@ -16,19 +16,21 @@ var db = server.use({
       password: 'admin'
     });
 
+// Containers for methods
 var plan = new Plan();
 var user = new User();
 
+// Variables for testing
+var testUser;
+var testUserRid;
+var result = null;
+var edge = null;
+var planData = {};
+planData.name = 'Test fund';
+
 
 // Test user functions
-
 describe('Plan Methods', function() {
-  var testUser;
-  var testUserRid;
-  var result = null;
-  var edge = null;
-  var planData = {};
-  planData.name = 'Test fund';
 
   before(function(done) {
     user.create('planTest@gmail.com', 'test', function(user) {
@@ -48,19 +50,19 @@ describe('Plan Methods', function() {
       });
     });
 
-  it('should create a new plan', function() {
-    expect(result.data.name).to.equal('Test fund');
-  });
+    it('should create a new plan', function() {
+      expect(result.data.name).to.equal('Test fund');
+    });
 
-  it('should create a link to the associated user', function() {
-    edgeOut = '#' + edge.out.cluster + ':' + edge.out.position;
-    expect(edgeOut).to.equal(testUserRid);
-  });
+    it('should create a link to the associated user', function() {
+      edgeOut = '#' + edge.out.cluster + ':' + edge.out.position;
+      expect(edgeOut).to.equal(testUserRid);
+    });
 
-  it('should create a link to the new plan', function() {
-    edgeIn = '#' + edge.in.cluster + ':' + edge.in.position;
-    resultRid = '#' + result['@rid'].cluster + ':' + result['@rid'].position;
-    expect(edgeIn).to.equal(resultRid);
+    it('should create a link to the new plan', function() {
+      edgeIn = '#' + edge.in.cluster + ':' + edge.in.position;
+      resultRid = '#' + result['@rid'].cluster + ':' + result['@rid'].position;
+      expect(edgeIn).to.equal(resultRid);
     });
   });
 
@@ -99,6 +101,7 @@ describe('Plan Methods', function() {
       });
     });
   });
+
 
   // Cleanup: Delete test user
   after(function() {

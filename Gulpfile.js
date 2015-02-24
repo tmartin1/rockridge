@@ -3,7 +3,7 @@ var annotate = require('gulp-ng-annotate');
 var browserSync = require('browser-sync');
 var concat = require('gulp-concat');
 var del = require('del');
-var gulp = require('gulp'); 
+var gulp = require('gulp');
 var gutil = require('gulp-util');
 var inject = require('gulp-inject');
 var jshint = require('gulp-jshint');
@@ -108,8 +108,10 @@ gulp.task('nodemon', function() {
 
 // Mocha for back-end tests
 gulp.task('mocha', function() {
-  gulp.src('server/**/*.spec.js')
-  .pipe(mocha({ reporter: 'spec' }));
+  return gulp.src('server/**/*.spec.js', {read: false} )
+    .pipe(mocha({ reporter: 'nyan' }))
+    .once('error', function () { process.exit(1); })
+    .once('end', function () { process.exit(); });
 });
 
 // Karma for front-end tests
@@ -141,9 +143,9 @@ gulp.task('build', ['test'], function() {
 // Run local server instance.
 gulp.task('serve', function() {
   runSequence('index', // inject bower, css, and js
-              'test', 
-              'nodemon', 
-              'browserSync', 
+              'test',
+              'nodemon',
+              'browserSync',
               'watch');
 });
 
@@ -156,4 +158,3 @@ gulp.task('default', function(){
     runSequence('serve');
   }
 });
-
