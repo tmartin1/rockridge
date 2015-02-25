@@ -2,12 +2,13 @@
 // The inputs in this object match the inputs in the example excel document for comparrison.
 
 var testUser = {
-  birthdate: Mon Jun 09 1969 00:00:00 GMT-0700 (PDT),
+  birthdate: new Date(1969, 05, 09),
   charitableContributions: 10000,
   children: Array[1],
   cityResident: "Seattle",
   dependents: 2,
   firstname: "Test",
+  fillingStatus: 'married',
   fixedAssets: [
     { asset: 'Checking Account', value: 5000 },
     { asset: 'Savings Account', value: 10000 }
@@ -23,7 +24,7 @@ var testUser = {
   ],
   flexibleExpenses: [
     { asset: 'Entertainment', value: 800 },
-    { asset: 'Travel / Vacations', value: 1000 }
+    { asset: 'Travel / Vacations', value: 1000 },
     { asset: 'Miscellaneous', value: 500 }
   ],
   grossAnnualIncome: 250000,
@@ -32,23 +33,23 @@ var testUser = {
   lastname: "User",
   maritalStatus: "true",
   mortgage: {
-    homeValue: 500000
+    homeValue: 500000,
     currentBalance: 300000,
-    currentRate: 3.9,
+    currentRate: 0.039,
     currentTerm: 30,
     initialBalance: 400000,
-    startDate: Sun Aug 01 2010 00:00:00 GMT-0700 (PDT)
+    startDate: new Date(2006, 05, 01),
   },
   mortgages: [
-    { asset: 'Mortgage', rate: 3.9, balance: 400000 }
+    { asset: 'Mortgage', rate: 0.0325, balance: 400000 }
   ],
   otherDebts: [
-    { asset: 'Auto Loan', rate: 0.9, balance: 35000 },
-    { asset: 'Chase Credit Card', rate: 15.99, balance: 4000 },
-    { asset: 'Disney Wedding Loan', rate: 9.5, balance: 41000 }
+    { asset: 'Auto Loan', rate: 0.009, balance: 35000 },
+    { asset: 'Chase Credit Card', rate: 0.1599, balance: 4000 },
+    { asset: 'Disney Wedding Loan', rate: 0.095, balance: 41000 }
   ],
   otherDeductions: 5000,
-  pentionIncome: 0,
+  pensionIncome: 0,
   personalAssets: [
     { asset: 'Home', value: 500000 },
     { asset: 'Auto', value: 40000 },
@@ -56,7 +57,7 @@ var testUser = {
   ],
   sameWorkResidence: "true",
   spouse401kContribution: 19000,
-  spouseBirthdate: Fri Sep 06 1996 00:00:00 GMT-0700 (PDT),
+  spouseBirthdate: new Date(1996, 08, 06),
   spouseCityResident: "Seattle",
   spouseEmployerDisabilityInsurance: undefined,
   spouseEmployerLifeInsurance: 50000,
@@ -68,8 +69,8 @@ var testUser = {
   spouseLastName: "User",
   spousePayrollDeductions: 400,
   spouseRothContribution: 5500,
-  spouseStateResident: "WA",
-  stateResident: "WA",
+  spouseStateResident: "CA",
+  stateResident: "CA",
   studentLoans: [
     { asset: 'Federal Stafford', rate: 6.8, balance: 150000 },
     { asset: 'Federal Perkins', rate: 5.0, balance: 50000 }
