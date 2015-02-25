@@ -8,7 +8,8 @@ angular.module('rockridge')
 .controller('MyPlanCtrl', function($rootScope, $scope, $state, Auth) {
 
   $scope.user = Auth.getCurrentUser();
-  $scope.plan = Auth.getUserPlan() || {};
+  $scope.plan = {};
+  // $scope.plan = Auth.getUserPlan();
 
   // Define default my-plan view to 'overview'.
   $scope.overview = { label: 'Overview', link: 'app/dashboard/my-plan/views/overview.html' };
@@ -23,6 +24,7 @@ angular.module('rockridge')
     { label: 'Taxes', link: 'app/dashboard/my-plan/views/tax.html' },
     { label: 'Insurance', link: 'app/dashboard/my-plan/views/insurance.html' },
     { label: 'Retire', link: 'app/dashboard/my-plan/views/retire.html' },
+    { label: 'Personal Info', link: 'app/dashboard/my-plan/views/personal.html' },
     { label: 'More', link: 'app/dashboard/my-plan/views/addmore.html' }
   ];
 
