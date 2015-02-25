@@ -63,8 +63,8 @@ module.exports.projection = function(plan) {
       return null;
     }
     // Check to see if requested variable depends on marital status.
-    if (target[plan.fillingStatus]) {
-      return target[plan.fillingStatus];
+    if (target[plan.filingStatus]) {
+      return target[plan.filingStatus];
     } else {
       return target;
     }
