@@ -4,7 +4,6 @@ Income tax projection builder
 var federal = require('../federal.variables');
 var local = require('../local.variables');
 var finance = require('../finance');
-// var calculate = require('./tax.util');
 
 // Requires a plan object as a parameter
 // Appends a taxProjection object to the plan and returns that same object.
@@ -22,8 +21,10 @@ module.exports.projection = function(plan) {
 
   // Deductions calculations
   result.deductions = {};
+
   // Standard deduction calcs
   result.deductions.standard = getVar(federal.deduction.standard);
+
   // Itemized deduction calcs
   result.deductions.itemized = {};
   // TODO: Refactor local taxes to account for living and working in different states.
@@ -53,7 +54,7 @@ module.exports.projection = function(plan) {
   plan.taxProjection = result;
   return result;
 
-  // Helper functions
+  // Helper functions for tax calculations.
 
   // Get variable from federal variable module.
   function getVar(target) {
