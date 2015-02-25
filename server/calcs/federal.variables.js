@@ -9,7 +9,7 @@ module.exports = {
 
   // Retriement contribution limits.
   retirement: {
-    401kMax: 18500,
+    employerMax: 18500,
     iraMax: 5500
   },
 
@@ -37,7 +37,7 @@ module.exports = {
       headOfHouse: 284050
     },
     itemizedReductionRate: 0.03
-  }
+  },
 
   // Variables for exemptions.
   exemption: {
@@ -86,6 +86,6 @@ module.exports = {
     maxRate: 0.28,
     breakpoint: 128500,
     exemptionReductionRate: 0.25
-  },
+  }
 
 }
