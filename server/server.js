@@ -10,6 +10,7 @@ var methodOverride = require('method-override');
 var cookieParser   = require('cookie-parser');
 //var session        = require('express-session');
 var config         = require('./config/config');
+var oriento        = require('oriento');
 
 // set our port
 var port = config.port;
@@ -50,9 +51,9 @@ console.log('Server running on port: ' + port);
 // expose app
 exports = module.exports = app;
 
-global.db = oriento(config.db)
-            .use({
-                name: 'rockridge',
-                username: 'admin',
-                password: 'admin'
-            });
+// connect to database
+global.db = oriento(config.db).use({
+  name: 'rockridge',
+  username: 'admin',
+  password: 'admin'
+});
