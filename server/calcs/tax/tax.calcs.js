@@ -1,4 +1,4 @@
-Income tax projection builder
+// Income tax projection builder
 'use strict';
 
 var federal = require('../federal.variables');
