@@ -1,4 +1,4 @@
-// Income tax projection builder
+Income tax projection builder
 'use strict';
 
 var federal = require('../federal.variables');
@@ -27,10 +27,10 @@ module.exports.projection = function(plan) {
   // Itemized deduction calcs
   result.deductions.itemized = {};
   // TODO: Refactor local taxes to account for living and working in different states.
-  result.deductions.itemized.localTaxes = stateTax();
-  result.deductions.itemized.propertyTaxes = propertyTax();
-  result.deductions.itemized.mortgageInterest = mortgageInterest();
-  result.deductions.itemized.miscDeduction = plan.otherDeductions; // This is just a user input right now
+  result.deductions.itemized.localTaxes = stateTax() || 0;
+  result.deductions.itemized.propertyTaxes = propertyTax() || 0;
+  result.deductions.itemized.mortgageInterest = mortgageInterest() || 0;
+  result.deductions.itemized.miscDeduction = plan.otherDeductions || 0; // This is just a user input right now
   result.deductions.maxApplicable = maxDeduction();
 
   // Exemption calcs
@@ -40,14 +40,14 @@ module.exports.projection = function(plan) {
   result.taxableIncome = result.agi - result.deductions.maxApplicable - result.exemptions.maxApplicable;
 
   // Tax calcs
-  results.projected = {};
+  result.projected = {};
   // Federal/AMT and local taxes
-  results.projected.federal = federalTax();
-  results.projected.amt = amtCalc();
-  results.projected.local = result.deductions.itemized.localTaxes;
+  result.projected.federal = federalTax();
+  result.projected.amt = amtCalc();
+  result.projected.local = result.deductions.itemized.localTaxes;
   // FICA tax calcs
-  results.projected.fica = {};
-  results.projected.fica.ss = ssCalc();
+  result.projected.fica = {};
+  result.projected.fica.ss = ssCalc();
   medicareCalc();
 
   plan.taxProjection = result;
@@ -62,8 +62,8 @@ module.exports.projection = function(plan) {
       return null;
     }
     // Check to see if requested variable depends on marital status.
-    if (target[plan.maritalStatus]) {
-      return target[maritalStatus];
+    if (target[plan.fillingStatus]) {
+      return target[plan.fillingStatus];
     } else {
       return target;
     }
@@ -77,8 +77,7 @@ module.exports.projection = function(plan) {
   // Calculate state income tax liability.
   function stateTax() {
     var agi = result.agi || ( ((plan.grossAnnualIncome || 0) + (plan.spouseGrossAnnualIncome || 0)) - ((plan.user401kContribution || 0) + (plan.spouse401kContribution || 0)) );
-    var state = plan.residentState;
-    return ( agi * getVar(local.stateIncomeTax(state)) );
+    return ( agi * local.stateIncomeTax[plan.stateResident] );
     // TODO: Calculate state income tax marginally, rather than just by highest marginal.
   }
 
@@ -87,7 +86,7 @@ module.exports.projection = function(plan) {
     var mortgage = plan.mortgage;
     // Create an amortization schedule. Takes four parameters: principle amount, months, interest rate (percent), start date (Date object).
     // Returns an array of payment objects { principle, interest, payment, paymentToPrincipal, paymentToInterest, date }
-    var amortTable = finance.calculateAmortization(plan.mortgage.initialBalance, plan.mortgage.currentTerm*12, plan.mortgage.currentRate, plan.mortgage.startDate);
+    var amortTable = finance.calculateAmortization(plan.mortgage.initialBalance, plan.mortgage.currentTerm*12, plan.mortgage.currentRate*100, plan.mortgage.startDate);
 
     // Total up how much of the payment will go to interest over the current year.
     var current = new Date(new Date().getFullYear(), 00); // Date object for current year.
@@ -97,18 +96,21 @@ module.exports.projection = function(plan) {
     for (var i=start; i<end; i++) {
       interestPayment += amortTable[i].paymentToInterest;
     }
+    return interestPayment;
   }
 
   // Determine the user's maximum allowable deduction (greater between standard and itemized).
   function maxDeduction() {
     var itemizedDeductions = 0;
     for (var x in result.deductions.itemized) {
-      itemizedDeductions += result.deductions.itemized[x];
+      if (x !== 'miscDeduction') {
+        itemizedDeductions += result.deductions.itemized[x];
+      }
     }
     // Calculations for itemized deduction phaseout.
     var agiOverLimit = Math.max( 0, result.agi - getVar(federal.deduction.phaseoutStart) );
     // Pease reduction floor for misc. deductions.
-    var peaseFloor = result.agi > federal.deduction.phaseoutStart ? Math.min(plan.otherDeductions, 0.02 * result.agi), 0);
+    var peaseFloor = result.agi > federal.deduction.phaseoutStart ? Math.min(plan.otherDeductions, 0.02 * result.agi) : 0;
     var personalReduction = agiOverLimit * federal.deduction.itemizedReductionRate;
     var maxReduction = 0.8 * itemizedDeductions;
     var reducedItemizedDeductions = itemizedDeductions - peaseFloor - Math.min( personalReduction, maxReduction );
@@ -127,7 +129,7 @@ module.exports.projection = function(plan) {
     if ( (result.agi - result.deductions.maxApplicable) > getVar(federal.exemption.phaseoutEnd) ) {
       exemptionReduction = 1;
     } else {
-      exemptionReduction = Math.min( 1, Math.ceil(agiOverLimit/2500) * federal.exemption.phaseoutRate) );
+      exemptionReduction = Math.min( 1, Math.ceil(agiOverLimit/2500) * federal.exemption.phaseoutRate);
     }
     result.exemptions.reductions = result.exemptions.claimed * exemptionReduction;
 
@@ -165,8 +167,8 @@ module.exports.projection = function(plan) {
   function amtCalc() {
     var amtExemption = Math.max( 0, getVar(federal.amt.maxExemption) - ( getVar(federal.amt.exemptionReductionRate) * (result.agi - getVar(federal.amt.exemptionPhaseOut)) ) );
     var taxableIncome = result.agi - amtExemption;
-    var maxAmtLiability = (federal.amt.minRate * Math.min(federal.amt.breakpoint, taxableincome))+(federal.amt.maxRate * Math.max(0, taxableincome - federal.amt.breakpoint));
-    return Math.max(0, maxAmtLiability - results.projected.federal);
+    var maxAmtLiability = (federal.amt.minRate * Math.min(federal.amt.breakpoint, taxableIncome))+(federal.amt.maxRate * Math.max(0, taxableIncome - federal.amt.breakpoint));
+    return Math.max(0, maxAmtLiability - result.projected.federal);
   }
 
   // Calculate the Social Security tax.
@@ -179,14 +181,14 @@ module.exports.projection = function(plan) {
   // Calculate basic and additional medicare tax.
   function medicareCalc() {
     // Calculations for standard medicare tax.
-    results.projected.fica.medicare = results.householdGross * federal.fica.medicareTax;
+    result.projected.fica.medicare = result.householdGross * federal.fica.medicareTax;
 
     // Calculationsfor additional medicare tax.
     var threshold = getVar(federal.fica.additionalMedicareLiability);
-    if (results.householdGross > threshold) {
-      results.projected.fica.addlMedicare = ( (results.householdGross - threshold) * federal.fica.additionalMedicareTax );
+    if (result.householdGross > threshold) {
+      result.projected.fica.addlMedicare = ( (result.householdGross - threshold) * federal.fica.additionalMedicareTax );
     } else {
-      results.projected.fica.addlMedicare = 0;
+      result.projected.fica.addlMedicare = 0;
     }
   }
 
