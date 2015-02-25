@@ -2,24 +2,28 @@
 
 angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
-    Auth) {
+    Auth, User) {
 
     // Define plan object that will be used and accessed by the different planning states.
     // TODO: If plan is partially complete, this should fetch previously entered data from DB.
     $scope.plan = {};
 
     // TODO: Create method to set default values of $scope.plan if not already defined.
-
     $scope.previous, $scope.next;
     $scope.isCollapsed = true;
     $scope.pctComplete = 40;
     $scope.user = {};
     $scope.signup = function() {
       $('.ui.modal').modal('hide');
+      // check if user is already created?
+        // or add to createUser to return false if user already exists?
       Auth.createUser($scope.user)
-        .then(function(user) {
-          //TODO: save plan data to db
-        });
+      .then(function() {
+        console.log('$scope.user', $scope.user);
+        var email = $scope.user.email;
+        var test = User.savePlan(email);
+        console.log('test', test);
+      });
     };
 
     // Defines the order of how pages are displayed to the user.
@@ -132,4 +136,8 @@ angular.module('rockridge')
     $scope.showModal = function() {
       $('.ui.modal').modal('show');
     };
+
+    $scope.savePlan = function() {
+      Auth.savePlan($scope.plan);
+    }
   });

@@ -67,6 +67,9 @@ angular.module('rockridge')
     },
     getToken: function() {
       return $cookieStore.get('token');
+    },
+    savePlan: function(plan) {
+      User.savePlan(plan);
     }
   };
 });

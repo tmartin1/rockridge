@@ -14,7 +14,7 @@ db = server.use({
 
 // User and Plan methods
 var Plan = require('./plan.model');
-var User = require('./user.model');
+var User = require('../user/user.model');
 
 // Containers for methods
 var plan = new Plan();

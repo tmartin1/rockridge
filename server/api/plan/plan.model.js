@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 // Create methods for Plans
 var Plan = function() {};
 
+// TODO? create by email rather than userRid?
 Plan.prototype.create = function(userRid, planData, cb) {
   db.query('insert into Plan (data) values (:data)',
   {
@@ -20,6 +21,8 @@ Plan.prototype.create = function(userRid, planData, cb) {
     });
   });
 };
+
+// TODO: Add update method
 
 Plan.prototype.findByUserRid = function(userRid, cb) {
   var query = 'select * from Plan where in_=' + userRid;
