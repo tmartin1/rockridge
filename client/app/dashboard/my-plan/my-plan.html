@@ -1,26 +1,29 @@
 <h2 class="ui top attached header">My Plan</h2>
 
 <div class="ui attached segment">
-  <!-- TODO: ng-repeat to display plan sections as nav-tabs -->
-  <!-- TODO: build presentation of financial plan -->
+
   <div class="ui top attached tabular menu">
+
     <a
-      ng-class="{ 'active':currentView === 'Overview', 'item':true }"
-      ng-click="setView('Overview')">
+      ng-class="{ 'active':currentView.label === 'Overview' }"
+      class="item"
+      ng-click="setView(overview)">
       Overview
     </a>
+
+    <!-- TODO: Disable these links if user has not completed plan-builder -->
     <a
-      ng-repeat="section in user.plan"
-      ng-class="{ 'active':currentView === section, 'item':true }"
-      ng-click="setView(section)">{{section}}</a>
-    <a
-      ng-class="{ 'active':currentView === 'addMore', 'item':true }"
-      ng-click="setView('addMore')">+</a>
-      <!-- TODO: This section will display other tools they can add to their plan -->
+      ng-repeat="section in planDisplay"
+      ng-class="{ 'active': currentView.label === section.label }"
+      class="item"
+      ng-click="setView(section)">
+      {{section.label}}
+    </a>
+
   </div>
 
   <div class="ui bottom attached segment">
-    <!-- TODO: This will need to dynamically display aspects of their plan. Likely with nested views within my-plan. -->
-    <div ng-include="planDisplay[currentView]"></div>
+    <div ng-include="currentView.link"></div>
   </div>
+
 </div>

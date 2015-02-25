@@ -5,26 +5,26 @@
     - allow the user to update their plan
 */
 angular.module('rockridge')
-.controller('MyPlanCtrl', function($rootScope, $scope, $state) {
+.controller('MyPlanCtrl', function($rootScope, $scope, $state, Auth) {
 
-  // Demo for the example, this will have to be dynamic (allow user to add tab for college savings, etc.)
-  console.log($scope.plan)
-  $scope.user = $scope.user || {};
-  $scope.plan = $scope.plan || {};
-  $scope.user.plan = ['Net Worth', 'Budget', 'Insurance', 'Retirement'];
+  $scope.user = Auth.getCurrentUser();
+  $scope.plan = Auth.getUserPlan() || {};
 
-  // Default my-plan view to 'overview'
-  $scope.currentView = 'Overview';
+  // Define default my-plan view to 'overview'.
+  $scope.overview = { label: 'Overview', link: 'app/dashboard/my-plan/views/overview.html' };
+
+  // Set my-plan view to 'overview' if undefined.
+  $scope.currentView = $scope.currentView || $scope.overview;
 
   // Different dispay options for user's plan.
-  $scope.planDisplay = {
-    'Overview': 'app/dashboard/my-plan/views/overview.html',
-    'Net Worth': 'app/dashboard/my-plan/views/nws.html',
-    'Budget': 'app/dashboard/my-plan/views/msa.html',
-    'Insurance': 'app/dashboard/my-plan/views/insurance.html',
-    'Retire': 'app/dashboard/my-plan/views/retire.html',
-    'addMore': 'app/dashboard/my-plan/views/addmore.html'
-  };
+  $scope.planDisplay = [
+    { label: 'Net Worth', link: 'app/dashboard/my-plan/views/nws.html' },
+    { label: 'Budget', link: 'app/dashboard/my-plan/views/msa.html' },
+    { label: 'Taxes', link: 'app/dashboard/my-plan/views/tax.html' },
+    { label: 'Insurance', link: 'app/dashboard/my-plan/views/insurance.html' },
+    { label: 'Retire', link: 'app/dashboard/my-plan/views/retire.html' },
+    { label: 'More', link: 'app/dashboard/my-plan/views/addmore.html' }
+  ];
 
   // Set current view inside of my-plan.
   $scope.setView = function(section) {
