@@ -6,6 +6,6 @@
 
 <div class="ui styled fluid accordion" style="margin-top:-14px">
   <div ng-repeat="query in queries" class="ui form">
-    <question query="query" plan="plan" ng-click="select(query)" ng-model="plan[query.bind]"></question>
+    <question query="query" plan="plan" sections='sections' ng-click="select(query)" ng-model="plan[query.bind]"></question>
   </div>
 </div>

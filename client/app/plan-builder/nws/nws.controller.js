@@ -24,12 +24,17 @@ angular.module('rockridge')
     fields: [{
       label: 'Asset Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      // value: '',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
-    }]
+      textAlign: 'right',
+      // value: '',
+      required: true
+    }],
+    index: 0
   }, {
     title: 'Variable Assets',
     question: "Please enter your variable assets (401k, 403b, IRA, Roth IRA, brokerage account, etc.) If you don't have any, feel free to move to the next section.",
@@ -38,12 +43,15 @@ angular.module('rockridge')
     fields: [{
       label: 'Asset Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
-    }]
+      textAlign: 'right',
+      required: true
+    }],
+    index: 1
   }, {
     title: 'Personal Assets',
     question: "These are the kind of assets you may not normally consider, things like your house, car, etc. If you don't have any, feel free to move to the next section.",
@@ -52,11 +60,13 @@ angular.module('rockridge')
     fields: [{
       label: 'Asset Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }]
   }, {
     title: 'Mortgages',
@@ -66,15 +76,18 @@ angular.module('rockridge')
     fields: [{
       label: 'Liability Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      required: true
     }, {
       label: 'Interest Rate',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }]
   }, {
     title: 'Student Loans',
@@ -84,15 +97,18 @@ angular.module('rockridge')
     fields: [{
       label: 'Liability Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      required: true
     }, {
       label: 'Interest Rate',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }]
   }, {
     title: 'Other Debts',
@@ -102,15 +118,18 @@ angular.module('rockridge')
     fields: [{
       label: 'Liability Name',
       type: 'text',
-      textAlign: 'left'
+      textAlign: 'left',
+      required: true
     }, {
       label: 'Interest Rate',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
-      textAlign: 'right'
+      textAlign: 'right',
+      required: true
     }]
   }];
 
