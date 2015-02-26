@@ -83,7 +83,7 @@ make sure they work also.
 you get here again and nothing is broken and all the tests pass.
 
 ```
-$ git --rebase continue
+$ git rebase --continue
 ```
 
 ```

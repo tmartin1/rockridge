@@ -2,16 +2,38 @@
 
 angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
-    Auth, User) {
+    Auth) {
 
     // Define plan object that will be used and accessed by the different planning states.
     // TODO: If plan is partially complete, this should fetch previously entered data from DB.
     $scope.plan = {};
+    $scope.selectedSection = 0;
+    // keep a memory of what sections are complete and started
+    $scope.sections = {
+      complete: [],
+      enabled: []
+    };
 
     // TODO: Create method to set default values of $scope.plan if not already defined.
-    $scope.previous, $scope.next;
+
+    // open up first question in accordion automatically
+    var nextStep = function(){
+      setTimeout(function(){
+        var title = $($('.ui.accordion').find('.title')[0]).attr('data-title');
+        if(!$scope.sections.complete[title]){
+          $($('.ui.accordion').find('.title')[0]).removeClass('disabled');
+          $('.ui.accordion').accordion('open', 0);
+          $scope.sections.enabled[title] = true;
+        }
+      }, 1000);
+    };
+    nextStep();
+
+    $scope.previous;
+    $scope.next;
     $scope.isCollapsed = true;
     $scope.pctComplete = 40;
+    $scope.accordionSection = 0;
     $scope.user = {};
     $scope.signup = function() {
       $('.ui.modal').modal('hide');
@@ -98,16 +120,13 @@ angular.module('rockridge')
       });
     };
 
-
     // Sets the title, progress bar, and the 'previous' and 'next' links.
     var updateRelationals = function(focus) {
       $scope.heading = focus.data.title;
       var index = order.indexOf(focus.name);
       // ui-router does not currently support dynamic sref: https://github.com/angular-ui/ui-router/issues/1208
-      $scope.previous = order[index - 1] ? order[index - 1].replace('.', '/') :
-        false;
-      $scope.next = order[index + 1] ? order[index + 1].replace('.', '/') :
-        false;
+      $scope.previous = order[index - 1] ? order[index - 1] : false;
+      $scope.next = order[index + 1] ? order[index + 1] : false;
       // set all previous steps to complete
       angular.forEach($scope.steps, function(item, i) {
         if (i < index) {
@@ -115,7 +134,6 @@ angular.module('rockridge')
         }
       });
       $scope.navToStep(focus);
-
     };
     updateRelationals($state.current);
 
@@ -126,9 +144,44 @@ angular.module('rockridge')
         if (order.indexOf(toState.name) >= 0) {
           updateRelationals(toState);
           $scope.navToStep(toState, fromState);
+          nextStep();
         }
       }
     );
+
+    $scope.nextQuestion = function(){
+      var sectionComplete = true;
+
+      var len = $('.content.active').length;
+      // make sure all required inputs are filled in
+      // before moving to the next question
+      var inputs = $('.content.active').find('input, select, button');
+      inputs.each(function(index){
+        if($(this).attr('ng-required') && !$(this).val()){
+          $(this).parent().addClass('ui error');
+          sectionComplete = false;
+        }
+      });
+      // if all inputs complete, open next question or step
+      if(sectionComplete){
+        var lastQuestion = $('.green.checkmark.icon').length-1;
+        // if all questions complete, move to next step
+        if($scope.selectedSection === lastQuestion){
+          var title = $('.title.active').attr('data-title');
+          $scope.sections.complete[title] = true;
+          $scope.selectedSection = 0;
+          $state.go($scope.next);
+        } else { // move to next section
+          var title = $('.title.active').attr('data-title');
+          $scope.sections.complete[title] = true;
+          $scope.selectedSection++;
+          var title = $($('.ui.accordion')
+              .find('.title')[$scope.selectedSection]).attr('data-title');
+          $scope.sections.enabled[title] = true;
+          $('.ui.accordion').accordion('open', $scope.selectedSection);
+        }
+      }
+    };
 
     // prompt user to signup and save
     $scope.showModal = function() {
