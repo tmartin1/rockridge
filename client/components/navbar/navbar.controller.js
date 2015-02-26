@@ -38,7 +38,7 @@ angular.module('rockridge')
 
   $scope.signup = function() {
     $('.ui.modal').modal('hide');
-    Auth.createUser()
+    Auth.createUser($scope.user)
     .then(function(user){});
   };
 
