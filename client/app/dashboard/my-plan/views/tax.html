@@ -1,5 +1,186 @@
 <!-- Display for income tax projection -->
-<p>
-  Displays the user's Net Worth Statement.<br>
-  Each element that can be edited by the user should reveal a <i class="fa fa-pencil"></i> icon when hovered over that will allow them to edit that specific element (or one per page).
-</p>
+
+<table class="tax-section">
+<!-- Income and deductions -->
+  <thead>
+    <th>Gross Annual Income</th>
+  </thead>
+  <tbody class="tax-group">
+    <tr>
+      <td class="label">Wages and Salaries</td>
+      <td class="number">{{plan.taxProjection.householdGross}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">Other Business Income / Loss</td>
+      <td class="number">0</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">Short-Term Capital Gains / Loss</td>
+      <td class="number">0</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr class="tax-total-row">
+      <td class="label">Total Income</td>
+      <td></td> <!-- placeholder -->
+      <td class="total number">{{plan.taxProjection.householdGross}}</td>
+    </tr>
+  </tbody>
+
+  <thead>
+    <th>Adjustments</th>
+  </thead>
+  <tbody class="tax-group">
+    <tr>
+      <td class="label">Pre-Tax Retirement Contributions</td>
+      <td class="number">{{plan.taxProjection.pretaxContributions}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">Other</td>
+      <td class="number">0</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr class="tax-total-row">
+      <td class="label">Total Adjustment</td>
+      <td></td> <!-- placeholder -->
+      <td class="total number">({{plan.taxProjection.pretaxContributions}})</td>
+    </tr>
+  </tbody>
+
+  <thead>
+    <th>Deductions</th>
+  </thead>
+  <tbody class="tax-group">
+    <tr>
+      <td class="label">Standard Deduction</td>
+      <td class="number">{{plan.taxProjection.deductions.standard}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label"><b><i>OR </i></b>Itemized Deduction</td>
+      <td></td> <!-- placeholder -->
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">State and City Taxes</td>
+      <td class="number">{{plan.taxProjection.deductions.itemized.localTaxes}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Property Taxes</td>
+      <td class="number">{{plan.taxProjection.deductions.itemized.propertyTaxes}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Home Mortgage Interest</td>
+      <td class="number">{{plan.taxProjection.deductions.itemized.mortgageInterest}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Miscellaneous Deductions</td>
+      <td class="number">{{plan.taxProjection.deductions.itemized.miscDeduction}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr class="tax-total-row">
+      <td class="label">Maximum Applicable Deduction</td>
+      <td></td> <!-- placeholder -->
+      <td class="total number">({{plan.taxProjection.deductions.maxApplicable}})</td>
+    </tr>
+  </tbody>
+
+  <thead>
+    <th>Exemptions</th>
+  </thead>
+  <tbody class="tax-group">
+    <tr>
+      <td class="label">Personal Exemptions</td>
+      <td class="number">{{plan.taxProjection.exemptions.claimed}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">Exemption Reduction</td>
+      <td class="number">({{plan.taxProjection.exemptions.reductions}})</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr class="tax-total-row">
+      <td class="label">Maximum Applicable Exemption</td>
+      <td></td> <!-- placeholder -->
+      <td class="total number">({{plan.taxProjection.exemptions.maxApplicable}})</td>
+    </tr>
+  </tbody>
+
+  <tr class="tax-section-break">
+    <td>Total Taxable Income</td>
+    <td></td>
+    <td class="total number">{{plan.taxProjection.taxableIncome}}</td>
+  </tr>
+
+<!-- Taxes -->
+  <thead>
+    <th>Projected Income Tax Liability</th>
+  </thead>
+  <tbody class="tax-group">
+    <tr>
+      <td class="label">Federal Income Tax</td>
+      <td class="number">{{plan.taxProjection.projected.federal}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Alternative Minimum Tax</td>
+      <td class="number">{{plan.taxProjection.projected.amt}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">State and Local Tax</td>
+      <td class="number">{{plan.taxProjection.projected.local}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="label">FICA Taxes</td>
+      <td></td> <!-- placeholder -->
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Social Security Tax</td>
+      <td class="number">{{plan.taxProjection.projected.fica.ss}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Basic Medicare Tax</td>
+      <td class="number">{{plan.taxProjection.projected.fica.medicare}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr>
+      <td class="subgroup-label">Additional Medicare Tax</td>
+      <td class="number">{{plan.taxProjection.projected.fica.addlMedicare}}</td>
+      <td></td> <!-- placeholder -->
+    </tr>
+    <tr class="tax-total-row">
+      <td class="label">Total Income Tax Liability</td>
+      <td></td> <!-- placeholder -->
+      <td class="total number">{{
+        plan.taxProjection.projected.federal +
+        plan.taxProjection.projected.amt +
+        plan.taxProjection.projected.local +
+        plan.taxProjection.projected.ss +
+        plan.taxProjection.projected.medicare +
+        plan.taxProjection.projected.addlMedicare
+      }}</td>
+    </tr>
+  </tbody>
+
+  <tr class="tax-section-break">
+    <td>Projected Annual Net Income</td>
+    <td></td> <!-- placeholder -->
+    <td class="total number">{{plan.taxProjection.netIncome + plan.taxProjection.pretaxContributions}}</td>
+  </tr>
+
+  <tr class="tax-section-break" style="border:none">
+    <td style="font-weight:normal; font-style:italic;">Projected Net Take-Home <i>(less retirement contributions)</i></td>
+    <td></td> <!-- placeholder -->
+    <td class="total number" style="font-weight:normal; font-style:italic;">{{plan.taxProjection.netIncome}}</td>
+  </tr>
+
+</table>
