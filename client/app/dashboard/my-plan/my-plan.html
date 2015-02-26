@@ -11,10 +11,10 @@
       Overview
     </a>
 
-    <!-- TODO: Disable these links if user has not completed plan-builder -->
+    <!-- TODO: Disable these links if user has not completed plan-builder (do so in controller) -->
     <a
       ng-repeat="section in planDisplay"
-      ng-class="{ 'active': currentView.label === section.label }"
+      ng-class="{ 'active': currentView.label === section.label, 'disabled': !user.builderComplete }"
       class="item"
       ng-click="setView(section)">
       {{section.label}}
