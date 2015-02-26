@@ -2,6 +2,7 @@ var bcrypt = require('bcrypt');
 
 var User = function() {};
 
+// TODO? Return false if user's email is already in db
 User.prototype.create = function(email, password, cb) {
   saltAndHash(password, null, function(data) {
     db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)',

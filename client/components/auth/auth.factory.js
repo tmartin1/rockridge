@@ -40,11 +40,11 @@ angular.module('rockridge')
         function(data) {
           $cookieStore.put('token', data.token);
           currentUser = User.get();
-          return cb(user);
+          return cb(currentUser);
         },
         function(err) {
           this.logout();
-          return cb(err);
+          return cb('error', err);
         }.bind(this)).$promise;
     },
     changePassword: function(oldPassword, newPassword, callback) {
@@ -67,6 +67,14 @@ angular.module('rockridge')
     },
     getToken: function() {
       return $cookieStore.get('token');
+    },
+    savePlan: function(userRid, plan) {
+      // console.log('saving plan', userRid, plan);
+      User.savePlan({userRid:userRid, plan:plan});
+    },
+    getPlan: function(userRid, plan) {
+      // console.log('saving plan', userRid, plan);
+      User.getPlan({userRid:userRid});
     }
   };
 });

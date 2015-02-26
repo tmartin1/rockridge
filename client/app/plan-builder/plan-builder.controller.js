@@ -3,6 +3,7 @@
 angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
     Auth) {
+
     // Define plan object that will be used and accessed by the different planning states.
     // TODO: If plan is partially complete, this should fetch previously entered data from DB.
     $scope.plan = {};
@@ -37,9 +38,12 @@ angular.module('rockridge')
     $scope.signup = function() {
       $('.ui.modal').modal('hide');
       Auth.createUser($scope.user)
-        .then(function(user) {
-          //TODO: save plan data to db
+      .then(function(user) {
+        User.get().$promise
+        .then(function(userOb) {
+          Auth.savePlan(userOb['@rid'], $scope.plan);
         });
+      });
     };
 
     // Defines the order of how pages are displayed to the user.
@@ -183,4 +187,8 @@ angular.module('rockridge')
     $scope.showModal = function() {
       $('.ui.modal').modal('show');
     };
+
+    $scope.savePlan = function() {
+      Auth.savePlan($scope.plan);
+    }
   });

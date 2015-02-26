@@ -2,15 +2,26 @@
 
 angular.module('rockridge')
 .factory('User', function($resource) {
-  return $resource('api/user/:id/:controller', {
-    id: '@rid'
-  },
+  return $resource('api/user/:id/:controller',
+  {id: '@rid'},
   {
     get: {
       method: 'GET',
+      params: {id: 'me'}
+    },
+    savePlan: {
+      method: 'POST',
       params: {
-        id: 'me'
-      } 
+        id: 'me',
+        controller: 'plan-builder'
+      }
+    },
+    getPlan: {
+      method: 'GET',
+      params: {
+        id: 'me',
+        controller: 'plan-builder'
+      }
     }
   });
 });

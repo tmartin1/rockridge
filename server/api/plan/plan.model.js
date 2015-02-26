@@ -21,6 +21,8 @@ Plan.prototype.create = function(userRid, planData, cb) {
   });
 };
 
+// TODO: Add update method
+
 Plan.prototype.findByUserRid = function(userRid, cb) {
   var query = 'select * from Plan where in_=' + userRid;
   db.query(query)
