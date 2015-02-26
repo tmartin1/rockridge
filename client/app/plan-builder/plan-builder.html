@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<!-- Plan builder navigation and progress bar -->
+<!-- Plan builder progress bar -->
 <div class="ui segment bottom attached">
 
   <center>
@@ -32,7 +32,7 @@
         <a class="ui button" ng-if="!!previous" ng-href="{{previous}}">
           <i class="fa fa-chevron-left"></i> Previous
         </a>
-        <a class="ui button" ng-if="!!next" ng-href="{{next}}">
+        <a class="ui button" ng-if="!!next" ng-click='nextQuestion()'>
           Next <i class="fa fa-chevron-right"></i>
         </a>
         <a class="ui primary button" ng-if="!next">Submit</a>
