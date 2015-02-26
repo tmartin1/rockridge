@@ -1,0 +1,19 @@
+/*
+ * Style classes for preview directive
+*/
+
+.previewEditIcon {
+  padding:5px 18px 5px 5px;
+  position:absolute;
+  left:100%;
+  top:-25%;
+}
+
+.previewSaveIcon {
+  padding:0px;
+  border:none;
+  background-color:white;
+  position:absolute;
+  left:85%;
+  top:22%;
+}

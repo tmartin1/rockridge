@@ -1,23 +1,42 @@
 <!-- HTML Template for Questions, template builder for individual questions -->
+<!-- TODO: Refactor inline stylings to css classes -->
 
 <div>
 
   <!-- Text element when not editing -->
-  <div ng-if="!edit">
-    <span ng-bind="plan[bind]" style="style"></span>
-    <!-- <div class="ui flowing popup"> -->
-      <!-- <div class="ui two column divided equal hieght center aligned grid"> -->
-        <!-- <div class="column"> -->
-          <i class="fa fa-pencil margin-left-sm" ng-click="toggle()"></i>
-        <!-- </div> -->
-      <!-- </div> -->
-    <!-- </div> -->
+  <!-- The pencil icon only shows when the text field is hovered over -->
+  {{edit}}
+  {{bind}}
+  <div ng-if="!edit" ng-mouseenter="showIcon=true" ng-mouseleave="showIcon=false">
+    <div style="display:inline-block; position:relative;">
+      <label ng-bind="plan[bind]" style="display:inline; style"></label>
+      <div ng-bind="plan['mortgage']['homeValue']"></div>
+      <div
+        ng-click="toggle()"
+        ng-class="{ 'visible': showIcon }"
+        class="ui flowing popup right center previewEditIcon"
+        style="padding:5px 18px 5px 5px; position:absolute; left:100%; top:-25%">
+
+        <div class="ui icon button" style="padding:0px; background-color:white;">
+          <i class="fa fa-pencil"></i>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <!-- Input element for editing -->
-  <div ng-if="!!edit">
-    <input ng-model="plan[bind]" style="style" />
-    <i class="fa fa-floppy-o fa-lg margin-left-sm" ng-click="toggle()"></i>
+  <!-- The save icon is always visible when in editing mode -->
+  <div ng-if="!!edit" style="display:inline-block; position:relative;">
+    <input ng-model="plan[bind]" style="padding-right:30px; style" />
+
+    <div
+      ng-click="toggle()"
+      class="ui icon button previewSaveIcon"
+      style="padding:0px; border:none; background-color:white; position:absolute; left:85%; top:22%;">
+      <i class="fa fa-floppy-o fa-lg"></i>
+    </div>
+
   </div>
 
 </div>
