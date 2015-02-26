@@ -1,0 +1,23 @@
+<!-- HTML Template for Questions, template builder for individual questions -->
+
+<div>
+
+  <!-- Text element when not editing -->
+  <div ng-if="!edit">
+    <span ng-bind="plan[bind]" style="style"></span>
+    <!-- <div class="ui flowing popup"> -->
+      <!-- <div class="ui two column divided equal hieght center aligned grid"> -->
+        <!-- <div class="column"> -->
+          <i class="fa fa-pencil margin-left-sm" ng-click="toggle()"></i>
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  </div>
+
+  <!-- Input element for editing -->
+  <div ng-if="!!edit">
+    <input ng-model="plan[bind]" style="style" />
+    <i class="fa fa-floppy-o fa-lg margin-left-sm" ng-click="toggle()"></i>
+  </div>
+
+</div>
