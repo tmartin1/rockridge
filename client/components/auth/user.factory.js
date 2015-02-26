@@ -13,7 +13,14 @@ angular.module('rockridge')
       method: 'POST',
       params: {
         id: 'me',
-        controller: 'saveplan'
+        controller: 'plan-builder'
+      }
+    },
+    getPlan: {
+      method: 'GET',
+      params: {
+        id: 'me',
+        controller: 'plan-builder'
       }
     }
   });

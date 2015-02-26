@@ -19,4 +19,13 @@ module.exports = function(app) {
     res.sendFile('index.html', { root: './client/' });
   });
 
+  app.route('api/user/:id/plan-builder')
+  .post(function(req, res) {
+    // console.log('req, res in routes', req, res);
+  });
+
+  app.route('api/user/:id/plan-builder')
+  .get(function(req, res) {
+    // console.log('req, res in routes', req, res);
+  });
 };

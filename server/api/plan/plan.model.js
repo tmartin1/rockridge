@@ -3,7 +3,6 @@ var bcrypt = require('bcrypt');
 // Create methods for Plans
 var Plan = function() {};
 
-// TODO? create by email rather than userRid?
 Plan.prototype.create = function(userRid, planData, cb) {
   db.query('insert into Plan (data) values (:data)',
   {

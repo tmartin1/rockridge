@@ -15,14 +15,12 @@ angular.module('rockridge')
     $scope.user = {};
     $scope.signup = function() {
       $('.ui.modal').modal('hide');
-      // check if user is already created?
-        // or add to createUser to return false if user already exists?
       Auth.createUser($scope.user)
-      .then(function() {
-        console.log('$scope.user', $scope.user);
-        var email = $scope.user.email;
-        var test = User.savePlan(email);
-        console.log('test', test);
+      .then(function(user) {
+        User.get().$promise
+        .then(function(userOb) {
+          Auth.savePlan(userOb['@rid'], $scope.plan);
+        });
       });
     };
 

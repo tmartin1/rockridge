@@ -17,12 +17,18 @@ exports.create = function(req, res, next) {
 };
 
 exports.savePlan = function(req, res, next) {
-  var user = new User();
   var plan = new Plan();
-  user.findByEmail(req.body.email, function(val) {
-    console.log("val['@rid']", val['@rid']);
-    plan.create(val['@rid'], req.body.plan, function(p,e) {
-      console.log('plan and edge created', p, e);
-    });
+  console.log('req in user.controller', req);
+  plan.create(req.body['userRid'], req.body.plan, function(p,e) {
+    console.log('plan and edge created', p, e);
+  });
+};
+
+exports.getPlan = function(req, res, next) {
+  var plan = new Plan();
+  console.log('req in user.controller', req);
+  plan.findByUserRid(req.body['userRid'], function(plan) {
+    console.log('plan', plan);
+    return plan;
   });
 };
