@@ -26,10 +26,6 @@
   text-decoration: underline;
 }
 
-.tax-section tbody {
-}
-
-
 .tax-group td {
   line-height: 1.5em;
 }
@@ -65,10 +61,6 @@
   padding-left: 10px;
   padding-right: 20px;
 }
-
-.tax-total-row .number {
-}
-
 
 .tax-section-break {
   border-top: 3px black double;

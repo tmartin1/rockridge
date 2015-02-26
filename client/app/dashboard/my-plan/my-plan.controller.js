@@ -27,7 +27,6 @@ angular.module('rockridge')
     { label: 'More', link: 'app/dashboard/my-plan/views/addmore.html' }
   ];
 
-
   // Set current view inside of my-plan.
   $scope.setView = function(section) {
     $scope.currentView = section;
