@@ -2,6 +2,7 @@
 
 angular.module('rockridge')
 .controller('NavbarCtrl', function($scope, $state, $location, Auth) {
+  $scope.user = {};
 
   $scope.menu = [{
     'title': 'Home',
@@ -12,14 +13,16 @@ angular.module('rockridge')
     'link': 'about',
     'shown': true
   }, {
+    // Link to plan-builder only shows if the user has not completed it yet.
+    'title': 'Start Planning',
+    'link': 'plan-builder.start',
+    'shown': !$scope.user.builderComplete,
+    'abstractLink': 'plan-builder'
+  }, {
+    // Link to dashboard only shows when user is logged in.
     'title': 'Dashboard',
     'link': 'dashboard',
     'shown': 'isLoggedIn()'
-  }, {
-    'title': 'Start Planning',
-    'link': 'plan-builder.start',
-    'shown': '!isLoggedIn()',
-    'abstractLink': 'plan-builder'
   }, {
     'title': 'Rockridge University',
     'class': 'fa fa-graduation-cap',
@@ -27,8 +30,6 @@ angular.module('rockridge')
     'shown': true,
     'abstractLink': 'university'
   }];
-
-  $scope.user = {};
 
   $scope.logout = function() {
     Auth.logout();
@@ -56,6 +57,7 @@ angular.module('rockridge')
     return $state.includes(viewLocation);
   };
 
+  // Shows signup/login modal.
   $scope.showModal = function(type) {
     $scope.modalType = type;
     $('.ui.modal').modal('show');

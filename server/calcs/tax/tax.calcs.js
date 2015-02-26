@@ -1,4 +1,4 @@
-Income tax projection builder
+// Income tax projection builder
 'use strict';
 
 var federal = require('../federal.variables');
@@ -50,6 +50,8 @@ module.exports.projection = function(plan) {
   result.projected.fica = {};
   result.projected.fica.ss = ssCalc();
   medicareCalc();
+
+  result.netIncome = result.netIncome - result.projected.federal - result.projected.amt - result.projected.local - result.projected.fica.ss - result.projected.fica.medicare - result.projected.fica.addlMedicare;
 
   plan.taxProjection = result;
   return result;
@@ -199,6 +201,9 @@ module.exports.projection = function(plan) {
    the results of all the tax calculations. The object should look like:
 
 var taxResults = {
+  householdGross: num,
+  pretaxContributions: num,
+  agi: num,
   deductions: {
     standard: num,
     itemized: {
@@ -214,6 +219,7 @@ var taxResults = {
     reductions: num,
     maxApplicable: num
   },
+  taxableIncome: num,
   projected: {
     federal: num,
     amt: num,
@@ -223,7 +229,8 @@ var taxResults = {
       medicare: num,
       addlMedicare: num
     }
-  }
+  },
+  netIncome: num
 };
 
 */
