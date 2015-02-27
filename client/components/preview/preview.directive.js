@@ -6,7 +6,7 @@
              object="plan" would work for 1st level plan items, like plan.spouseFirstName but not plan.mortgage.initialBalance
              in that case you would have to define object="plan.mortgage"
     property - Defines which property of the plan this field should represent. See above comment for details on nested objects.
-    type - What kind of data type. Default type is 'text'.
+    type - What kind of data type. Default type is 'text', other options are: 'number', 'currency', 'date'.
     style - Define specific styles for the text and input field.
 
   How to use in the HTML template:
@@ -41,9 +41,50 @@ angular.module('rockridge')
         $scope.edit = !$scope.edit;
       };
 
+      // Saves the item to $scope.plan and changes view back to read-only.
+      $scope.saveItem = function() {
+        // Verify that the type is still valid before saving.
+        if ($scope.type === undefined || $scope.type === 'currency' ||
+            $scope.type === 'number' && angular.isNumber($scope.object[$scope.property]) ||
+            $scope.type === 'date' && angular.isDate($scope.object[$scope.property]))
+        {
+          $scope.toggle();
+        }
+      };
+
       // Default edit icon to hidden.
       $scope.showIcon = false;
     },
     templateUrl: './components/preview/previewTemplate.html'
+  };
+})
+
+// Directive to validate numbers.
+.directive('validNumber', function() {
+  return {
+    require: '?ngModel',
+    link: function(scope, element, attrs, ngModelCtrl) {
+      if(!ngModelCtrl) {
+        return;
+      }
+
+      ngModelCtrl.$parsers.push(function(val) {
+        if (angular.isUndefined(val)) {
+            var val = '';
+        }
+        var clean = val.replace(/[^0-9]+/g, '');
+        if (val !== clean) {
+          ngModelCtrl.$setViewValue(clean);
+          ngModelCtrl.$render();
+        }
+        return clean;
+      });
+
+      element.bind('keypress', function(event) {
+        if(event.keyCode === 32) {
+          event.preventDefault();
+        }
+      });
+    }
   };
 });
