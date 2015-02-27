@@ -80,6 +80,15 @@ angular.module('rockridge')
       type: 'multi',
       subqueries: [
         {
+          question:"What is your tax filing status?",
+          type:'select',
+          bind:'filingStatus',
+          options: [
+            {text:'Single', value:'single' },
+            {text:'Married Filing Jointly', value:'married' },
+            {text:'Head of House', value:'headOfHouse' }
+          ]
+        }, {
           question:"How many dependents do you intend on declaring this year?",
           type:'number',
           bind:'dependents'
