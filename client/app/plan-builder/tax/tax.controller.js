@@ -40,42 +40,6 @@ angular.module('rockridge')
           condition:'maritalStatus'
         }]
     }, {
-      title: 'Primary Residence',
-      type: 'multi',
-      subqueries: [
-        {
-          question: "Do you have a mortgage for your primary residence?",
-          bind: 'hasPrimaryResidence',
-          type: 'select',
-          options: [ { text:'Yes', value:true }, { text:'No', value:false } ]
-        }, {
-          question: "When did you purchase or last refinance your home (whichever was most recent)?",
-          bind: 'mortgageStartDate',
-          type: 'month',
-          condition: 'hasPrimaryResidence'
-        }, {
-          question: "What is the current balance owed on the mortgage for your primary residence?",
-          bind: 'mortgageCurrentBalance',
-          type: 'number',
-          condition: 'hasPrimaryResidence'
-        }, {
-          question: "What was the original balance of your mortgage, or it's balance at last refinance (whichever was most recent)?",
-          bind: 'mortgageInitialBalance',
-          type: 'number',
-          condition: 'hasPrimaryResidence'
-        }, {
-          question: "What is the interest rate on your mortgage?",
-          bind: 'mortgageCurrentRate',
-          type: 'number',
-          condition: 'hasPrimaryResidence'
-        }, {
-          question: "What is the term of your current mortgage (years)?",
-          bind: 'mortgageCurrentTerms',
-          type: 'number',
-          condition: 'hasPrimaryResidence'
-        }
-      ]
-    }, {
       title: 'Other Considerations',
       type: 'multi',
       subqueries: [

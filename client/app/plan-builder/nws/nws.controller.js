@@ -12,6 +12,7 @@ Needed information:
 angular.module('rockridge')
 .controller('NwsCtrl', function($scope) {
   // assign collected info to $scope.plan, defined in parent state: plan-builder.controller.js
+  $scope.plan.mortgage = $scope.plan.mortgage || {};
 
   // $scope.queries must be an array of question objects in the order that they should appear to
   // the user. Question objects have a specific format that must be followed. For more info, see
@@ -25,13 +26,11 @@ angular.module('rockridge')
       label: 'Asset Name',
       type: 'text',
       textAlign: 'left',
-      // value: '',
       required: true
     }, {
       label: 'Value/Balance',
       type: 'number',
       textAlign: 'right',
-      // value: '',
       required: true
     }],
     index: 0
@@ -69,26 +68,58 @@ angular.module('rockridge')
       required: true
     }]
   }, {
-    title: 'Mortgages',
-    question: "Please enter any Mortgages that you currently owe money on. If you don't have any, congratulations! Feel free to move to the next section.",
-    bind: 'mortgages',
-    type: 'table',
-    fields: [{
-      label: 'Liability Name',
-      type: 'text',
-      textAlign: 'left',
-      required: true
-    }, {
-      label: 'Interest Rate',
-      type: 'number',
-      textAlign: 'right',
-      required: true
-    }, {
-      label: 'Value/Balance',
-      type: 'number',
-      textAlign: 'right',
-      required: true
-    }]
+    title: 'Primary Residence',
+    type: 'multi',
+    bind: 'mortgage',
+    subqueries: [
+      {
+        question: 'Do you own a home?',
+        type: 'select',
+        bind: 'hasPrimaryResidence',
+        options: [{
+          text: 'Yes',
+          value: true
+        }, {
+          text: 'No',
+          value: false
+        }]
+      }, {
+        question: 'What is the approximate current market value of your home?',
+        type: 'number',
+        bind: 'homeValue',
+        condition: 'hasPrimaryResidence'
+      }, {
+        question: 'Do you have a mortgage for your primary residence?',
+        type: 'select',
+        bind: 'hasMortgage',
+        options: [ { text:'Yes', value:true }, { text:'No', value:false } ]
+      }, {
+        question: 'What is the current balance owed on your mortgage?',
+        type: 'number',
+        bind: 'currentBalance',
+        condition: 'hasMortgage'
+      }, {
+        question: 'What is the interest rate on your mortgage?',
+        type: 'number',
+        bind: 'currentRate',
+        condition: 'hasMortgage'
+      }, {
+        question: 'What is the term of your mortgage (in years)?',
+        type: 'number',
+        bind: 'currentTerm',
+        condition: 'hasMortgage'
+      }, {
+        question: 'What was the principal, or balance owed, of your mortgage initially or when you last refinanced (whichever was more recent)?',
+        type: 'number',
+        bind: 'initialBalance',
+        condition: 'hasMortgage'
+      }, {
+        question: 'When did you purchase or last refinance your home (whichever was most recent)?',
+        type: 'month',
+        bind: 'startDate',
+        condition: 'hasMortgage'
+      }
+    ]
   }, {
     title: 'Student Loans',
     question: "Please enter any Federal Student Loans you currently have. If you don't have any, congratulations! Feel free to move to the next section.",
