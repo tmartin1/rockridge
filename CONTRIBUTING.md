@@ -99,7 +99,7 @@ $ git push origin branch
 Update your local master.
 
 ```
-$ git pull upstream development
+$ git pull upstream dev
 ```
 
   - If pull requests have been accepted to development while yours was pending, 
