@@ -21,11 +21,10 @@ module.exports = function(app) {
 
   app.route('api/user/:id/plan-builder')
   .post(function(req, res) {
-    // console.log('req, res in routes', req, res);
   });
 
   app.route('api/user/:id/plan-builder')
   .get(function(req, res) {
-    // console.log('req, res in routes', req, res);
+    console.log('req, res in routes', req, res);
   });
 };
