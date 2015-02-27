@@ -43,8 +43,11 @@ angular.module('rockridge')
         .then(function(userOb) {
           // stringify plan b/c OrientDB won't allow keys/fields with spaces
           var plan = JSON.stringify($scope.plan);
-          // Auth.savePlan(userOb['@rid'], plan);
-          Auth.getPlan('#12:662');
+          Auth.savePlan(userOb['@rid'], plan);
+          // Auth.getPlan('#12:662')
+          // .then(function(plan) {
+          //   console.log(plan);
+          // });
         });
       });
     };
