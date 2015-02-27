@@ -8,15 +8,19 @@
 <div class="ui centered grid basic hidden segment">
 
   <div class="twelve wide column" style="padding-top:0px">
+
     <!-- steps -->
-    <div class="ui steps margin-bottom-md">
-      <div class="{{step.isActive}} step" ui-sref-active='active' ui-sref='{{step.key}}' ng-click='navToStep(step)' ng-repeat='step in steps' style='cursor:pointer;'>
-        <i class="{{step.icon}}"></i>
-        <div class="content">
-          <div class="title">{{step.title}}</div>
+    <center>
+      <div class="ui steps margin-bottom-md">
+        <div class="{{step.isActive}} step" ui-sref-active='active' ui-sref='{{step.key}}' ng-click='navToStep(step)' ng-repeat='step in steps' style='cursor:pointer;'>
+          <i class="{{step.icon}}"></i>
+          <div class="content">
+            <div class="title">{{step.title}}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </center>
+
     <!-- Main content (container for plan-builder states) -->
     <div ui-view></div>
   </div>
@@ -27,6 +31,7 @@
 
   <center>
     <div class="margin-bottom-md">
+      
       <!-- prev and next buttons -->
       <div class='margin-bottom-md'>
         <a class="ui button" ng-if="!!previous" ng-href="{{previous}}">

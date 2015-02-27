@@ -50,10 +50,10 @@ angular.module('rockridge')
           options: [
             {text:'Single', value:'single' },
             {text:'Married Filing Jointly', value:'married' },
-            {text:'Head of House', value:'headOfHouse' }
+            {text:'Head of Household', value:'headOfHouse' }
           ]
         }, {
-          question:"How many dependents do you intend on declaring this year?",
+          question:"How many dependents do you intend to declare this year?",
           type:'number',
           bind:'dependents'
         }, {
