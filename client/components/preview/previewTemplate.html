@@ -5,12 +5,9 @@
 
   <!-- Text element when not editing -->
   <!-- The pencil icon only shows when the text field is hovered over -->
-  {{edit}}
-  {{bind}}
   <div ng-if="!edit" ng-mouseenter="showIcon=true" ng-mouseleave="showIcon=false">
     <div style="display:inline-block; position:relative;">
-      <label ng-bind="plan[bind]" style="display:inline; style"></label>
-      <div ng-bind="plan['mortgage']['homeValue']"></div>
+      <label ng-bind="object[property]" style="display:inline; style"></label>
       <div
         ng-click="toggle()"
         ng-class="{ 'visible': showIcon }"
@@ -28,7 +25,7 @@
   <!-- Input element for editing -->
   <!-- The save icon is always visible when in editing mode -->
   <div ng-if="!!edit" style="display:inline-block; position:relative;">
-    <input ng-model="plan[bind]" style="padding-right:30px; style" />
+    <input ng-bind="object[property]" style="padding-right:30px; style" />
 
     <div
       ng-click="toggle()"
