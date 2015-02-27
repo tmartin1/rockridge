@@ -5,6 +5,7 @@
 angular.module('rockridge')
 .controller('NwsViewCtrl', function($scope) {
   $scope.plan.fixedAssets = $scope.plan.fixedAssets || {};
+
 });
 
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
