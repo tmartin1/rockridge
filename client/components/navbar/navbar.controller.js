@@ -5,10 +5,6 @@ angular.module('rockridge')
   $scope.user = {};
 
   $scope.menu = [{
-    'title': 'Home',
-    'link': 'main',
-    'shown': true
-  }, {
     'title': 'About',
     'link': 'about',
     'shown': true

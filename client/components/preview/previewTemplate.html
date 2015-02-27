@@ -30,8 +30,19 @@
   <!-- Input element for editing -->
   <!-- The save icon is always visible when in editing mode -->
   <div ng-if="!!edit" style="display:inline-block; position:relative;">
-    <input ng-if="type !== 'number' && type !== 'currency'" ng-model="object[property]" type="{{type}}" style="padding-right:30px; style" />
-    <input ng-if="type === 'number' || type === 'currency'" ng-model="object[property]" type="{{type}}" style="padding-right:30px; style" valid-number />
+
+    <input
+      ng-if="type !== 'number' && type !== 'currency'"
+      ng-model="object[property]"
+      type="{{type}}"
+      style="padding-right:30px; style" />
+
+    <input
+      ng-if="type === 'number' || type === 'currency'"
+      ng-model="object[property]"
+      type="{{type}}"
+      style="padding-right:30px; style"
+      valid-number />
 
     <div
       ng-click="saveItem()"

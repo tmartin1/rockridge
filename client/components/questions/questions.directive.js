@@ -39,6 +39,10 @@ angular.module('rockridge')
       sections: '='
     },
     controller: function($scope) {
+      // If a binding is defined for a multi question object, 
+      if ($scope.query.type === 'multi' && $scope.query.bind) {
+        $scope.plan = $scope.plan[$scope.query.bind];
+      }
 
       var makeRow = function(){
         var row = {};
