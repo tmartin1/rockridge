@@ -7,7 +7,12 @@
   <!-- The pencil icon only shows when the text field is hovered over -->
   <div ng-if="!edit" ng-mouseenter="showIcon=true" ng-mouseleave="showIcon=false">
     <div style="display:inline-block; position:relative;">
-      <label ng-bind="object[property]" style="display:inline; style"></label>
+      <!-- TODO: Refactor this to be better -->
+      <label ng-if="type === 'number'" style="display:inline; style">{{ object[property] | number }}</label>
+      <label ng-if="type === 'currency'" style="display:inline; style">{{ object[property] | currency }}</label>
+      <label ng-if="type === 'date'" style="display:inline; style">{{ object[property] | date }}</label>
+      <label ng-if="type === 'text' || !type" style="display:inline; style">{{ object[property] }}</label>
+
       <div
         ng-click="toggle()"
         ng-class="{ 'visible': showIcon }"
@@ -25,10 +30,11 @@
   <!-- Input element for editing -->
   <!-- The save icon is always visible when in editing mode -->
   <div ng-if="!!edit" style="display:inline-block; position:relative;">
-    <input ng-bind="object[property]" style="padding-right:30px; style" />
+    <input ng-if="type !== 'number' && type !== 'currency'" ng-model="object[property]" type="{{type}}" style="padding-right:30px; style" />
+    <input ng-if="type === 'number' || type === 'currency'" ng-model="object[property]" type="{{type}}" style="padding-right:30px; style" valid-number />
 
     <div
-      ng-click="toggle()"
+      ng-click="saveItem()"
       class="ui icon button previewSaveIcon"
       style="padding:0px; border:none; background-color:white; position:absolute; left:85%; top:22%;">
       <i class="fa fa-floppy-o fa-lg"></i>
