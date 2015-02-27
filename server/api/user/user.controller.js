@@ -18,17 +18,15 @@ exports.create = function(req, res, next) {
 
 exports.savePlan = function(req, res, next) {
   var plan = new Plan();
-  console.log('req in user.controller', req);
-  plan.create(req.body['userRid'], req.body.plan, function(p,e) {
-    console.log('plan and edge created', p, e);
+  plan.create(req.body['userRid'], req.body.plan, function(plan, edge) {
+    console.log('plan and edge created');
   });
 };
 
 exports.getPlan = function(req, res, next) {
   var plan = new Plan();
-  console.log('req in user.controller', req);
-  plan.findByUserRid(req.body['userRid'], function(plan) {
-    console.log('plan', plan);
-    return plan;
+  plan.findByUserRid(req.query.userRid, function(plan) {
+  // Parsing plan data b/c we had to stringify it before for OrientDB
+  res.send(JSON.parse(plan.data));
   });
 };

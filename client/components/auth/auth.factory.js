@@ -69,12 +69,10 @@ angular.module('rockridge')
       return $cookieStore.get('token');
     },
     savePlan: function(userRid, plan) {
-      // console.log('saving plan', userRid, plan);
       User.savePlan({userRid:userRid, plan:plan});
     },
-    getPlan: function(userRid, plan) {
-      // console.log('saving plan', userRid, plan);
-      User.getPlan({userRid:userRid});
+    getPlan: function(userRid) {
+      return User.getPlan({userRid:userRid}).$promise;
     }
   };
 });

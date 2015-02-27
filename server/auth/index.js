@@ -2,7 +2,6 @@
 
 var express = require('express');
 var User = require('../api/user/user.model');
-//var config = require('../config/config');
 var auth = require('../auth/auth.service');
 
 var router = express.Router();
