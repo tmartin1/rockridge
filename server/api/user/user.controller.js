@@ -26,8 +26,7 @@ exports.savePlan = function(req, res, next) {
 exports.getPlan = function(req, res, next) {
   var plan = new Plan();
   plan.findByUserRid(req.query.userRid, function(plan) {
-    var parsePlan = JSON.parse(plan.data);
-    console.log('parsed plan', parsePlan);
-    // return plan;
+  // Parsing plan data b/c we had to stringify it before for OrientDB
+  res.send(JSON.parse(plan.data));
   });
 };

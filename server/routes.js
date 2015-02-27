@@ -25,6 +25,6 @@ module.exports = function(app) {
 
   app.route('api/user/:id/plan-builder')
   .get(function(req, res) {
-    console.log('req, res in routes', req, res);
+    console.log('res in routes', res);
   });
 };

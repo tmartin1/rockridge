@@ -72,7 +72,7 @@ angular.module('rockridge')
       User.savePlan({userRid:userRid, plan:plan});
     },
     getPlan: function(userRid) {
-      User.getPlan({userRid:userRid});
+      return User.getPlan({userRid:userRid}).$promise;
     }
   };
 });
