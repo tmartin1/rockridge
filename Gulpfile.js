@@ -110,7 +110,8 @@ gulp.task('nodemon', function() {
 // Mocha for back-end tests
 gulp.task('mocha', function() {
   return gulp.src('server/**/*.spec.js')
-    .pipe(mocha({ reporter: 'nyan' }));
+    .pipe(mocha({ reporter: 'nyan' }))
+    .once('error', function () { process.exit(); })
     .once('end', function () { process.exit(); });
 });
 
