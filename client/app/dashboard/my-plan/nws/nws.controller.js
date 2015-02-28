@@ -68,15 +68,24 @@ angular.module('rockridge')
       addOptions: '='
     },
     controller: function($scope) {
+      // Get balance for newly added nws item.
+      $scope.hideSubMenus = function() {
+        $scope.showBalanceField = false;
+      };
+
       // Add new item to user's plan.
       $scope.addNewItem = function(title) {
-        title = title || $scope.newTitle;
         $scope.group.push({
-          asset: title,
-          rate: null,
-          value: 1
+          asset: title || $scope.newTitle,
+          value: $scope.newBalance || 1,
+          rate: $scope.newRate
         });
+        // Reset input fields.
         $scope.newTitle = '';
+        $scope.newRate = null;
+        $scope.newBalance = null;
+        // Hide menus.
+        $scope.showBalanceField = false;
         $scope.showMenu = false;
       };
     },
