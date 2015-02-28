@@ -2,12 +2,13 @@
   Styles and classes for NWS view within my-plan.
 */
 .nwsViewContainer {
-  margin: 25px auto 0px;
+  margin: 1% auto 0px;
 }
 
 .nwsViewContainer td {
   padding-right: 10px;
   padding-left: 10px;
+  cursor: default;
 }
 
 .nwsSectionHeader {

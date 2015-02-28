@@ -4,6 +4,9 @@
 
 angular.module('rockridge')
 .controller('NwsViewCtrl', function($scope) {
+  $scope.test = function(){
+    $scope.recalculate();
+  };
 
   // Total value of all assets and all debts
   var calculateTotal = function(addFrom) {
@@ -18,9 +21,24 @@ angular.module('rockridge')
     }
     return total;
   };
-  $scope.totalAssets = calculateTotal($scope.plan.assets);
-  $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
-  $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
+
+  // $scope.totalAssets = calculateTotal($scope.plan.assets);
+  // $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
+  // $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
+
+  // $scope.$watchCollection('plan', function() {
+  $scope.recalculate = function() {
+    console.log('recalculating');
+    $scope.totalAssets = calculateTotal($scope.plan.assets);
+    $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
+    $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
+    console.log($scope.totalAssets);
+  };
+  $scope.recalculate();
+
+  $('.fa').on('click', function() {
+    console.log('clicked save');
+  })
 })
 
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
@@ -33,10 +51,13 @@ angular.module('rockridge')
     },
     controller: function($scope) {
       // Generate group subtotals
-      $scope.subtotal = 0;
-      for (var i=0; i<$scope.group.length; i++) {
-        $scope.subtotal += $scope.group[i]['value'] || $scope.group[i]['balance'] || 0;
-      }
+      $scope.calculateSubtotal = function() {
+        $scope.subtotal = 0;
+        for (var i=0; i<$scope.group.length; i++) {
+          $scope.subtotal += $scope.group[i]['value'] || $scope.group[i]['balance'] || 0;
+        }
+      };
+      $scope.calculateSubtotal();
     },
     templateUrl: './app/dashboard/my-plan/nws/nwsGroupTemplate.html'
   }

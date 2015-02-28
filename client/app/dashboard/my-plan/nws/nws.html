@@ -2,61 +2,65 @@
 
 <div ng-controller="NwsViewCtrl">
 
-    <table class="nwsViewContainer">
+  <table class="nwsViewContainer" ng-click="recalculate()">
 
-      <!-- Assets -->
-      <tr class="nwsSectionHeader">
-        <td>Assets</td>
-      </tr>
-      <tbody nwsgroup title="Fixed Assets" group="plan.assets.fixed"></tbody>
-      <tbody nwsgroup title="Variable Assets" group="plan.assets.variable"></tbody>
-      <tbody nwsgroup title="Personal Assets" group="plan.assets.personal"></tbody>
+    <!-- Assets -->
+    <tr class="nwsSectionHeader">
+      <td>Assets</td>
+    </tr>
+    <tbody nwsgroup title="Fixed Assets" group="plan.assets.fixed"></tbody>
+    <tbody nwsgroup title="Variable Assets" group="plan.assets.variable"></tbody>
+    <tbody nwsgroup title="Personal Assets" group="plan.assets.personal"></tbody>
 
-      <!-- Section Break -->
-      <tr class="nwsSectionBreak">
-        <td>Total Assets</td> <!-- placeholder -->
-        <td></td> <!-- placeholder -->
-        <td class="nwsSum nwsSubtotal">{{ totalAssets | number }}</td>
-      </tr>
+    <!-- Section Break -->
+    <tr class="nwsSectionBreak">
+      <td>Total Assets</td> <!-- placeholder -->
+      <td></td> <!-- placeholder -->
+      <td class="nwsSum nwsSubtotal">{{ totalAssets | number }}</td>
+    </tr>
 
-      <!-- Debts -->
-      <tr class="nwsSectionHeader">
-        <td>Liabilities</td>
-      </tr>
-      <!-- Mortgage added independently because it is stored differently -->
-      <tr class="nwsGroupItemTitle">
-        <td>Mortgages</td>
-      </tr>
-      <tr class="nwsGroupItems">
-        <td class="nwsItemName">Primary Residence</td>
-        <td class="nwsPercentage">{{ plan.mortgage.currentRate | number :2 }}%</td>
-        <td class="nwsNumber">{{ plan.mortgage.currentBalance | number }}</td>
-      </tr>
-      <tr class="nwsTotalRow">
-        <td></td> <!-- placeholder -->
-        <td></td> <!-- placeholder -->
-        <td class="nwsSum nwsSubtotal simpleTopBorder">{{ plan.mortgage.currentBalance | number }}</td>
-      </tr>
-      <!-- Non-mortgage debts -->
-      <tbody nwsgroup title="Student Loans" group="plan.debts.studentLoans"></tbody>
-      <tbody nwsgroup title="Credit Cards" group="plan.debts.creditCards"></tbody>
-      <tbody nwsgroup title="Other Debts" group="plan.debts.other"></tbody>
+    <!-- Debts -->
+    <tr class="nwsSectionHeader">
+      <td>Liabilities</td>
+    </tr>
+    <!-- Mortgage added independently because it is stored differently -->
+    <tr class="nwsGroupItemTitle">
+      <td>Mortgages</td>
+    </tr>
+    <tr class="nwsGroupItems">
+      <td class="nwsItemName">Primary Residence</td>
+      <td class="nwsPercentage">
+        <preview object="plan.mortgage" property="currentRate" type="percent"></preview>
+      </td>
+      <td class="nwsNumber">
+        <preview object="plan.mortgage" property="currentBalance" type="number" ></preview>
+      </td>
+    </tr>
+    <tr class="nwsTotalRow">
+      <td></td> <!-- placeholder -->
+      <td></td> <!-- placeholder -->
+      <td class="nwsSum nwsSubtotal simpleTopBorder">{{ plan.mortgage.currentBalance | number }}</td>
+    </tr>
+    <!-- Non-mortgage debts -->
+    <tbody nwsgroup title="Student Loans" group="plan.debts.studentLoans"></tbody>
+    <tbody nwsgroup title="Credit Cards" group="plan.debts.creditCards"></tbody>
+    <tbody nwsgroup title="Other Debts" group="plan.debts.other"></tbody>
 
-      <!-- Section Break -->
-      <tr class="nwsSectionBreak">
-        <td>Total Liabilities</td> <!-- placeholder -->
-        <td></td> <!-- placeholder -->
-        <td class="nwsSum nwsSubtotal">{{ totalDebts | number }}</td>
-      </tr>
+    <!-- Section Break -->
+    <tr class="nwsSectionBreak">
+      <td>Total Liabilities</td> <!-- placeholder -->
+      <td></td> <!-- placeholder -->
+      <td class="nwsSum nwsSubtotal">{{ totalDebts | number }}</td>
+    </tr>
 
-      <!-- Total Net Worth -->
-      <tr class="nwsSectionHeader" style="border-top: 3px black double;">
-        <td>Net Worth</td>
-        <td></td> <!-- placeholder -->
-        <td ng-if="plan.netWorth >= 0" class="nwsSum nwsTotal" style="text-align:right">{{ plan.netWorth | number }}</td>
-        <td ng-if="plan.netWorth < 0" class="nwsSum nwsTotal" style="text-align:right; color:red">({{ plan.netWorth | number }})</td>
-      </tr>
+    <!-- Total Net Worth -->
+    <tr class="nwsSectionHeader" style="border-top: 3px black double;">
+      <td>Net Worth</td>
+      <td></td> <!-- placeholder -->
+      <td ng-if="plan.netWorth >= 0" class="nwsSum nwsTotal" style="text-align:right">{{ plan.netWorth | number }}</td>
+      <td ng-if="plan.netWorth < 0" class="nwsSum nwsTotal" style="text-align:right; color:red">({{ plan.netWorth | number }})</td>
+    </tr>
 
-    </table>
+  </table>
 
 </div> <!-- End of controller scope -->
