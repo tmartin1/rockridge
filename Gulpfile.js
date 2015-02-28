@@ -107,6 +107,11 @@ gulp.task('nodemon', function() {
   nodemon({'script': './server/server.js'});
 });
 
+// Creates new test user & plan in the dB
+gulp.task('seed', function() {
+  nodemon({'script': './tests/testSeed.js'});
+});
+
 // Mocha for back-end tests
 gulp.task('mocha', function() {
   return gulp.src('server/**/*.spec.js')
@@ -151,7 +156,7 @@ gulp.task('serve', function() {
 });
 
 // Detects process.env and runs appropriate service.
-gulp.task('default', function(){
+gulp.task('default', function() {
   if(process.env.NODE_ENV === 'production'){
     runSequence('build');
   } else {

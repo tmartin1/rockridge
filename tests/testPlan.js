@@ -127,3 +127,5 @@ var testPlan = {
     netIncome: 143999
   }
 };
+
+module.exports = testPlan;
