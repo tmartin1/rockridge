@@ -1,0 +1,17 @@
+<!-- Template for adding new items to nws groups -->
+
+<div class="ui icon left pointing dropdown button" style="padding:0px;">
+  <div class="ui icon button mini" ng-click="showMenu=!showMenu">
+    <i class="plus icon"></i>
+  </div>
+  <div class="ui compact menu" ng-show="showMenu" ng-mouseleave="showMenu=false">
+    <div class="item">Checking</div>
+    <div class="item">Savings</div>
+    <div class="item">CD</div>
+    <div class="item">
+      <div class="ui input">
+        <input type="text" />
+      </div>
+    </div>
+  </div>
+</div>
