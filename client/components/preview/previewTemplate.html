@@ -5,7 +5,7 @@
 
   <!-- Text element when not editing -->
   <!-- The pencil icon only shows when the text field is hovered over -->
-  <div ng-if="!edit" ng-mouseenter="showIcon=true" ng-mouseleave="showIcon=false">
+  <div ng-if="!edit" ng-mouseenter="revealIcon()">
     <div style="display:inline-block; position:relative;">
       <!-- TODO: Refactor this to be better -->
       <label ng-if="type === 'number'" style="display:inline; style">{{ object[property] | number }}</label>
