@@ -18,7 +18,8 @@ angular.module('rockridge')
     var total = 0;
     var addToTotal = function(subset) {
       for (var item in subset) {
-        total += (item['value'] || item['balance'] || 0);
+        console.log(subset);
+        total += (subset[item]['value'] || subset[item]['balance'] || 0);
       }
     };
     for (var subset in addFrom) {
