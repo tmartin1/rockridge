@@ -30,10 +30,11 @@ angular.module('rockridge')
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
 .directive('nwsgroup', function() {
   return {
-    restrict: 'AE',
+    restrict: 'A',
     scope: {
       group: '=',
-      title: '@'
+      title: '@',
+      options: '@'
     },
     controller: function($scope) {
       // Generate group subtotals
@@ -46,5 +47,19 @@ angular.module('rockridge')
       $scope.calculateSubtotal();
     },
     templateUrl: './app/dashboard/my-plan/nws/nwsGroupTemplate.html'
+  }
+})
+
+.directive('nwsadditem', function() {
+  return {
+    restrict: 'AE',
+    scope: {
+      group: '=',
+      options: '@'
+    },
+    controller: function($scope) {
+      // stuff
+    },
+    templateUrl: './app/dashboard/my-plan/nws/addItemTemplate.html'
   }
 });
