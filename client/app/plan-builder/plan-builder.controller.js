@@ -169,7 +169,7 @@ angular.module('rockridge')
         }
       });
       // if all inputs complete, open next question or step
-      if(sectionComplete){
+      if(sectionComplete || len === 0){
         var lastQuestion = $('.green.checkmark.icon').length-1;
         // if all questions complete, move to next step
         if($scope.selectedSection === lastQuestion){
