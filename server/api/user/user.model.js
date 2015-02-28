@@ -2,33 +2,34 @@ var bcrypt = require('bcrypt');
 
 var User = function() {};
 
-// TODO? Return false if user's email is already in db
 User.prototype.create = function(email, password, cb) {
-  saltAndHash(password, null, function(data) {
-    db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)',
-      {
-        params: {
-          email: email,
-          password: data[1],
-          salt: data[0],
-          role: 'user'
-        }
-      }
-    ).then(function(userArr) {
-      cb(userArr[0]);
-    }).catch(function(err) {
-      console.log('error', err);
-    });
+  db.query('select from User where email="' + email +'"')
+  .then(function(user) {
+    if (user.length > 0) {
+      throw new Error('Cannot create account');
+    } else {
+      saltAndHash(password, null, function(data) {
+        db.query('insert into User (email, password, salt, role) values (:email, :password, :salt, :role)',
+          {
+            params: {
+              email: email,
+              password: data[1],
+              salt: data[0],
+              role: 'user'
+            }
+          }
+        ).then(function(userArr) {
+          cb(userArr[0]);
+        });
+      });
+    }
+  }).catch(function(err) {
+    // console.log(err);
   });
 };
 
 User.prototype.authenticate = function(email, password, cb) {
-  db.query('select from User where email=:email',
-  {
-    params: {
-      email: email
-    }
-  })
+  db.query('select from User where email="' + email + '"')
   .then(function(user) {
     checkPassword(password, user[0], function(passwordMatch) {
       var res = passwordMatch ? user[0] : null;
@@ -38,13 +39,7 @@ User.prototype.authenticate = function(email, password, cb) {
 };
 
 User.prototype.findByEmail = function(email, cb) {
-  db.query('select from User where email=:email',
-  {
-    params: {
-      email: email
-    },
-    limit: 1
-  })
+  db.query('select from User where email="' + email + '"')
   .then(function(user) {
     cb(user[0]);
   });
@@ -74,7 +69,6 @@ var saltAndHash = function(password, salt, cb) {
 
 var checkPassword = function(rawPassword, user, cb) {
   var tempArr = [];
-
   saltAndHash(rawPassword, user.salt, function(data) {
     cb(user.password === data[1]);
   });
