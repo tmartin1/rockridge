@@ -1,13 +1,48 @@
 <!-- Display for net worth statement -->
 
 <div ng-controller="NwsViewCtrl">
-  {{plan.fixedAssets}}
-  <center>
 
-    <table>
-      <!-- <nwsgroup group="plan.fixedAssets"></nwsgroup> -->
+    <table class="nwsViewContainer">
+
+      <!-- Assets -->
+      <tr class="nwsSectionHeader">
+        <td>Assets</td>
+      </tr>
+      <tbody nwsgroup title="Fixed Assets" group="plan.assets.fixed"></tbody>
+      <tbody nwsgroup title="Variable Assets" group="plan.assets.variable"></tbody>
+      <tbody nwsgroup title="Personal Assets" group="plan.assets.personal"></tbody>
+
+      <!-- Section Break -->
+      <tr class="nwsSectionBreak">
+        <td>Total Assets</td> <!-- placeholder -->
+        <td></td> <!-- placeholder -->
+        <td class="nwsSum nwsSubtotal">{{totalAssets}}</td>
+      </tr>
+
+      <!-- Debts -->
+      <tr class="nwsSectionHeader">
+        <td>Liabilities</td>
+      </tr>
+      <!-- <tbody nwsgroup title="Mortgage" group="plan.mortgage"></tbody> -->
+      <tbody nwsgroup title="Credit Cards" group="plan.debts.creditCards"></tbody>
+      <tbody nwsgroup title="Student Loans" group="plan.debts.studentLoans"></tbody>
+      <tbody nwsgroup title="Other Debts" group="plan.debts.other"></tbody>
+
+      <!-- Section Break -->
+      <tr class="nwsSectionBreak">
+        <td>Total Liabilities</td> <!-- placeholder -->
+        <td></td> <!-- placeholder -->
+        <td class="nwsSum nwsSubtotal">{{totalDebts}}</td>
+      </tr>
+
+      <!-- Total Net Worth -->
+      <tr class="nwsSectionHeader" style="border-top: 3px black double;">
+        <td>Net Worth</td>
+        <td></td> <!-- placeholder -->
+        <td ng-if="plan.netWorth >= 0" class="nwsSum nwsTotal" style="text-align:right">{{plan.netWorth | number}}</td>
+        <td ng-if="plan.netWorth < 0" class="nwsSum nwsTotal" style="text-align:right; color:red">({{plan.netWorth | number}})</td>
+      </tr>
+
     </table>
-
-  </center>
 
 </div> <!-- End of controller scope -->
