@@ -1,0 +1,25 @@
+<!-- Template for nws groups -->
+
+<!-- Group title -->
+<table>
+  <tr class="nwsGroupItemTitle">
+    <td>{{ title }}</td>
+    <td></td> <!-- placeholder -->
+    <td></td> <!-- placeholder -->
+  </tr>
+
+  <!-- Group data -->
+  <tr ng-repeat="item in group" class="nwsGroupItems">
+    <td class="nwsItemName">{{ item.asset }}</td>
+    <td ng-if="!item.rate"></td> <!-- placeholder -->
+    <td ng-if="!!item.rate" class="nwsPercentage">{{ item.rate | number :2 }}%</td>
+    <td class="nwsNumber">{{ item.value || item.balance | number }}</td>
+  </tr>
+
+  <!-- Group sub-total -->
+  <tr class="nwsTotalRow">
+    <td></td> <!-- placeholder -->
+    <td></td> <!-- placeholder -->
+    <td class="nwsSum nwsSubtotal simpleTopBorder">{{ subtotal | number }}</td>
+  </tr>
+</table>
