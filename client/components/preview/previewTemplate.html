@@ -29,27 +29,34 @@
   </div>
 
   <!-- Input element for editing -->
-  <!-- The save icon is always visible when in editing mode -->
-  <div ng-if="!!edit" style="display:inline-block; position:relative;">
+  <div ng-if="!!edit" class="ui input" style="display:inline-block; position:relative;">
 
     <input
       ng-if="type !== 'number' && type !== 'currency'"
       ng-model="object[property]"
       type="{{type}}"
-      style="padding-right:30px; style" />
+      style="padding-right:30px; padding:1px; margin:0px; style" />
 
     <input
       ng-if="type === 'number' || type === 'currency'"
       ng-model="object[property]"
       type="{{type}}"
-      style="padding-right:30px; style"
+      style="padding-right:30px; padding:1px; margin:0px; style"
       valid-number />
 
+    <!-- The save and delete icons are always visible when in editing mode -->
     <div
       ng-click="saveItem()"
       class="ui icon button previewSaveIcon"
-      style="padding:0px; border:none; background-color:white; position:absolute; left:85%; top:22%;">
+      style="padding:0px; border:none; background-color:white; position:absolute; left:105%; top:22%;">
       <i class="fa fa-floppy-o fa-lg"></i>
+    </div>
+
+    <div
+      ng-click="deleteItem()"
+      class="ui icon button previewSaveIcon"
+      style="padding:0px; border:none; background-color:white; position:absolute; left:120%; top:22%;">
+      <i class="fa fa-trash-o fa-lg"></i>
     </div>
 
   </div>

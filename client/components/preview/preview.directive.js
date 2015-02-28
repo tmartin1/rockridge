@@ -52,6 +52,14 @@ angular.module('rockridge')
         }
       };
 
+      // Deletes the item from the user's plan
+      // TODO: Refactor this to work. Should delete the object from the plan.
+      // ... may need to move this outside of the preview directive preserve the sanctity of the scope.
+      $scope.deleteItem = function() {
+        console.log($scope.object);
+        $scope.object = {};
+      };
+
       // Default edit icon to hidden.
       $scope.showIcon = false;
 
