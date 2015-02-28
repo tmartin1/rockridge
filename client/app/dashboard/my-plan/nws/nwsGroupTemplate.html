@@ -2,9 +2,9 @@
 
 <!-- Group title -->
 <tr class="nwsGroupItemTitle">
-  <td>
+  <td ng-mouseenter="showAddItemIcon = true" ng-mouseleave="showAddItemIcon = false">
     <span class="margin-right-sm" style="float:left; text-decoration:underline;">{{ title }}</span>
-    <nwsadditem group="group" options="options"></nwsadditem>
+    <nwsadditem ng-show="showAddItemIcon" group="group" add-options="addOptions[title]"></nwsadditem>
   </td>
   <td></td> <!-- placeholder -->
   <td></td> <!-- placeholder -->
@@ -16,11 +16,9 @@
     <preview object="item" property="asset" type="text"></preview>
   </td>
   <td ng-if="!item.rate"></td> <!-- placeholder -->
-  <!-- <td ng-if="!!item.rate" class="nwsPercentage">{{ item.rate | number :2 }}%</td> -->
   <td ng-if="!!item.rate" class="nwsPercentage">
     <preview object="item" property="rate" type="percent"></preview>
   </td>
-  <!-- <td class="nwsNumber">{{ item.value || item.balance | number }}</td> -->
   <td ng-if="!!item.value" class="nwsNumber">
     <preview object="item" property="value" type="number"></preview>
   </td>

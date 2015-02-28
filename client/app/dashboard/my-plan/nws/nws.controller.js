@@ -18,13 +18,13 @@ angular.module('rockridge')
     return total;
   };
 
-  // $scope.$watchCollection('plan', function() {
   $scope.recalculate = function() {
     $scope.totalAssets = calculateTotal($scope.plan.assets);
     $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
     $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
   };
   $scope.recalculate();
+
 })
 
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
@@ -33,8 +33,7 @@ angular.module('rockridge')
     restrict: 'A',
     scope: {
       group: '=',
-      title: '@',
-      options: '@'
+      title: '@'
     },
     controller: function($scope) {
       // Generate group subtotals
@@ -45,6 +44,17 @@ angular.module('rockridge')
         }
       };
       $scope.calculateSubtotal();
+
+      // Default options for adding items to groups.
+      $scope.addOptions = {
+        'Fixed Assets': [ 'Checking Account', 'Savings Account', 'CD' ],
+        'Variable Assets': [ 'Nonretirement Brokerage Acct.', 'Roth IRA', '401k at myemployer' ],
+        'Personal Assets': [ 'Primary Residence', 'Car', 'Stuff' ],
+        // Mortgages: [ 'Primary Residence', 'Vacation Home', 'HELOC' ],
+        'Student Loans': [ 'Federal Perkins', 'GradPLUS', 'Stafford' ],
+        'Credit Cards': [ 'VISA', 'MasterCard', 'AmEx' ],
+        'Other': [ 'Auto Loan', 'Home Improvement Loan', 'Money Owed to Parents' ]
+      };
     },
     templateUrl: './app/dashboard/my-plan/nws/nwsGroupTemplate.html'
   }
@@ -52,13 +62,23 @@ angular.module('rockridge')
 
 .directive('nwsadditem', function() {
   return {
-    restrict: 'AE',
+    restrict: 'E',
     scope: {
       group: '=',
-      options: '@'
+      addOptions: '='
     },
     controller: function($scope) {
-      // stuff
+      // Add new item to user's plan.
+      $scope.addNewItem = function(title) {
+        title = title || $scope.newTitle;
+        $scope.group.push({
+          asset: title,
+          rate: null,
+          value: 1
+        });
+        $scope.newTitle = '';
+        $scope.showMenu = false;
+      };
     },
     templateUrl: './app/dashboard/my-plan/nws/addItemTemplate.html'
   }
