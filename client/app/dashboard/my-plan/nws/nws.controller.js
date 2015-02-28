@@ -4,10 +4,6 @@
 
 angular.module('rockridge')
 .controller('NwsViewCtrl', function($scope) {
-  $scope.test = function(){
-    $scope.recalculate();
-  };
-
   // Total value of all assets and all debts
   var calculateTotal = function(addFrom) {
     var total = 0;
@@ -22,23 +18,13 @@ angular.module('rockridge')
     return total;
   };
 
-  // $scope.totalAssets = calculateTotal($scope.plan.assets);
-  // $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
-  // $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
-
   // $scope.$watchCollection('plan', function() {
   $scope.recalculate = function() {
-    console.log('recalculating');
     $scope.totalAssets = calculateTotal($scope.plan.assets);
     $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
     $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
-    console.log($scope.totalAssets);
   };
   $scope.recalculate();
-
-  $('.fa').on('click', function() {
-    console.log('clicked save');
-  })
 })
 
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
