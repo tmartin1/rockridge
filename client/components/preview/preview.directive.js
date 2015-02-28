@@ -70,7 +70,7 @@ angular.module('rockridge')
 
       ngModelCtrl.$parsers.push(function(val) {
         if (angular.isUndefined(val)) {
-            var val = '';
+          var val = '';
         }
         var clean = val.replace(/[^0-9]+/g, '');
         if (val !== clean) {

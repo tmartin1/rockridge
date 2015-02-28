@@ -80,10 +80,10 @@ angular.module('rockridge')
       options: [
         {
           text: 'Button 1',
-          value: function() { alert('Button 1!') }
+          value: function() { alert('Button 1!'); }
         }, {
           text: 'Button 2',
-          value: function() { alert('Button 2!') }
+          value: function() { alert('Button 2!'); }
         }
       ]
     },
