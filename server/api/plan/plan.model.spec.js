@@ -109,5 +109,3 @@ describe('Plan Methods', function() {
   });
 
 });
-
-module.exports = testPlan;

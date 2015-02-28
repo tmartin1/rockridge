@@ -16,49 +16,88 @@ var User = require('../server/api/user/user.model');
 var testPlan = require('./testPlan');
 var testUser = require('./testUser');
 
-var plan = new Plan();
-var user = new User();
+var planModel = new Plan();
+var userModel = new User();
 var email = testUser.email;
-
-// Get test user's RID, for deleting them and the plan linked to them
+var password = testUser.password
 var userRid;
-user.findByEmail(email, function(user) {
-  userRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
-});
+var newUserRid;
 
-// Delete test plan linked to test user
-var query = 'delete vertex Plan where in_=' + userRid;
+// If test user already exists in the dB, delete their plan and them.
+userModel.findByEmail(email, function(user) {
+  // Check if test user already exists in dB
+  if (!user) {
+    // Create new test user
+    userModel.create(email, password, function(user) {
+      newUserRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
+      console.log('new test user created', newUserRid);
 
-db.query(query)
-.then(function(num) {
-  console.log('Total ' + num + ' plans deleted');
-})
-.catch(function(err) {
-  console.log('error', err);
-});
+      for (var key in testUser) {
+        if (key !=='email' || key !=='password') {
+          query = 'update ' + newUserRid + ' set ' + key + '="' + testUser[key] + '"';
+          db.query(query)
+          .then(function(numValsAdded) {})
+          // TODO: keep all these catch statements?
+          .catch(function(err) {
+            console.log('error', err);
+          });
+        }
+      }
 
-// Delete test user
-query = 'delete vertex User where email="' + email + '"';
-db.query(query)
-.then(function(num) {
-  console.log('Total ' + num + ' users deleted');
-})
-.catch(function(err) {
-  console.log('error', err);
-});
+      // Create new test plan
+      planModel.create(newUserRid, JSON.stringify(testPlan), function(plan) {
+        console.log('plan created', plan['@rid']);
+      });
+    });
+  } else {
+    // Get the existing test user's RID
+    userRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
+    console.log('First @rid', userRid);
 
-// Create new test user
-testUser = JSON.stringify(testUser);
-var query = 'create vertex User content ' + testUser;
-db.query(query)
-.then(function(user) {});
+    // Delete test plan linked to test user's RID
+    var query = 'delete vertex Plan where in_=' + userRid;
 
-// Get test user's RID, then create a new plan linked to it
-user.findByEmail(email, function(user) {
-  userRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
-  console.log('user created ' + userRid);
-  testPlan = JSON.stringify(testPlan);
-  plan.create(userRid, testPlan, function(plan) {
-    console.log('plan created', plan['@rid']);
-  });
+    db.query(query)
+    .then(function(num) {
+      console.log('Total ' + num + ' plans deleted');
+
+      // Delete test user by userRid
+      query = 'delete vertex ' + userRid;
+      db.query(query)
+      .then(function(num) {
+        if (num[0] == 1) {
+          console.log('User ' + userRid + ' deleted');
+        } else if (num[0] == 0) {
+          console.log('No users deleted.');
+        }
+
+        // Create new test user
+        userModel.create(email, password, function(user) {
+          newUserRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
+          console.log('New test user created', newUserRid);
+
+          for (var key in testUser) {
+            if (key !=='email' || key !=='password') {
+              query = 'update ' + newUserRid + ' set ' + key + '="' + testUser[key] + '"';
+              db.query(query)
+              .then(function(num) {
+                // console.log(num + ' user value updated');
+              })
+              .catch(function(err) {
+                console.log('error', err);
+              });
+            }
+          }
+
+          // Create new test plan
+          planModel.create(newUserRid, JSON.stringify(testPlan), function(plan) {
+            console.log('Plan created', plan['@rid']);
+          });
+        });
+      })
+      .catch(function(err) {
+        console.log('error', err);
+      });
+    });
+  }
 });
