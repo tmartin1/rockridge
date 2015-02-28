@@ -1,0 +1,35 @@
+<!-- Template for nws groups -->
+
+<!-- Group title -->
+<tr class="nwsGroupItemTitle">
+  <td ng-mouseenter="showAddItemIcon = true" ng-mouseleave="showAddItemIcon = false">
+    <span class="margin-right-sm" style="float:left; text-decoration:underline;">{{ title }}</span>
+    <nwsadditem ng-show="showAddItemIcon" group="group" add-options="addOptions[title]"></nwsadditem>
+  </td>
+  <td></td> <!-- placeholder -->
+  <td></td> <!-- placeholder -->
+</tr>
+
+<!-- Group data -->
+<tr ng-repeat="item in group" class="nwsGroupItems" ng-click="calculateSubtotal()">
+  <td class="nwsItemName">
+    <preview object="item" property="asset" type="text"></preview>
+  </td>
+  <td ng-if="!item.rate"></td> <!-- placeholder -->
+  <td ng-if="!!item.rate" class="nwsPercentage">
+    <preview object="item" property="rate" type="percent"></preview>
+  </td>
+  <td ng-if="!!item.value" class="nwsNumber">
+    <preview object="item" property="value" type="number"></preview>
+  </td>
+  <td ng-if="!!item.balance" class="nwsNumber">
+    <preview object="item" property="balance" type="number"></preview>
+  </td>
+</tr>
+
+<!-- Group sub-total -->
+<tr class="nwsTotalRow">
+  <td></td> <!-- placeholder -->
+  <td></td> <!-- placeholder -->
+  <td class="nwsSum nwsSubtotal simpleTopBorder">{{ subtotal | number }}</td>
+</tr>

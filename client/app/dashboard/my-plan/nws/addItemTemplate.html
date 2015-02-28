@@ -1,0 +1,27 @@
+<!-- Template for adding new items to nws groups -->
+
+<div class="ui icon dropdown button" style="padding:0px;">
+  <div class="ui icon button mini" ng-click="showMenu=!showMenu" style="padding:5px;">
+    <i class="plus icon"></i>
+  </div>
+  <div class="ui compact menu" ng-show="showMenu" ng-mouseleave="showMenu=false" style="min-width:150px;">
+
+    <div ng-repeat="option in addOptions" class="item" ng-click="showBalanceField=true">
+      <span class="text">{{ option }}</span>
+      <!-- TODO: Fix the balance submenu and add option to input rate -->
+      <div class="ui fluid menu" ng-show="showBalanceField">
+        <div class="item">
+          <span class="text">Balance: </span>
+          <input class="ui input" ng-enter="addNewItem(option)" ng-model="newBalance" type="number" />
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="ui input" style="margin-bottom:5px; margin-top:5px;">
+        <input type="text" placeholder="Add custom..." ng-enter="getBalance()" ng-model="newTitle" />
+      </div>
+    </div>
+
+  </div>
+</div>

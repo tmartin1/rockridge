@@ -5,12 +5,13 @@
 
   <!-- Text element when not editing -->
   <!-- The pencil icon only shows when the text field is hovered over -->
-  <div ng-if="!edit" ng-mouseenter="showIcon=true" ng-mouseleave="showIcon=false">
+  <div ng-if="!edit" ng-mouseenter="revealIcon()" ng-mouseleave="hideIcon()">
     <div style="display:inline-block; position:relative;">
       <!-- TODO: Refactor this to be better -->
       <label ng-if="type === 'number'" style="display:inline; style">{{ object[property] | number }}</label>
       <label ng-if="type === 'currency'" style="display:inline; style">{{ object[property] | currency }}</label>
       <label ng-if="type === 'date'" style="display:inline; style">{{ object[property] | date }}</label>
+      <label ng-if="type === 'percent'" style="display:inline; style">{{ object[property] | number :2 }}%</label>
       <label ng-if="type === 'text' || !type" style="display:inline; style">{{ object[property] }}</label>
 
       <div
@@ -28,27 +29,34 @@
   </div>
 
   <!-- Input element for editing -->
-  <!-- The save icon is always visible when in editing mode -->
-  <div ng-if="!!edit" style="display:inline-block; position:relative;">
+  <div ng-if="!!edit" class="ui input" style="display:inline-block; position:relative;">
 
     <input
       ng-if="type !== 'number' && type !== 'currency'"
       ng-model="object[property]"
       type="{{type}}"
-      style="padding-right:30px; style" />
+      style="padding-right:30px; padding:1px; margin:0px; style" />
 
     <input
       ng-if="type === 'number' || type === 'currency'"
       ng-model="object[property]"
       type="{{type}}"
-      style="padding-right:30px; style"
+      style="padding-right:30px; padding:1px; margin:0px; style"
       valid-number />
 
+    <!-- The save and delete icons are always visible when in editing mode -->
     <div
       ng-click="saveItem()"
       class="ui icon button previewSaveIcon"
-      style="padding:0px; border:none; background-color:white; position:absolute; left:85%; top:22%;">
+      style="padding:0px; border:none; background-color:white; position:absolute; left:105%; top:22%;">
       <i class="fa fa-floppy-o fa-lg"></i>
+    </div>
+
+    <div
+      ng-click="deleteItem()"
+      class="ui icon button previewSaveIcon"
+      style="padding:0px; border:none; background-color:white; position:absolute; left:120%; top:22%;">
+      <i class="fa fa-trash-o fa-lg"></i>
     </div>
 
   </div>
