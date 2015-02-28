@@ -5,20 +5,11 @@
 angular.module('rockridge')
 .controller('NwsViewCtrl', function($scope) {
 
-  // If plan has a mortgage, then add primary residence to personal assets and mortgage information to plan.debts.other
-  (function addMortgageInfo() {
-    if ($scope.plan.hasMortgage) {
-      // addMortgageInfo
-      console.log('adding mortgage');
-    }
-  })();
-
-  // Total value of all assets
+  // Total value of all assets and all debts
   var calculateTotal = function(addFrom) {
     var total = 0;
     var addToTotal = function(subset) {
       for (var item in subset) {
-        console.log(subset);
         total += (subset[item]['value'] || subset[item]['balance'] || 0);
       }
     };
@@ -28,7 +19,8 @@ angular.module('rockridge')
     return total;
   };
   $scope.totalAssets = calculateTotal($scope.plan.assets);
-  $scope.totalDebts = calculateTotal($scope.plan.debts);
+  $scope.totalDebts = calculateTotal($scope.plan.debts) + $scope.plan.mortgage.currentBalance;
+  $scope.plan.netWorth = $scope.totalAssets - $scope.totalDebts;
 })
 
 // Directive to display nws groups of items (fixed assets, variable assets, etc.)
@@ -42,7 +34,6 @@ angular.module('rockridge')
     controller: function($scope) {
       // Generate group subtotals
       $scope.subtotal = 0;
-        // console.log($scope.group);
       for (var i=0; i<$scope.group.length; i++) {
         $scope.subtotal += $scope.group[i]['value'] || $scope.group[i]['balance'] || 0;
       }

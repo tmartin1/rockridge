@@ -23,9 +23,23 @@
       <tr class="nwsSectionHeader">
         <td>Liabilities</td>
       </tr>
-      <!-- <tbody nwsgroup title="Mortgage" group="plan.mortgage"></tbody> -->
-      <tbody nwsgroup title="Credit Cards" group="plan.debts.creditCards"></tbody>
+      <!-- Mortgage added independently because it is stored differently -->
+      <tr class="nwsGroupItemTitle">
+        <td>Mortgages</td>
+      </tr>
+      <tr class="nwsGroupItems">
+        <td class="nwsItemName">Primary Residence</td>
+        <td class="nwsPercentage">{{ plan.mortgage.currentRate | number :2 }}%</td>
+        <td class="nwsNumber">{{ plan.mortgage.currentBalance | number }}</td>
+      </tr>
+      <tr class="nwsTotalRow">
+        <td></td> <!-- placeholder -->
+        <td></td> <!-- placeholder -->
+        <td class="nwsSum nwsSubtotal simpleTopBorder">{{ plan.mortgage.currentBalance | number }}</td>
+      </tr>
+      <!-- Non-mortgage debts -->
       <tbody nwsgroup title="Student Loans" group="plan.debts.studentLoans"></tbody>
+      <tbody nwsgroup title="Credit Cards" group="plan.debts.creditCards"></tbody>
       <tbody nwsgroup title="Other Debts" group="plan.debts.other"></tbody>
 
       <!-- Section Break -->
@@ -39,8 +53,8 @@
       <tr class="nwsSectionHeader" style="border-top: 3px black double;">
         <td>Net Worth</td>
         <td></td> <!-- placeholder -->
-        <td ng-if="plan.netWorth >= 0" class="nwsSum nwsTotal" style="text-align:right">{{plan.netWorth | number}}</td>
-        <td ng-if="plan.netWorth < 0" class="nwsSum nwsTotal" style="text-align:right; color:red">({{plan.netWorth | number}})</td>
+        <td ng-if="plan.netWorth >= 0" class="nwsSum nwsTotal" style="text-align:right">{{ plan.netWorth | number }}</td>
+        <td ng-if="plan.netWorth < 0" class="nwsSum nwsTotal" style="text-align:right; color:red">({{ plan.netWorth | number }})</td>
       </tr>
 
     </table>
