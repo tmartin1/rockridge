@@ -47,7 +47,7 @@
 
 .nwsGroupItems .nwsPercentage {
   text-align: right;
-  padding: 0px 20px;
+  padding: 0px 30px;
 }
 
 .nwsSectionBreak {
@@ -63,7 +63,6 @@
 .nwsSum:before {
   content: "$";
   float: left;
-  padding-left: 20px;
   padding-right: 20px;
 }
 
