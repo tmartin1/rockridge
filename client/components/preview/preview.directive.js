@@ -34,8 +34,7 @@ angular.module('rockridge')
       type: '@',
       style: '@'
     },
-    controller: function($scope) {
-
+    controller: function($scope, $timeout) {
       // Switch between text field (read only) and input field (editable).
       $scope.toggle = function() {
         $scope.edit = !$scope.edit;
@@ -44,7 +43,7 @@ angular.module('rockridge')
       // Saves the item to $scope.plan and changes view back to read-only.
       $scope.saveItem = function() {
         // Verify that the type is still valid before saving.
-        if ($scope.type === undefined || $scope.type === 'currency' ||
+        if ($scope.type !== 'number' || $scope.type !== 'percent' || $scope.type !== 'date' ||
             $scope.type === 'number' && angular.isNumber($scope.object[$scope.property]) ||
             $scope.type === 'percent' && angular.isNumber($scope.object[$scope.property]) ||
             $scope.type === 'date' && angular.isDate($scope.object[$scope.property]))
@@ -55,12 +54,20 @@ angular.module('rockridge')
 
       // Default edit icon to hidden.
       $scope.showIcon = false;
+
+      // Show edit icon on hover.
       $scope.revealIcon = function() {
+        $timeout.cancel($scope.hideMe);
         $scope.showIcon = true;
-        setTimeout(function() {
-          $scope.showIcon = false;
-        },1);
       };
+
+      // Hide edit icon 1s after leaving field.
+      $scope.hideIcon = function() {
+        $scope.hideMe = $timeout(function() {
+          $scope.showIcon = false;
+        }, 100);
+      };
+
     },
     templateUrl: './components/preview/previewTemplate.html'
   };
