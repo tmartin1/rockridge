@@ -46,6 +46,7 @@ angular.module('rockridge')
         // Verify that the type is still valid before saving.
         if ($scope.type === undefined || $scope.type === 'currency' ||
             $scope.type === 'number' && angular.isNumber($scope.object[$scope.property]) ||
+            $scope.type === 'percent' && angular.isNumber($scope.object[$scope.property]) ||
             $scope.type === 'date' && angular.isDate($scope.object[$scope.property]))
         {
           $scope.toggle();
@@ -54,6 +55,12 @@ angular.module('rockridge')
 
       // Default edit icon to hidden.
       $scope.showIcon = false;
+      $scope.revealIcon = function() {
+        $scope.showIcon = true;
+        setTimeout(function() {
+          $scope.showIcon = false;
+        },1);
+      };
     },
     templateUrl: './components/preview/previewTemplate.html'
   };
@@ -64,20 +71,16 @@ angular.module('rockridge')
   return {
     require: '?ngModel',
     link: function(scope, element, attrs, ngModelCtrl) {
-      if(!ngModelCtrl) {
-        return;
-      }
+      if(!ngModelCtrl) return;
 
       ngModelCtrl.$parsers.push(function(val) {
-        if (angular.isUndefined(val)) {
-            var val = '';
-        }
-        var clean = val.replace(/[^0-9]+/g, '');
-        if (val !== clean) {
+        if (angular.isUndefined(val)) var val = '';
+        var clean = val.toString().replace( /[^0-9]+/g, '');
+        if (val.toString() !== clean) {
           ngModelCtrl.$setViewValue(clean);
           ngModelCtrl.$render();
         }
-        return clean;
+        return val;
       });
 
       element.bind('keypress', function(event) {
