@@ -40,18 +40,18 @@
         Login
       </a>
 
-      <a
+      <!-- <a
         class="item"
         ng-show="isLoggedIn()">
         <p class="navbar-text"> Hello {{getCurrentUser().name}} </p>
-      </a>
+      </a> -->
 
       <a
         class="item"
         ng-show="isLoggedIn()"
         ng-class="{active: isActive('settings')}"
         href="/settings">
-        <span class="glyphicon glyphicon-cog"></span>
+        <i class='setting icon'></i>
       </a>
 
       <a
