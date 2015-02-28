@@ -25,7 +25,10 @@
     </tr>
     <!-- Mortgage added independently because it is stored differently -->
     <tr class="nwsGroupItemTitle">
-      <td>Mortgages</td>
+      <td ng-mouseenter="showAddItemIcon = true" ng-mouseleave="showAddItemIcon = false">
+        <span class="margin-right-sm" style="float:left; text-decoration:underline;">Mortgages</span>
+        <nwsadditem ng-show="showAddItemIcon" group="group" add-options="[ 'Primary Residence', 'Vacation Home', 'HELOC' ]"></nwsadditem>
+      </td>
     </tr>
     <tr class="nwsGroupItems">
       <td class="nwsItemName">Primary Residence</td>
@@ -33,7 +36,7 @@
         <preview object="plan.mortgage" property="currentRate" type="percent"></preview>
       </td>
       <td class="nwsNumber">
-        <preview object="plan.mortgage" property="currentBalance" type="number" ></preview>
+        <preview object="plan.mortgage" property="currentBalance" type="number"></preview>
       </td>
     </tr>
     <tr class="nwsTotalRow">
