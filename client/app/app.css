@@ -64,7 +64,7 @@
 }
 
 /*
- * Basic padding classes 
+ * Basic padding classes
 */
 .pad-sm {
   padding: 10px;
@@ -124,4 +124,11 @@
 
 .pad-right-lg {
   padding-right: 30px;
+}
+
+body {
+  background-image: url('../public/images/backgroundPattern.jpg') !important;
+  background-repeat: repeat !important;
+  background-position: top left;
+  background-attachment: fixed;
 }
