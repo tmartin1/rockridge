@@ -65,7 +65,7 @@ angular.module('rockridge')
       $scope.hideIcon = function() {
         $scope.hideMe = $timeout(function() {
           $scope.showIcon = false;
-        }, 100);
+        }, 500);
       };
 
     },
