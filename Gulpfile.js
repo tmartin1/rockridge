@@ -93,7 +93,7 @@ gulp.task('browserSync', function() {
 });
 
 // Building the index file with all its dependencies injected
-gulp.task('index', function () {
+gulp.task('index', function() {
   var target = gulp.src('./client/index.html');
   var all = paths.styles.concat(paths.scripts, paths.vendors);
   // don't actual read the files (speed boost)
@@ -115,9 +115,9 @@ gulp.task('seed', function() {
 // Mocha for back-end tests
 gulp.task('mocha', function() {
   return gulp.src('server/**/*.spec.js')
-    .pipe(mocha({ reporter: 'nyan' }))
-    .once('error', function () { process.exit(); })
-    .once('end', function () { process.exit(); });
+    .pipe(mocha({ reporter: 'nyan' }));
+    // .once('error', function() { process.exit(); })
+    // .once('end', function() { process.exit(); });
 });
 
 // Karma for front-end tests
