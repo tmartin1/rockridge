@@ -115,9 +115,9 @@ gulp.task('seed', function() {
 // Mocha for back-end tests
 gulp.task('mocha', function() {
   return gulp.src('server/**/*.spec.js')
-    .pipe(mocha({ reporter: 'nyan' }));
-    // .once('error', function() { process.exit(); })
-    // .once('end', function() { process.exit(); });
+    .pipe(mocha({ reporter: 'nyan' }))
+    .once('error', function() { process.exit(); })
+    .once('end', function() { process.exit(); });
 });
 
 // Karma for front-end tests
