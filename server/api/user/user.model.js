@@ -5,6 +5,7 @@ var User = function() {};
 User.prototype.create = function(email, password, cb) {
   db.query('select from User where email="' + email +'"')
   .then(function(user) {
+    // If an existing user is found w/the same email address, throw error.
     if (user.length > 0) {
       throw new Error('Cannot create account');
     } else {
@@ -24,7 +25,7 @@ User.prototype.create = function(email, password, cb) {
       });
     }
   }).catch(function(err) {
-    // console.log(err);
+    console.log(err);
   });
 };
 
@@ -70,7 +71,13 @@ var saltAndHash = function(password, salt, cb) {
 var checkPassword = function(rawPassword, user, cb) {
   var tempArr = [];
   saltAndHash(rawPassword, user.salt, function(data) {
+    console.log('salt and hash cb data', data);
+    if (user.password !== data[1]) {
+      throw new Error('Cannot create account');
+    }
     cb(user.password === data[1]);
+  }).catch(function(err) {
+    console.log(err);
   });
 };
 
