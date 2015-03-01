@@ -73,7 +73,7 @@ var checkPassword = function(rawPassword, user, cb) {
   saltAndHash(rawPassword, user.salt, function(data) {
     console.log('salt and hash cb data', data);
     if (user.password !== data[1]) {
-      throw new Error('Cannot create account');
+      throw new Error('Wrong password');
     }
     cb(user.password === data[1]);
   }).catch(function(err) {
