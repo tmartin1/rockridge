@@ -41,8 +41,16 @@ describe('User Methods', function() {
     it('should create a new user', function() {
       expect(testUser.email).to.equal('testuser@gmail.com');
     });
-  });
 
+    it('should not allow accounts with identical email addresses', function() {
+      try {
+        user.create('testuser@gmail.com', 'testPass2', function() {})
+      }
+      catch(err) {
+        expect(err.message).to.equal('Cannot create account');
+      }
+    });
+  });
 
   // Test find user methods
   describe('find user', function() {
