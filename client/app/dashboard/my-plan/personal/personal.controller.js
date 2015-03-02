@@ -22,4 +22,11 @@ angular.module('rockridge')
     transition: 'drop'
   });
 
+  $scope.addChildRow = function() {
+    $scope.plan.children.push({
+      name: '',
+      birthdate: ''
+    });
+  };
+
 });

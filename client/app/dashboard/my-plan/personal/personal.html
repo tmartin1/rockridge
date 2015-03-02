@@ -123,19 +123,14 @@
       <div ng-repeat="child in plan.children">
         <div class="two fields">
           <div class="field">
-            <label>Name</label>
-            <div class="field">
-              <input type="text" ng-model="child.name" placeholder="Name">
-            </div>
+            <input type="text" ng-model="child.name" placeholder="Name">
           </div>
           <div class="field">
-            <label>Birthdate</label>
-            <div class="field">
-              <input type="date" ng-model="child.birthdate" placeholder="Birthdate">
-            </div>
+            <input type="date" ng-model="child.birthdate" placeholder="Birthdate">
           </div>
         </div>
       </div> <!-- End ng-repeat -->
+      <button class="ui button" ng-click="addChildRow()">Add Child</button>
     </div> <!-- End children section -->
   </form>
 
