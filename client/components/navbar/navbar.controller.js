@@ -3,6 +3,7 @@
 angular.module('rockridge')
 .controller('NavbarCtrl', function($scope, $state, $location, Auth) {
   $scope.user = {};
+  $scope.isLoggedIn = Auth.isLoggedIn;
 
   $scope.menu = [{
     'title': 'About',
@@ -34,18 +35,12 @@ angular.module('rockridge')
 
   $scope.signup = function() {
     $('.ui.modal').modal('hide');
-    Auth.createUser($scope.user)
-    .then(function(user){});
+    Auth.createUser($scope.user);
   };
 
   $scope.login = function() {
     $('.ui.modal').modal('hide');
-    Auth.login()
-    .then(function(user){});
-  };
-
-  $scope.isLoggedIn = function() {
-    return Auth.isLoggedIn();
+    Auth.login($scope.user);
   };
 
   // Sets active class on sidebar.
@@ -57,6 +52,8 @@ angular.module('rockridge')
   $scope.showModal = function(type) {
     $scope.modalType = type;
     $('.ui.modal').modal('show');
+    $scope.submitForm = $scope[type]; // Set submit function to login or signup.
   };
+
 
 });
