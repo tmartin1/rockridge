@@ -58,6 +58,8 @@ angular.module('rockridge')
       { name: 'Child 1 Name', birthdate: new Date(2015, 2, 14) }
     ],
     cityResident: 'San Francisco',
+    streetResident: '1234 W. 5th St.',
+    zipResident: '12345',
     debts: {
       creditCards: [
         { asset: 'VISA', rate: 10.99, balance: 5000 },
