@@ -12,6 +12,7 @@ exports.create = function(req, res, next) {
   var user = new User();
   user.create(req.body.email, req.body.password, function(user) {
     req.user = user;
+    console.log('user', user);
     auth.setTokenCookie(req, res);
   });
 };

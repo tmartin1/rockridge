@@ -34,8 +34,7 @@ angular.module('rockridge')
       type: '@',
       style: '@'
     },
-    controller: function($scope) {
-
+    controller: function($scope, $timeout) {
       // Switch between text field (read only) and input field (editable).
       $scope.toggle = function() {
         $scope.edit = !$scope.edit;
@@ -44,16 +43,39 @@ angular.module('rockridge')
       // Saves the item to $scope.plan and changes view back to read-only.
       $scope.saveItem = function() {
         // Verify that the type is still valid before saving.
-        if ($scope.type === undefined || $scope.type === 'currency' ||
+        if ($scope.type !== 'number' || $scope.type !== 'percent' || $scope.type !== 'date' ||
             $scope.type === 'number' && angular.isNumber($scope.object[$scope.property]) ||
+            $scope.type === 'percent' && angular.isNumber($scope.object[$scope.property]) ||
             $scope.type === 'date' && angular.isDate($scope.object[$scope.property]))
         {
           $scope.toggle();
         }
       };
 
+      // Deletes the item from the user's plan
+      // TODO: Refactor this to work. Should delete the object from the plan.
+      // ... may need to move this outside of the preview directive preserve the sanctity of the scope.
+      $scope.deleteItem = function() {
+        console.log($scope.object);
+        $scope.object = {};
+      };
+
       // Default edit icon to hidden.
       $scope.showIcon = false;
+
+      // Show edit icon on hover.
+      $scope.revealIcon = function() {
+        $timeout.cancel($scope.hideMe);
+        $scope.showIcon = true;
+      };
+
+      // Hide edit icon 1s after leaving field.
+      $scope.hideIcon = function() {
+        $scope.hideMe = $timeout(function() {
+          $scope.showIcon = false;
+        }, 500);
+      };
+
     },
     templateUrl: './components/preview/previewTemplate.html'
   };
@@ -64,20 +86,16 @@ angular.module('rockridge')
   return {
     require: '?ngModel',
     link: function(scope, element, attrs, ngModelCtrl) {
-      if(!ngModelCtrl) {
-        return;
-      }
+      if(!ngModelCtrl) return;
 
       ngModelCtrl.$parsers.push(function(val) {
-        if (angular.isUndefined(val)) {
-            var val = '';
-        }
-        var clean = val.replace(/[^0-9]+/g, '');
-        if (val !== clean) {
+        if (angular.isUndefined(val)) var val = '';
+        var clean = val.toString().replace( /[^0-9]+/g, '');
+        if (val.toString() !== clean) {
           ngModelCtrl.$setViewValue(clean);
           ngModelCtrl.$render();
         }
-        return clean;
+        return val;
       });
 
       element.bind('keypress', function(event) {

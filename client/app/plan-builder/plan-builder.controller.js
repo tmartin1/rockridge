@@ -29,8 +29,8 @@ angular.module('rockridge')
     };
     nextStep();
 
-    $scope.previous;
-    $scope.next;
+    $scope.previous = null;
+    $scope.next = null;
     $scope.isCollapsed = true;
     $scope.pctComplete = 40;
     $scope.accordionSection = 0;
@@ -176,16 +176,17 @@ angular.module('rockridge')
         });
         var lastQuestion = $('.green.checkmark.icon').length-1;
         // if all questions complete, move to next step
+        var title = null;
         if($scope.selectedSection === lastQuestion || len === 0){
-          var title = $('.title.active').attr('data-title');
+          title = $('.title.active').attr('data-title');
           $scope.sections.complete[title] = true;
           $scope.selectedSection = 0;
           $state.go($scope.next);
         } else { // move to next section
-          var title = $('.title.active').attr('data-title');
+          title = $('.title.active').attr('data-title');
           $scope.sections.complete[title] = true;
           $scope.selectedSection++;
-          var title = $($('.ui.accordion')
+          title = $($('.ui.accordion')
               .find('.title')[$scope.selectedSection]).attr('data-title');
           $scope.sections.enabled[title] = true;
           $('.ui.accordion').accordion('open', $scope.selectedSection);
@@ -200,5 +201,5 @@ angular.module('rockridge')
 
     $scope.savePlan = function() {
       Auth.savePlan($scope.plan);
-    }
+    };
   });
