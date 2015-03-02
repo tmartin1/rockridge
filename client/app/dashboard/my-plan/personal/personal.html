@@ -1,17 +1,142 @@
 <!-- Display for personal information (to allow user to edit/update) -->
 
 <div ng-controller="PersonalViewCtrl">
+  <p>
+    Below is your personal information, if any of it is incorrect or if anything has changed since you last updated your plan, please update it in the field below.
+  </p>
+  <br>
+  <form class="ui form">
+    <h4 class="ui dividing header">Personal</h4>
+    <!-- User name and birthdate -->
+    <div class="three fields">
+      <div class="field">
+        <label>First Name</label>
+        <div class="field">
+          <input type="text" ng-model="plan.firstname" placeholder="First Name">
+        </div>
+      </div>
+      <div class="field">
+        <label>Last Name</label>
+        <div class="field">
+          <input type="text" ng-model="plan.lastname" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="field">
+        <label>Birthdate</label>
+        <div class="field">
+          <input type="date" ng-model="plan.birthdate" placeholder="Birthdate">
+        </div>
+      </div>
+    </div>
 
-  <ul>
-    <li>Displays the user's personal info that isn't displayed in the other tabs.</li>
-    <ul>
-      <li>first/last name</li>
-      <li>address</li>
-      <li>marital status</li>
-      <li>spouse info</li>
-      <li>etc.</li>
-    </ul>
-    <li>Each element that can be edited by the user should reveal a <i class="fa fa-pencil"></i> icon when hovered over that will allow them to edit that specific element (or one per page).</li>
-  </ul>
+    <!-- Marital status -->
+    <div class="four fields">
+      <div class="field">
+        <label>Are you married?</label>
+        <select class="" ng-model="plan.maritalStatus">
+          <option value="true" >Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Do you have children?</label>
+        <select class="" ng-model="plan.hasChildren">
+          <option value="true" >Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="field"></div>
+      <div class="field"></div>
+    </div>
 
+    <!-- Spouse name and birthdate -->
+    <div class="three fields" ng-if="plan.maritalStatus==='true'">
+      <div class="field">
+        <label>First Name</label>
+        <div class="field">
+          <input type="text" ng-model="plan.spouseFirstName" placeholder="First Name">
+        </div>
+      </div>
+      <div class="field">
+        <label>Last Name</label>
+        <div class="field">
+          <input type="text" ng-model="plan.spouseLastName" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="field">
+        <label>Birthdate</label>
+        <div class="field">
+          <input type="date" ng-model="plan.spouseBirthdate" placeholder="Birthdate">
+        </div>
+      </div>
+    </div>
+
+    <!-- Address info -->
+    <h4 class="ui dividing header">Resident Address</h4>
+    <div class="three fields">
+      <div class="field">
+        <label>Street</label>
+        <input type="text" ng-model="plan.streetResident" placeholder="Address">
+      </div>
+      <div class="field">
+        <label>City</label>
+        <input type="text" ng-model="plan.cityResident" placeholder="City">
+      </div>
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>State</label>
+            <select class="" ng-model="plan.stateResident">
+              <option ng-repeat="state in states" ng-value="{{state}}">{{ state }}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Zip Code</label>
+            <input type="text" ng-model="plan.zipResident" placeholder="Zip Code">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <h4 class="ui header">Work Address</h4>
+    <div class="three fields">
+      <div class="field">
+        <label>Address</label>
+        <input type="text" ng-model="plan.workStreet" placeholder="Address">
+      </div>
+      <div class="field">
+        <label>City</label>
+        <input type="text" ng-model="plan.workCity" placeholder="City">
+      </div>
+      <div class="field">
+        <label>State</label>
+        <select class="" ng-model="plan.workState">
+          <option ng-repeat="state in states" ng-value="{{state}}">{{ state }}</option>
+        </select>
+      </div>
+    </div> -->
+    <br>
+
+    <!-- Children Info -->
+    <div ng-if="plan.hasChildren === 'true'">
+      <h4 class="ui dividing header">Children</h4>
+      <div ng-repeat="child in plan.children">
+        <div class="two fields">
+          <div class="field">
+            <label>Name</label>
+            <div class="field">
+              <input type="text" ng-model="child.name" placeholder="Name">
+            </div>
+          </div>
+          <div class="field">
+            <label>Birthdate</label>
+            <div class="field">
+              <input type="date" ng-model="child.birthdate" placeholder="Birthdate">
+            </div>
+          </div>
+        </div>
+      </div> <!-- End ng-repeat -->
+    </div> <!-- End children section -->
+
+  </form>
 </div> <!-- End of controller scope -->
