@@ -3,7 +3,12 @@
 'use strict';
 
 angular.module('rockridge')
-.controller('PersonalViewCtrl', function($scope) {
+.controller('PersonalViewCtrl', function($scope, Auth) {
+  // Saves plan to database.
+  $scope.savePlan = function() {
+    Auth.savePlan($scope.user.rid, $scope.plan);
+  };
+
   // TODO: Refactor the states list so it's not so redundant.
   $scope.states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL',
     'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
@@ -12,13 +17,9 @@ angular.module('rockridge')
     'VT', 'WA', 'WI', 'WV', 'WY'
   ];
 
+  // Animation for dropdown menu.
   $('.dropdown').dropdown({
     transition: 'drop'
   });
-
-  $scope.testLog = function() {
-    console.log($scope.plan.maritalStatus);
-  };
-  $scope.testLog();
 
 });
