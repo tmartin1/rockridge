@@ -5,7 +5,7 @@ When writing any block of code that is logically subordinate to the line immedia
 * Do not put any tab characters anywhere in your code.
 
 * Increase the indent level for all blocks by two extra spaces
-    * When a line opens a block, the next line starts 2 spaces further in than the line that opened
+    * When a line opens a block, the next line starts 2 spaces further in than the line that opened.
 
         ```javascript
         // good:
@@ -19,7 +19,7 @@ When writing any block of code that is logically subordinate to the line immedia
         }
         ```
 
-    * When a line closes a block, that line starts at the same level as the line that opened the block
+    * When a line closes a block, that line starts at the same level as the line that opened the block.
 
         ```javascript
         // good:
@@ -33,7 +33,7 @@ When writing any block of code that is logically subordinate to the line immedia
           }
         ```
 
-    * In the event of promises or dependents that are not inside the scope of the previous line, there should be no difference in their indentation
+    * In the event of promises or dependents that are not inside the scope of the previous line, there should be no difference in their indentation.
 
         ```javascript
         // good:
@@ -59,8 +59,6 @@ When writing any block of code that is logically subordinate to the line immedia
             }
         }});
         ```
-
-    * use sublime's arrow collapsing as a guide. do the collapsing lines seem like they should be 'contained' by the line with an arrow on it?
 
 
 ### Variable names
@@ -88,7 +86,7 @@ When writing any block of code that is logically subordinate to the line immedia
     var animal = ['cat', 'dog', 'fish'];
     ```
 
-* Name your variables after their purpose, not their structure
+* Name your variables after their purpose, not their structure.
 
     ```javascript
     // good:
@@ -147,20 +145,10 @@ When writing any block of code that is logically subordinate to the line immedia
     }
     ```
 
-* Don't use function statements for the entire first half of the course. They introduce a slew of subtle new rules to how the language behaves, and without a clear benefit. Once you and all your peers are expert level in the second half, you can start to use the more (needlessly) complicated option if you like.
-
-    ```javascript
-    // good:
-    var go = function() {...};
-
-    // bad:
-    function stop() {...};
-    ```
-
 
 ### Semicolons
 
-* Don't forget semicolons at the end of lines
+* Don't forget semicolons at the end of lines.
 
   ```javascript
   // good:
@@ -171,7 +159,6 @@ When writing any block of code that is logically subordinate to the line immedia
   ```
 
 * Semicolons are not required at the end of statements that include a block--i.e. `if`, `for`, `while`, etc.
-
 
   ```javascript
   // good:
@@ -206,6 +193,7 @@ When writing any block of code that is logically subordinate to the line immedia
 * Conserve line quantity by minimizing the number lines you write in. The more concisely your code is written, the more context can be seen in one screen.
 * Conserve line length by minimizing the amount of complexity you put on each line. Long lines are difficult to read. Rather than a character count limit, I recommend limiting the amount of complexity you put on a single line. Try to make it easily read in one glance. This goal is in conflict with the line quantity goal, so you must do your best to balance them.
 
+
 ### Comments
 
 * Provide comments any time you are confident it will make reading your code easier.
@@ -235,7 +223,7 @@ When writing any block of code that is logically subordinate to the line immedia
     var secondItem = getSecond();
     ```
 
-* Put `else` and `else if` statements on the same line as the ending curly brace for the preceding `if` block
+* Put `else` and `else if` statements on the same line as the ending curly brace for the preceding `if` block.
     ```javascript
     // good:
     if(condition) {
@@ -254,26 +242,9 @@ When writing any block of code that is logically subordinate to the line immedia
     ```
 
 
-
 ### Working with files
 
 * Do not end a file with any character other than a newline.
-* Don't use the -a or -m flags for `git commit` for the first half of the class, since they conceal what is actually happening (and do slightly different things than most people expect).
-
-    ```shell
-    # good:
-    > git add .
-    > git commit
-    [save edits to the commit message file using the text editor that opens]
-
-    # bad:
-    > git commit -a
-    [save edits to the commit message file using the text editor that opens]
-
-    # bad:
-    > git add .
-    > git commit -m "updated algorithm"
-    ```
 
 
 ### Opening or closing too many blocks at once
@@ -300,7 +271,7 @@ When writing any block of code that is logically subordinate to the line immedia
 * Use a new var statement for each line you declare a variable on.
 * Do not break variable declarations onto mutiple lines.
 * Use a new line for each variable declaration.
-* See http://benalman.com/news/2012/05/multiple-var-statements-javascript/ for more details
+* See http://benalman.com/news/2012/05/multiple-var-statements-javascript/ for more details.
 
     ```javascript
     // good:
@@ -338,7 +309,7 @@ When writing any block of code that is logically subordinate to the line immedia
     };
     ```
 
-* For lists, put commas at the end of each newline, not at the beginning of each item in a list
+* For lists, put commas at the end of each newline, not at the beginning of each item in a list.
 
     ```javascript
     // good:
@@ -387,7 +358,7 @@ When writing any block of code that is logically subordinate to the line immedia
     <img id="lucy" />
     ```
 
-* Do not include a `type=text/javascript"` attribute on script tags
+* Do not include a `type=text/javascript"` attribute on script tags.
 
     ```html
     <!-- good -->
