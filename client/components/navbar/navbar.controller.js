@@ -22,7 +22,7 @@ angular.module('rockridge')
   }, {
     'title': 'Rockridge University',
     'class': 'fa fa-graduation-cap',
-    'link': 'university.welcome',
+    'link': 'university',
     'shown': true,
     'abstractLink': 'university'
   }];
