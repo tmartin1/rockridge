@@ -4,40 +4,27 @@
 
 angular.module('rockridge')
 .controller('OverviewViewCtrl', function($scope) {
-<<<<<<< HEAD
-=======
-  // Helper functions
->>>>>>> Add Net Worth chart to overview.
 
   // Calculates and return the total of a given group.
   var sumGroup = function(group) {
     var total = 0;
-<<<<<<< HEAD
     for (var key in group) {
       if (typeof group[key] === 'number') total += group[key];
       else total += group[key]['value'] || group[key]['balance'];
-=======
-    for (var i=0; i<group.length; i++) {
-      total += group[i]['value'] || group[i]['balance'];
->>>>>>> Add Net Worth chart to overview.
     }
     return total;
   }
 
 <<<<<<< HEAD
 =======
-  
->>>>>>> Add Net Worth chart to overview.
+
+>>>>>>> Add income tax pie chart to overview.
   // Net Worth Chart Logic
   // http://www.highcharts.com/demo/pie-drilldown
   var fixedAssets = sumGroup($scope.plan.assets.fixed);
   var variableAssets = sumGroup($scope.plan.assets.variable);
   var personalAssets = sumGroup($scope.plan.assets.personal);
-<<<<<<< HEAD
   var mortgages = $scope.plan.mortgage.currentBalance;
-=======
-  var mortgages = sumGroup($scope.plan.mortgage.currentBalance);
->>>>>>> Add Net Worth chart to overview.
   var studentLoans = sumGroup($scope.plan.debts.studentLoans);
   var creditCards = sumGroup($scope.plan.debts.creditCards);
   var otherDebts = sumGroup($scope.plan.debts.other);
@@ -60,11 +47,7 @@ angular.module('rockridge')
       allowDecimals: false,
       min: 0,
       title: {
-<<<<<<< HEAD
         text: 'Amount'
-=======
-        text: 'Amount ($)'
->>>>>>> Add Net Worth chart to overview.
       }
     },
     tooltip: {
@@ -118,7 +101,6 @@ angular.module('rockridge')
     'savings': null
   };
   var sliceData = [{
-<<<<<<< HEAD
     drilldown: 'Fixed Expenses',
     name: 'Fixed Expenses',
     visible: true,
@@ -130,26 +112,15 @@ angular.module('rockridge')
     y: (flexibleExpenses / totalCashFlowOut) * 100
   }, {
     drilldown: 'Savings',
+<<<<<<< HEAD
     name: 'Long-Term Savings',
 =======
-    drilldown: 'fixed expenses',
-    name: 'fixed expenses',
-    visible: true,
-    y: (fixedExpenses / totalCashFlowOut) * 100
-  }, {
-    drilldown: 'flexible expenses',
-    name: 'flexible expenses',
-    visible: true,
-    y: (flexibleExpenses / totalCashFlowOut) * 100
-  }, {
-    drilldown: 'savings',
-    name: 'savings',
->>>>>>> Add Net Worth chart to overview.
+    name: 'Savings',
+>>>>>>> Add income tax pie chart to overview.
     visible: true,
     y: (savings / totalCashFlowOut) * 100
   }];
   var drillDownSlices = [{
-<<<<<<< HEAD
     name: 'Fixed Expenses',
     id: 'Fixed Expenses',
     data: [ 20, 60, 20]
@@ -158,20 +129,12 @@ angular.module('rockridge')
     id: 'Flexible Expenses',
     data: [ 25, 50, 25]
   }, {
+<<<<<<< HEAD
     name: 'Long-Term Savings',
-    id: 'Savings',
 =======
-    name: 'fixed expenses',
-    id: 'fixed expenses',
-    data: [ 20, 60, 20]
-  }, {
-    name: 'flexible expenses',
-    id: 'flexible expenses',
-    data: [ 25, 50, 25]
-  }, {
-    name: 'savings',
-    id: 'savings',
->>>>>>> Add Net Worth chart to overview.
+    name: 'Savings',
+>>>>>>> Add income tax pie chart to overview.
+    id: 'Savings',
     data: [ 10, 70, 20]
   }];
 
@@ -190,23 +153,17 @@ angular.module('rockridge')
       series: {
         dataLabels: {
           enabled: true,
-<<<<<<< HEAD
           format: '{point.name}'
-=======
-          format: '{point.name}: {point.y:.1f}%'
->>>>>>> Add Net Worth chart to overview.
         }
       }
     },
     tooltip: {
-<<<<<<< HEAD
       enabled: true,
-      pointFormat: '<b>{point.percentage:.1f}%</b>'
+<<<<<<< HEAD
 =======
-      enabled: false,
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
->>>>>>> Add Net Worth chart to overview.
+      // headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+>>>>>>> Add income tax pie chart to overview.
+      pointFormat: '<b>{point.percentage:.1f}%</b>'
     },
     series: [{
       name: 'top',
@@ -233,6 +190,47 @@ angular.module('rockridge')
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
   var start = calculateAge($scope.plan.birthdate);
+=======
+  // Build the chart
+  $('#taxContainer').highcharts({
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false
+    },
+    title: {
+      text: 'Income Tax Analysis'
+    },
+    subtitle: {
+      text: 'click any asset or debt in the legend to add or remove it from the graph'
+    },
+    tooltip: {
+      pointFormat: '<b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+            enabled: true
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      type: 'pie',
+      data: [
+        [ 'Federal', $scope.plan.taxProjection.projected.federal ],
+        [ 'State and City', $scope.plan.taxProjection.projected.local ],
+        [ 'FICA', sumGroup($scope.plan.taxProjection.projected.fica) ],
+        [ 'AMT', $scope.plan.taxProjection.projected.amt ],
+        [ 'Net Income', $scope.plan.taxProjection.netIncome + $scope.plan.spouse401kContribution + $scope.plan.user401kContribution ]
+      ]
+    }]
+  });
+  // hide highcharts.com logo
+  $('text[text-anchor=end]').hide();
+>>>>>>> Add income tax pie chart to overview.
 
   // Populate rage and averages
   // TODO: Use the actual numbers once the calculations are complete.
@@ -335,11 +333,5 @@ angular.module('rockridge')
   });
   // hide highcharts.com logo
   $('text[text-anchor=end]').hide();
-=======
-
-
-  // Tax Chart Logic
-
->>>>>>> Add Net Worth chart to overview.
 
 });
