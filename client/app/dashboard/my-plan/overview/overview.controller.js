@@ -108,7 +108,7 @@ angular.module('rockridge')
     y: (flexibleExpenses / totalCashFlowOut) * 100
   }, {
     drilldown: 'Savings',
-    name: 'Savings',
+    name: 'Long-Term Savings',
     visible: true,
     y: (savings / totalCashFlowOut) * 100
   }];
@@ -121,7 +121,7 @@ angular.module('rockridge')
     id: 'Flexible Expenses',
     data: [ 25, 50, 25]
   }, {
-    name: 'Savings',
+    name: 'Long-Term Savings',
     id: 'Savings',
     data: [ 10, 70, 20]
   }];
