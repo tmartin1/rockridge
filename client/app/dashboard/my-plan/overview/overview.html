@@ -7,19 +7,23 @@
   </div>
 
   <!-- Shown overview of plan if the user has completed plan-builder -->
-  <div ng-show="!user.builderComplete">
-    
-    <!-- Net worth summary -->
-    <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+  <div class="ui two column centered grid" ng-show="!user.builderComplete">
 
-    <!-- Budget summary -->
-    <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    <div class="column">
+      <!-- Net worth summary -->
+      <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+      <br><br>
+      <!-- Retirement summary -->
+      <div id="retirementContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    </div>
 
-    <!-- Retirement summary -->
-    <div id="retirementContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-
-    <!-- Tax summary -->
-    <div id="taxContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    <div class="column">
+      <!-- Budget summary -->
+      <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+      <br><br>
+      <!-- Tax summary -->
+      <div id="taxContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    </div>
 
   </div> <!-- End overview content -->
 
