@@ -1,15 +1,31 @@
-<!-- TODO: Show link to plan builder if user has not completed plan builder -->
-<div>
+<!-- Display for my-plan overview -->
 
-</div>
+<div ng-controller="OverviewViewCtrl">
+  <!-- TODO: Show link to plan builder if user has not completed plan builder -->
+  <div ng-show="!user.builderComplete">
 
-<!-- Shown overview of plan if the user has completed plan-builder -->
-<div>
+  </div>
 
-  <p>
-    See overview of their plan on this tab.<br>
-    Click on other tabs to review that specific info and update inputs.<br>
-    Click on '+' tab to add new tools to their plan (college savings, etc.)
-  </p>
+  <!-- Shown overview of plan if the user has completed plan-builder -->
+  <div ng-show="!user.builderComplete">
+    <!-- Net worth summary -->
+    <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+    <!-- Budget summary -->
+    <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+    <!-- Retirement summary -->
+    <div class="">
+      <h3>Retirement at a Glance</h3>
+
+    </div>
+
+    <!-- Tax summary -->
+    <div class="">
+      <h3>Income Tax Analysis</h3>
+
+    </div>
+
+  </div> <!-- End overview content -->
 
 </div>
