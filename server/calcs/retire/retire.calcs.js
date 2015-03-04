@@ -37,11 +37,7 @@ module.exports.retirementProjection = function(plan){
   }
   if(result.married){
       // need to add spouse to
-    // monthly needs
-      //Is this going to stay the same?
-    // result.nonRetirementAccounts
-    // result.retireAccounts
-      //Do these accounts change?
+    
     // result.maxSaveLongTerm  * 2
     result.maxSaveLongTerm = result.maxSaveLongTerm * 2;
     // monthly savings  plan.spouseAggregateMonthlySavings + plan.aggregateMonthlySavings
