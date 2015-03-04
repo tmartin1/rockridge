@@ -101,7 +101,7 @@ angular.module('rockridge')
     otherDeductions: 5000,
     pensionIncome: 0,
     sameWorkResidence: 'true',
-    spouse401kContribution: 19000,
+    spouse401kContribution: 11000,
     spouseBirthdate: new Date(1996, 8, 6),
     spouseCityResident: 'San Francisco',
     spouseEmployerDisabilityInsurance: undefined,
