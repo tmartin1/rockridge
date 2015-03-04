@@ -53,7 +53,7 @@ angular.module('rockridge')
     index: 1
   }, {
     title: 'Personal Assets',
-    question: "These are the kind of assets you may not normally consider, things like your house, car, etc. If you don't have any, feel free to move to the next section.",
+    question: "These are the kind of assets you may not normally consider, like your house, your car, etc. If you don't have any, feel free to move to the next section.",
     bind: 'personalAssets',
     type: 'table',
     fields: [{
