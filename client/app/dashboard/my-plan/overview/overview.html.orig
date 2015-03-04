@@ -27,6 +27,7 @@
     </div>
 =======
   <div ng-show="!user.builderComplete">
+    
     <!-- Net worth summary -->
     <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
 
@@ -34,13 +35,11 @@
     <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
 
     <!-- Retirement summary -->
-    <h3>Retirement Projection</h3>
-    <!-- TODO: Add retirement projection graph -->
     <div id="retirementContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
 
     <!-- Tax summary -->
     <div id="taxContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
->>>>>>> Add income tax pie chart to overview.
+>>>>>>> Add sample retirement projection to overview.
 
   </div> <!-- End overview content -->
 
