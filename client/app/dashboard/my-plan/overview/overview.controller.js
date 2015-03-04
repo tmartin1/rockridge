@@ -9,19 +9,20 @@ angular.module('rockridge')
   // Calculates and return the total of a given group.
   var sumGroup = function(group) {
     var total = 0;
-    for (var i=0; i<group.length; i++) {
-      total += group[i]['value'] || group[i]['balance'];
+    for (var key in group) {
+      if (typeof group[key] === 'number') total += group[key];
+      else total += group[key]['value'] || group[key]['balance'];
     }
     return total;
   }
 
-  
+
   // Net Worth Chart Logic
   // http://www.highcharts.com/demo/pie-drilldown
   var fixedAssets = sumGroup($scope.plan.assets.fixed);
   var variableAssets = sumGroup($scope.plan.assets.variable);
   var personalAssets = sumGroup($scope.plan.assets.personal);
-  var mortgages = sumGroup($scope.plan.mortgage.currentBalance);
+  var mortgages = $scope.plan.mortgage.currentBalance;
   var studentLoans = sumGroup($scope.plan.debts.studentLoans);
   var creditCards = sumGroup($scope.plan.debts.creditCards);
   var otherDebts = sumGroup($scope.plan.debts.other);
@@ -98,32 +99,32 @@ angular.module('rockridge')
     'savings': null
   };
   var sliceData = [{
-    drilldown: 'fixed expenses',
-    name: 'fixed expenses',
+    drilldown: 'Fixed Expenses',
+    name: 'Fixed Expenses',
     visible: true,
     y: (fixedExpenses / totalCashFlowOut) * 100
   }, {
-    drilldown: 'flexible expenses',
-    name: 'flexible expenses',
+    drilldown: 'Flexible Expenses',
+    name: 'Flexible Expenses',
     visible: true,
     y: (flexibleExpenses / totalCashFlowOut) * 100
   }, {
-    drilldown: 'savings',
-    name: 'savings',
+    drilldown: 'Savings',
+    name: 'Savings',
     visible: true,
     y: (savings / totalCashFlowOut) * 100
   }];
   var drillDownSlices = [{
-    name: 'fixed expenses',
-    id: 'fixed expenses',
+    name: 'Fixed Expenses',
+    id: 'Fixed Expenses',
     data: [ 20, 60, 20]
   }, {
-    name: 'flexible expenses',
-    id: 'flexible expenses',
+    name: 'Flexible Expenses',
+    id: 'Flexible Expenses',
     data: [ 25, 50, 25]
   }, {
-    name: 'savings',
-    id: 'savings',
+    name: 'Savings',
+    id: 'Savings',
     data: [ 10, 70, 20]
   }];
 
@@ -142,14 +143,14 @@ angular.module('rockridge')
       series: {
         dataLabels: {
           enabled: true,
-          format: '{point.name}: {point.y:.1f}%'
+          format: '{point.name}'
         }
       }
     },
     tooltip: {
-      enabled: false,
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      enabled: true,
+      // headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat: '<b>{point.percentage:.1f}%</b>'
     },
     series: [{
       name: 'top',
@@ -165,7 +166,45 @@ angular.module('rockridge')
 
 
   // Retirement Chart Logic
-
+  // Build the chart
+  $('#taxContainer').highcharts({
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false
+    },
+    title: {
+      text: 'Income Tax Analysis'
+    },
+    subtitle: {
+      text: 'click any asset or debt in the legend to add or remove it from the graph'
+    },
+    tooltip: {
+      pointFormat: '<b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+            enabled: true
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      type: 'pie',
+      data: [
+        [ 'Federal', $scope.plan.taxProjection.projected.federal ],
+        [ 'State and City', $scope.plan.taxProjection.projected.local ],
+        [ 'FICA', sumGroup($scope.plan.taxProjection.projected.fica) ],
+        [ 'AMT', $scope.plan.taxProjection.projected.amt ],
+        [ 'Net Income', $scope.plan.taxProjection.netIncome + $scope.plan.spouse401kContribution + $scope.plan.user401kContribution ]
+      ]
+    }]
+  });
+  // hide highcharts.com logo
+  $('text[text-anchor=end]').hide();
 
   // Tax Chart Logic
 
