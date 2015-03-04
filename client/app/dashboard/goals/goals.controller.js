@@ -12,7 +12,6 @@ angular.module('rockridge')
   // Marks a goal as complete or not.
   $scope.checkGoal = function(goal) {
     goal.complete = !goal.complete;
-    console.log(goal);
   };
 
   // Creates a new goal.

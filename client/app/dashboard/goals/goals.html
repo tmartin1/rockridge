@@ -1,16 +1,8 @@
 <h2 class="ui top attached header">Goals</h2>
 
 <div class="ui attached segment">
-  <!-- <ul>
-    <li ng-repeat="goal in plan.goals.plan">{{ goal.text }}</li>
-    <li ng-repeat="goal in plan.goals.user">{{ goal.text }}</li>
-    <li>
-      <input>
-      <button name="button">Add Goal</button>
-    </li>
-  </ul> -->
-
   <div class="ui relaxed list">
+
     <!-- Display plan calculated goals first -->
     <h3>Plan defined goals:</h3>
     <div class="item" ng-repeat="goal in plan.goals.plan">
@@ -25,17 +17,21 @@
     <div class="item" ng-repeat="goal in plan.goals.user">
       <div class="ui checkbox" style="width:100%" ng-click="checkGoal(goal, $index)">
         <input type="checkbox" ng-checked="goal.complete">
-        <label>{{ goal.text }}</label>
+        <label>
+          {{ goal.text }}
+          <div class="ui icon button" style="padding:2px; float:right; background-color:white;" ng-click="removeGoal($index)">
+            <i class="trash icon"></i>
+          </div>
+        </label>
       </div>
-      <button style="float:right; font-decoration:italic;" ng-click="removeGoal($index)">
-        <i class="fa fa-trash-o"></i>
-      </button>
     </div>
 
     <!-- Input for user to add new personal goals -->
     <div class="item ui input">
-      <input class="" placeholder="Add new goal..." ng-model="newGoal">
-      <button name="button" ng-click="createGoal()">Add Goal</button>
+      <input class="ui attached segment" placeholder="Add new personal goal..." ng-model="newGoal" ng-enter="createGoal()">
+      <div class="ui bottom attached button" ng-click="createGoal()" style="width:75px; padding:5px;">Add Goal</div>
+      <!-- <button name="button" ng-click="createGoal()">Add Goal</button> -->
     </div>
-  </div>
+
+  </div> <!-- End ui relaxed list -->
 </div>
