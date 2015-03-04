@@ -13,9 +13,9 @@ var testPlan = {
       { asset: 'Other Stuff', value: 10000 }
     ],
     variable: [
-      { asset: 'Brokerage Account', value: 25000 },
-      { asset: 'User 401k', value: 137000 },
-      { asset: 'Spouse 401k', value: 10000 }
+      { asset: 'Brokerage Account', value: 25000, retirementAcct: false },
+      { asset: 'User 401k', value: 137000, retirementAcct: true },
+      { asset: 'Spouse 401k', value: 10000, retirementAcct: true }
     ],
   },
   birthdate: new Date(1969, 5, 9),
