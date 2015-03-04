@@ -24,7 +24,7 @@
     <h3>Personal goals:</h3>
     <div class="item" ng-repeat="goal in plan.goals.user">
       <div class="ui checkbox" style="width:100%" ng-click="checkGoal(goal, $index)">
-        <input type="checkbox">
+        <input type="checkbox" ng-checked="goal.complete">
         <label>{{ goal.text }}</label>
       </div>
       <button style="float:right; font-decoration:italic;" ng-click="removeGoal($index)">
@@ -34,7 +34,7 @@
 
     <!-- Input for user to add new personal goals -->
     <div class="item ui input">
-      <input class="" placeholder="Add new goal...">
+      <input class="" placeholder="Add new goal..." ng-model="newGoal">
       <button name="button" ng-click="createGoal()">Add Goal</button>
     </div>
   </div>

@@ -10,14 +10,18 @@ angular.module('rockridge')
 .controller('GoalsCtrl', function($scope) {
 
   // Marks a goal as complete or not.
-  $scope.checkGoal = function(goal, index) {
+  $scope.checkGoal = function(goal) {
+    goal.complete = !goal.complete;
     console.log(goal);
-    console.log(index);
   };
 
   // Creates a new goal.
   $scope.createGoal = function() {
-    //
+    $scope.plan.goals.user.push({
+      text: $scope.newGoal,
+      created: new Date(),
+      complete: false
+    });
   };
 
   // Removes selected goal from the list.
