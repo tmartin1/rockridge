@@ -4,7 +4,6 @@
 
 angular.module('rockridge')
 .controller('OverviewViewCtrl', function($scope) {
-  // Helper functions
 
   // Calculates and return the total of a given group.
   var sumGroup = function(group) {
@@ -15,7 +14,6 @@ angular.module('rockridge')
     }
     return total;
   }
-
 
   // Net Worth Chart Logic
   // http://www.highcharts.com/demo/pie-drilldown
@@ -45,7 +43,7 @@ angular.module('rockridge')
       allowDecimals: false,
       min: 0,
       title: {
-        text: 'Amount ($)'
+        text: 'Amount'
       }
     },
     tooltip: {
@@ -149,7 +147,6 @@ angular.module('rockridge')
     },
     tooltip: {
       enabled: true,
-      // headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
       pointFormat: '<b>{point.percentage:.1f}%</b>'
     },
     series: [{
@@ -166,6 +163,79 @@ angular.module('rockridge')
 
 
   // Retirement Chart Logic
+  var ranges = [];
+  var averages = [];
+
+  // Calculate user age for start point.
+  function calculateAge(birthday) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+  var start = calculateAge($scope.plan.birthdate);
+
+  // Populate rage and averages
+  // TODO: Use the actual numbers once the calculations are complete.
+  var stdev;
+  for (var i=0; i<(120-start); i++) {
+    averages.push([
+      i,
+      (variableAssets * (i*0.08)) + savings
+    ]);
+    stdev = ((120-i)/(i+1));
+    ranges.push([
+      i,
+      averages[i][1] - (stdev * averages[i][1]),
+      averages[i][1] + (stdev * averages[i][1])
+      // -1 * ( (120-i) * 5 ),
+      // (120-start) * 5
+    ]);
+  }
+  // End placeholder retirement calculations
+
+  $('#retirementContainer').highcharts({
+    title: {
+      text: 'Retirement Savings Projection'
+    },
+    xAxis: {
+      type: 'number',
+      title: {
+        text: 'Age'
+      }
+    },
+    yAxis: {
+      title: {
+        text: 'Total Savings'
+      }
+    },
+    tooltip: {
+      crosshairs: true,
+      shared: true
+    },
+    series: [{
+      name: 'Projected Savings',
+      data: averages,
+      zIndex: 1,
+      marker: {
+        fillColor: 'white',
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[0]
+      }
+    }, {
+      name: 'Standard Deviation',
+      data: ranges,
+      type: 'arearange',
+      lineWidth: 0,
+      linkedTo: ':previous',
+      color: Highcharts.getOptions().colors[0],
+      fillOpacity: 0.3,
+      zIndex: 0
+    }]
+  });
+  // hide highcharts.com logo
+  $('text[text-anchor=end]').hide();
+
+  // Tax Chart Logic
   // Build the chart
   $('#taxContainer').highcharts({
     chart: {
@@ -205,8 +275,5 @@ angular.module('rockridge')
   });
   // hide highcharts.com logo
   $('text[text-anchor=end]').hide();
-
-  // Tax Chart Logic
-
 
 });
