@@ -34,7 +34,7 @@
 
       <!-- prev and next buttons -->
       <div class='margin-bottom-md'>
-        <a class="ui button" ng-if="!!previous" ng-href="{{previous}}">
+        <a class="ui button" ng-if="!!previous" ui-sref="{{previous}}">
           <i class="fa fa-chevron-left"></i> Previous
         </a>
         <a class="ui button" ng-if="!!next" ng-click='nextQuestion()'>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <button class='ui button' ng-click='showModal();'>Save Progress</button>
+      <button class='ui button' ng-click='showModal()'>Save Progress</button>
     </div>
   </center>
 

@@ -3,7 +3,6 @@
 angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
     Auth, User) {
-
     // Define plan object that will be used and accessed by the different planning states.
     // TODO: If plan is partially complete, this should fetch previously entered data from DB.
     $scope.plan = {};
@@ -32,7 +31,7 @@ angular.module('rockridge')
     $scope.previous = null;
     $scope.next = null;
     $scope.isCollapsed = true;
-    $scope.pctComplete = 40;
+    $scope.pctComplete = 0;
     $scope.accordionSection = 0;
     $scope.user = {};
     $scope.signup = function() {
@@ -179,7 +178,10 @@ angular.module('rockridge')
         var title = null;
         if($scope.selectedSection === lastQuestion || len === 0){
           title = $('.title.active').attr('data-title');
-          $scope.sections.complete[title] = true;
+          if(!$scope.sections.complete[title]){
+            $scope.sections.complete[title] = true;
+            $scope.pctComplete += 20;
+          }
           $scope.selectedSection = 0;
           $state.go($scope.next);
         } else { // move to next section
