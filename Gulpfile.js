@@ -116,8 +116,7 @@ gulp.task('seed', function() {
 gulp.task('mocha', function() {
   return gulp.src('server/**/*.spec.js')
     .pipe(mocha({ reporter: 'nyan' }))
-    .once('error', function() { process.exit(); })
-    .once('end', function() { process.exit(); });
+    .on('error', function() { process.exit(); });
 });
 
 // Karma for front-end tests
@@ -127,7 +126,8 @@ gulp.task('karma', function() {
       configFile: 'karma.conf.js',
       action: 'run'
     }))
-    .on('error', function(err) { throw err; });
+    .on('error', function(err) { throw err; })
+    .on('end', function() { process.exit(); });
 });
 
 gulp.task('test', ['lint', 'karma', 'mocha']);
