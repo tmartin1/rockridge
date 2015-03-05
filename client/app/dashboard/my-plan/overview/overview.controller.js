@@ -187,8 +187,6 @@ angular.module('rockridge')
       i,
       averages[i][1] - (stdev * averages[i][1]),
       averages[i][1] + (stdev * averages[i][1])
-      // -1 * ( (120-i) * 5 ),
-      // (120-start) * 5
     ]);
   }
   // End placeholder retirement calculations
