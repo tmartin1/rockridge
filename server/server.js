@@ -43,7 +43,7 @@ require('./routes')(app); // configure our routes
 
 // start app ===============================================
 // startup our app at http://localhost:8080
-app.listen(port, host);
+app.listen(port);
 
 // shoutout to the user
 console.log('Server running on my port: ' + port, config.db.host);
