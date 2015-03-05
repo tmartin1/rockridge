@@ -46,7 +46,7 @@ require('./routes')(app); // configure our routes
 app.listen(port, host);
 
 // shoutout to the user
-console.log('Server running on my port: ' + port);
+console.log('Server running on my port: ' + port, config.db.host);
 
 // expose app
 exports = module.exports = app;
