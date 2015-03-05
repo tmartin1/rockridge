@@ -4,18 +4,26 @@ angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
     Auth, User) {
     // Define plan object that will be used and accessed by the different planning states.
-    // TODO: If plan is partially complete, this should fetch previously entered data from DB.
+
     $scope.plan = {};
+    // If user is logged in, retrieve their plan
+    User.get().$promise
+    .then(function(user) {
+      Auth.getPlan(user['@rid'])
+      .then(function(plan) {
+        $scope.plan = plan;
+        console.log(plan);
+      });
+    });
+
     $scope.selectedSection = 0;
-    // keep a memory of what sections are complete and started
+    // Track what sections are complete and started
     $scope.sections = {
       complete: [],
       enabled: []
     };
 
-    // TODO: Create method to set default values of $scope.plan if not already defined.
-
-    // open up first question in accordion automatically
+    // Open the first question in accordion automatically
     var nextStep = function(){
       setTimeout(function(){
         var title = $($('.ui.accordion').find('.title')[0]).attr('data-title');
@@ -40,13 +48,9 @@ angular.module('rockridge')
       .then(function(user) {
         User.get().$promise
         .then(function(userOb) {
-          // stringify plan b/c OrientDB won't allow keys/fields with spaces
+          // Stringify plan b/c OrientDB won't allow keys/fields with spaces
           var plan = JSON.stringify($scope.plan);
           Auth.savePlan(userOb['@rid'], plan);
-          // Auth.getPlan('#12:662')
-          // .then(function(plan) {
-          //   console.log(plan);
-          // });
         });
       });
     };
@@ -62,7 +66,7 @@ angular.module('rockridge')
       'plan-builder.retire'
     ];
 
-    // data that controls the semantic-ui steps element
+    // Data that controls the semantic-ui steps element
     $scope.steps = [{
         icon: 'fa fa-play icon',
         title: 'start',
@@ -88,7 +92,6 @@ angular.module('rockridge')
         isComplete: false,
         key: order[3]
       },
-      //TODO: why does pie char icon not work??
       {
         icon: 'bar chart icon',
         title: 'budget',
@@ -132,7 +135,7 @@ angular.module('rockridge')
       // ui-router does not currently support dynamic sref: https://github.com/angular-ui/ui-router/issues/1208
       $scope.previous = order[index - 1] ? order[index - 1] : false;
       $scope.next = order[index + 1] ? order[index + 1] : false;
-      // set all previous steps to complete
+      // Set all previous steps to complete
       angular.forEach($scope.steps, function(item, i) {
         if (i < index) {
           item.isComplete = true;
@@ -158,8 +161,7 @@ angular.module('rockridge')
       var sectionComplete = true;
 
       var len = $('.content.active').length;
-      // make sure all required inputs are filled in
-      // before moving to the next question
+      // Make sure all required inputs are filled in before moving to next question
       var inputs = $('.content.active').find('input, select, button');
       inputs.each(function(index){
         if($(this).attr('ng-required') && !$(this).val()){
@@ -167,14 +169,14 @@ angular.module('rockridge')
           sectionComplete = false;
         }
       });
-      // if all inputs complete, open next question or step
+      // If all inputs complete, open next question or step
       if(sectionComplete || len === 0){
-        //remove all error classes
+        //Remove all error classes
         $('.content.active').find('.error').each(function(index){
           $(this).removeClass('error');
         });
         var lastQuestion = $('.green.checkmark.icon').length-1;
-        // if all questions complete, move to next step
+        // If all questions complete, move to next step
         var title = null;
         if($scope.selectedSection === lastQuestion || len === 0){
           title = $('.title.active').attr('data-title');
@@ -196,7 +198,7 @@ angular.module('rockridge')
       }
     };
 
-    // prompt user to signup and save
+    // Prompt user to signup and save
     $scope.showModal = function() {
       $('.ui.modal').modal('show');
     };
