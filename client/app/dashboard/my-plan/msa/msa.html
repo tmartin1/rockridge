@@ -1,7 +1,7 @@
 <!-- Display for monthly spending analysis (budget) -->
 
 <center ng-controller="MsaViewCtrl">
-  <table>
+  <table ng-click="recalculate()" ng-enter="recalculate()">
 
     <!-- Income and tax summary -->
     <tr class="msaHeader">
