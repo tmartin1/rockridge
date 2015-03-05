@@ -1,0 +1,36 @@
+.msaHeader {
+  text-align: left;
+}
+
+.msaHeader th {
+  padding-top: 25px;
+}
+
+.msaLineItem {
+}
+
+.msaLineItem td {
+  padding-left: 25px;
+}
+
+.msaTotalLine {
+  font-weight: bold;
+  border-top: 1px black solid;
+}
+
+.msaTotalLine td {
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+.msaTotalLine .msaDollar:before {
+  content: "$";
+  float: left;
+  padding-right: 15px;
+  padding-left: 10px;
+}
+
+.msaDollar {
+  text-align: right;
+  /*padding-left: 25px;*/
+}
