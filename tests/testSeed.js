@@ -19,7 +19,7 @@ var testUser = require('./testUser');
 var planModel = new Plan();
 var userModel = new User();
 var email = testUser.email;
-var password = testUser.password
+var password = testUser.password;
 var userRid;
 var newUserRid;
 
@@ -30,16 +30,15 @@ userModel.findByEmail(email, function(user) {
     // Create new test user
     userModel.create(email, password, function(user) {
       newUserRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
-      console.log('new test user created', newUserRid);
+      console.log('New test user created:', newUserRid);
 
       for (var key in testUser) {
-        if (key !=='email' || key !=='password') {
+        if (key !=='email' && key !=='password') {
           query = 'update ' + newUserRid + ' set ' + key + '="' + testUser[key] + '"';
           db.query(query)
           .then(function(numValsAdded) {})
-          // TODO: keep all these catch statements?
           .catch(function(err) {
-            console.log('error', err);
+            console.log('Testuser creation error:', err);
           });
         }
       }
@@ -58,8 +57,7 @@ userModel.findByEmail(email, function(user) {
     var query = 'delete vertex Plan where in_=' + userRid;
 
     db.query(query)
-    .then(function(num) {
-      console.log('Total ' + num + ' plans deleted');
+    .then(function(numPlansCreated) {
 
       // Delete test user by userRid
       query = 'delete vertex ' + userRid;
@@ -73,30 +71,29 @@ userModel.findByEmail(email, function(user) {
 
         // Create new test user
         userModel.create(email, password, function(user) {
+          console.log('user', user);
           newUserRid = '#' + user['@rid']['cluster'] + ':' + user['@rid']['position'];
-          console.log('New test user created', newUserRid);
+          console.log('New test user created:', newUserRid);
 
           for (var key in testUser) {
-            if (key !=='email' || key !=='password') {
+            if (key !=='email' && key !=='password') {
               query = 'update ' + newUserRid + ' set ' + key + '="' + testUser[key] + '"';
               db.query(query)
-              .then(function(num) {
-                // console.log(num + ' user value updated');
-              })
+              .then(function(num) {})
               .catch(function(err) {
-                console.log('error', err);
+                console.log('Testuser creation error:', err);
               });
             }
           }
 
           // Create new test plan
           planModel.create(newUserRid, JSON.stringify(testPlan), function(plan) {
-            console.log('Plan created', plan['@rid']);
+            console.log('Plan created:', plan['@rid']);
           });
         });
       })
       .catch(function(err) {
-        console.log('error', err);
+        console.log('New test plan creation error:', err);
       });
     });
   }
