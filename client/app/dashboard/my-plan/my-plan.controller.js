@@ -14,8 +14,7 @@ angular.module('rockridge')
   $scope.overview = { label: 'Overview', link: 'app/dashboard/my-plan/overview/overview.html' };
 
   // Set my-plan view to 'overview' if undefined.
-  // $scope.currentView = $scope.currentView || $scope.overview;
-  $scope.currentView = { label: 'Budget', link: 'app/dashboard/my-plan/msa/msa.html' };
+  $scope.currentView = $scope.currentView || $scope.overview;
 
   // Set current view inside of my-plan.
   $scope.setView = function(section) {
@@ -25,7 +24,7 @@ angular.module('rockridge')
   // Different dispay options for user's plan.
   $scope.planDisplay = [
     { label: 'Net Worth', link: 'app/dashboard/my-plan/nws/nws.html' },
-    { label: 'Budget', link: 'app/dashboard/my-plan/msa/msa.html' },
+    { label: 'Cash Flow', link: 'app/dashboard/my-plan/msa/msa.html' },
     { label: 'Tax Projection', link: 'app/dashboard/my-plan/tax/tax.html' },
     // { label: 'Insurance', link: 'app/dashboard/my-plan/insurance/insurance.html' },
     { label: 'Retirement', link: 'app/dashboard/my-plan/retire/retire.html' },
