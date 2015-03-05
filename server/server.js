@@ -52,8 +52,8 @@ console.log('Server running on port: ' + port);
 exports = module.exports = app;
 
 // connect to database
-global.db = oriento(config.db).use({
-  name: 'rockridge',
-  username: 'admin',
-  password: 'admin'
-});
+// global.db = oriento(config.db).use({
+//   name: 'rockridge',
+//   username: 'admin',
+//   password: 'admin'
+// });
