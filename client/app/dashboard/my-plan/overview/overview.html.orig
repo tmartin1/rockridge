@@ -1,0 +1,56 @@
+<!-- Display for my-plan overview -->
+
+<div ng-controller="OverviewViewCtrl">
+<<<<<<< HEAD
+  <!-- Show link to plan builder if user has not completed plan builder -->
+  <div ng-show="!user.builderComplete">
+    <!-- TODO: Add link -->
+  </div>
+
+  <!-- Shown overview of plan if the user has completed plan-builder -->
+  <div class="ui two column centered grid" ng-show="!user.builderComplete">
+
+    <div class="column">
+      <!-- Net worth summary -->
+      <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+      <br><br>
+      <!-- Retirement summary -->
+      <div id="retirementContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+    </div>
+
+    <div class="column">
+      <!-- Budget summary -->
+      <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+      <br><br>
+      <!-- Tax summary -->
+      <div id="taxContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+=======
+  <!-- TODO: Show link to plan builder if user has not completed plan builder -->
+  <div ng-show="!user.builderComplete">
+
+  </div>
+
+  <!-- Shown overview of plan if the user has completed plan-builder -->
+  <div ng-show="!user.builderComplete">
+    <!-- Net worth summary -->
+    <div id="netWorthContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+    <!-- Budget summary -->
+    <div id="budgetContainer" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+    <!-- Retirement summary -->
+    <div class="">
+      <h3>Retirement at a Glance</h3>
+
+    </div>
+
+    <!-- Tax summary -->
+    <div class="">
+      <h3>Income Tax Analysis</h3>
+
+>>>>>>> Move budget chart to overview.
+    </div>
+
+  </div> <!-- End overview content -->
+
+</div>
