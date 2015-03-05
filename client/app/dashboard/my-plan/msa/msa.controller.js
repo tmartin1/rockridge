@@ -13,12 +13,14 @@ angular.module('rockridge')
     return total;
   };
 
-  $scope.fixedExpenses = calculateTotal($scope.plan.fixedExpenses);
-  $scope.flexibleExpenses = calculateTotal($scope.plan.flexibleExpenses);
-  $scope.totalExpenses = $scope.fixedExpenses + $scope.flexibleExpenses;
-
-  $scope.monthlyTakehome = Math.floor($scope.plan.taxProjection.netIncome / 12);
-
-  $scope.unallocatedIncome = $scope.monthlyTakehome - $scope.totalExpenses;
+  // Calculate and recalculate locally used variables.
+  $scope.recalculate = function() {
+    $scope.fixedExpenses = calculateTotal($scope.plan.fixedExpenses);
+    $scope.flexibleExpenses = calculateTotal($scope.plan.flexibleExpenses);
+    $scope.totalExpenses = $scope.fixedExpenses + $scope.flexibleExpenses;
+    $scope.monthlyTakehome = Math.floor($scope.plan.taxProjection.netIncome / 12);
+    $scope.unallocatedIncome = $scope.monthlyTakehome - $scope.totalExpenses;
+  };
+  $scope.recalculate();
 
 });

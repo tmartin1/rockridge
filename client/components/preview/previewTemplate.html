@@ -35,13 +35,15 @@
       ng-if="type !== 'number' && type !== 'currency'"
       ng-model="object[property]"
       type="{{type}}"
-      style="padding-right:30px; padding:1px; margin:0px; style" />
+      style="padding-right:30px; padding:1px; margin:0px; style"
+      ng-enter="saveItem()" />
 
     <input
       ng-if="type === 'number' || type === 'currency'"
       ng-model="object[property]"
       type="{{type}}"
       style="padding-right:30px; padding:1px; margin:0px; style"
+      ng-enter="saveItem()"
       valid-number />
 
     <!-- The save and delete icons are always visible when in editing mode -->
