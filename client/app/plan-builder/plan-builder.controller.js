@@ -4,8 +4,18 @@ angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
     Auth, User) {
     // Define plan object that will be used and accessed by the different planning states.
-    // TODO: If plan is partially complete, this should fetch previously entered data from DB.
+
     $scope.plan = {};
+    // If user is logged in, retrieve their plan
+    User.get().$promise
+    .then(function(user) {
+      Auth.getPlan(user['@rid'])
+      .then(function(plan) {
+        $scope.plan = plan;
+        console.log(plan);
+      });
+    });
+
     $scope.selectedSection = 0;
     // keep a memory of what sections are complete and started
     $scope.sections = {
@@ -43,10 +53,6 @@ angular.module('rockridge')
           // stringify plan b/c OrientDB won't allow keys/fields with spaces
           var plan = JSON.stringify($scope.plan);
           Auth.savePlan(userOb['@rid'], plan);
-          // Auth.getPlan('#12:662')
-          // .then(function(plan) {
-          //   console.log(plan);
-          // });
         });
       });
     };
