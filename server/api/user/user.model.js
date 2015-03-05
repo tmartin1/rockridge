@@ -76,8 +76,6 @@ var checkPassword = function(rawPassword, user, cb) {
       throw new Error('Wrong password');
     }
     cb(user.password === data[1]);
-  }).catch(function(err) {
-    console.log(err);
   });
 };
 
