@@ -1,8 +1,6 @@
 // Calculations for retirement savings projections
 
 'use strict';
-
-
 module.exports.retirementProjection = function(plan){
 
   plan.retireProjection = {};
@@ -53,14 +51,14 @@ module.exports.retirementProjection = function(plan){
       result.retireAccounts += plan.assets.variable[i].value;
     }
   }
-  if(result.married){
-      // need to add spouse to
 
+  if(result.married){
     // result.maxSaveLongTerm  * 2
     result.maxSaveLongTerm = result.maxSaveLongTerm * 2;
     // monthly savings  plan.spouseAggregateMonthlySavings + plan.aggregateMonthlySavings
     result.curMonthlySavings += plan.spouseAggregateMonthlySavings;
   }
+
   result.retireProj = {};
   result.retireProj[result.currentAge] = {};
   result.retireProj[result.currentAge].amountMonthlyNeeds = 0;
@@ -86,18 +84,18 @@ module.exports.retirementProjection = function(plan){
   result.retireProjThirtyYear[result.currentDate.getFullYear()].longTermSavingsThirtyYear = result.retireAccounts;
   result.retireProjThirtyYear[result.currentDate.getFullYear()].totalSavingsAcctsThirtyYear = result.nonRetirementAccounts + result.retireAccounts;
 
-
   //call calculationsHome to get started generating the data
   calculationsHome(result.curMonthlySavings, result.run);
   calcProjectionsForVariedReturns(30, result.curMonthlySavings);
   plan.retireProjection = result;
   return result;
 
-
   function getInterestWorst(i){
     var SandPworst = [-44.2, -37.22, -32.11, -26.95, -22.72, -22.27, -18.62, -15.03, -13.95, -12.05, -11.98, -10.36, -9.46, -9.3, -9.2, -9.11, -9.09, -8.91, -8.63, -8.01, -7.78, -5.81, -5.39, -5.33, -3.42, -0.8, -0.74, 1.19, 2.07, 2.56, 2.98, 3.6, 4.79, 5.45, 5.46, 5.69, 5.96, 6.38, 6.41, 7.6, 8.12, 9.51, 10.15, 10.17, 10.82, 11.03, 11.51, 11.59, 12.45, 13.8, 14.54, 14.87, 15.74, 15.88, 15.96, 16.59, 16.64, 17.5, 18.21, 18.35, 18.69, 19.06, 19.15, 19.67, 19.67, 21.11, 21.22, 21.74, 23.04, 23.06, 23.1, 23.13, 23.6, 24.2, 24.45, 25.83, 27.1, 27.11, 28.22, 28.51, 28.72, 28.73, 29.07, 30.95, 31.2, 32, 32.24, 32.43, 32.55, 32.76, 33.67, 34.28, 37.1, 38.02, 38.46, 39.35, 43.4, 47.57, 54.93, 55.99, 56.79];
     return (SandPworst[i-result.currentAge-1])/100;
   }
+
+  //return the best interest rate for the year with S&P 500 historical returns
   function getInterestBest(i){
     var SandPbest = [56.79, 55.99, 54.93, 47.57, 43.4, 39.35, 38.46, 38.02, 37.1, 34.28, 33.67, 32.76, 32.55, 32.43, 32.24, 32, 31.2, 30.95, 29.07, 28.73, 28.72, 28.51, 28.22, 27.11, 27.1, 25.83, 24.45, 24.2, 23.6, 23.13, 23.1, 23.06, 23.04, 21.74, 21.22, 21.11, 19.67, 19.67, 19.15, 19.06, 18.69, 18.35, 18.21, 17.5, 16.64, 16.59, 15.96, 15.88, 15.74, 14.87, 14.54, 13.8, 12.45, 11.59, 11.51, 11.03, 10.82, 10.17, 10.15, 9.51, 8.12, 7.6, 6.41, 6.38, 5.96, 5.69, 5.46, 5.45, 4.79, 3.6, 2.98, 2.56, 2.07, 1.19, -0.74, -0.8, -3.42, -5.33, -5.39, -5.81, -7.78, -8.01, -8.63, -8.91, -9.09, -9.11, -9.2, -9.3, -9.46, -10.36, -11.98, -12.05, -13.95, -15.03, -18.62, -22.27, -22.72, -26.95, -32.11, -37.22, -44.2];
     return (SandPbest[i-result.currentAge-1])/100;
@@ -153,7 +151,6 @@ module.exports.retirementProjection = function(plan){
     }
   }
 
-//this function calculates inflation adjusted longTerm savings with
   function calcLongTermSavings(i, monthlySaveWithInflation, longTermMonthlySave, interest, route){
     var nowYr = result.currentDate.getFullYear();
     route = route || 'fixed';
@@ -180,7 +177,7 @@ module.exports.retirementProjection = function(plan){
         return longSavings;
       }
       else{
-      return longSavings;
+        return longSavings;
       }
     }
     else{
@@ -257,15 +254,13 @@ module.exports.retirementProjection = function(plan){
       }
       fini = 12;
     }
-
-
     //getting 30 years of yearly returns from the 1000 iterations by averaging them
     // 30 X 1
     var sum = 1;
     var geoMean = 0;
     for(var j=0; j<30; j++){
       for(var i=0; i<1000; i++){
-        sum *= (yearlyReturns[i][j]+1)
+        sum *= (yearlyReturns[i][j]+1);
       }
       //used a geometric mean because it is a lower and more strict average
       geoMean = Math.pow(sum, (1/1000))-1;
@@ -297,11 +292,9 @@ module.exports.retirementProjection = function(plan){
       result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYear = calcEarlyRetirementSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'varied');
       result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYear = calcLongTermSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'varied');
       result.retireProjThirtyYear[nowYr+i].totalSavingsAcctsThirtyYear = result.retireProjThirtyYear[nowYr+i].earlyRetireSavings + result.retireProjThirtyYear[nowYr+i].longTermSavings;
-
+   
     }
-
   }
-
   //this function is called to find the minimum amount per month in whole dollars the user
   //needs to save to meet their monthly needs in retirement
   //function is only called if the users current monthly savings fails to get them to theEnd with a
@@ -317,13 +310,11 @@ module.exports.retirementProjection = function(plan){
       while(value<0){
         curr+=1;
         value = calculationsHome(curr, result.run); //call calcHome and set to value
-
       }
       return curr;
     };
     startSaving = callWhile(monthlySave);
     return startSaving;    //return the amount to save to meet retirement goals
-
   }
 
 //function generates all the data for the results container
@@ -398,10 +389,7 @@ module.exports.retirementProjection = function(plan){
     if(result.searchForOptiSave){
       var suggestMonthlySave = calcMonthlySavingsToMeetGoals(currentMonthlySave);
       result.endSavings = [theEnd, result.retireProj[theEnd].totalSavingsAccts, suggestMonthlySave]; //update results
-    }
-
+    } 
   }
-
-
-
- };
+ 
+};
