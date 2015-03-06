@@ -7,9 +7,6 @@
 angular.module('rockridge')
 .controller('MyPlanCtrl', function($rootScope, $scope, $state, Auth) {
 
-  $scope.user = Auth.getCurrentUser();
-  // $scope.plan = Auth.getUserPlan();
-
   // Define default my-plan view to 'overview'.
   $scope.overview = { label: 'Overview', link: 'app/dashboard/my-plan/overview/overview.html' };
 

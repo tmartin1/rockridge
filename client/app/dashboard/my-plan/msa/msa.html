@@ -1,15 +1,11 @@
 <!-- Display for monthly spending analysis (budget) -->
 
 <center ng-controller="MsaViewCtrl">
-  <table ng-click="recalculate()" ng-enter="recalculate()">
+  <table>
 
     <!-- Income and tax summary -->
     <tr class="msaHeader">
-      <th>Income Summary</th>
-    </tr>
-    <tr class="msaLineItem">
-      <td>Gross Annual Income</td>
-      <td class="msaDollar">{{ plan.taxProjection.householdGross | number }}</td>
+      <th>Gross Annual Income</th>
     </tr>
     <tr class="msaLineItem">
       <td>Pre-tax Retirement Contributions</td>
@@ -45,6 +41,7 @@
       <td class="msaDollar">{{ monthlyTakehome | number }}</td>
     </tr>
 
+
     <!-- Fixed Expenses -->
     <tr class="msaHeader">
       <th>Fixed Expenses</th>
@@ -52,7 +49,10 @@
     <tr ng-repeat="item in plan.fixedExpenses" class="msaLineItem">
       <td><preview object="item" property="asset" type="text"></preview></td>
       <td><preview class="msaDollar" object="item" property="value" type="number"></preview></td>
+      <!-- <td>{{ item.asset }}</td>
+      <td class="msaDollar">{{ item.value | number }}</td> -->
     </tr>
+
 
     <!-- Flexible Expenses -->
     <tr class="msaHeader">
@@ -61,7 +61,10 @@
     <tr ng-repeat="item in plan.flexibleExpenses" class="msaLineItem">
       <td><preview object="item" property="asset" type="text"></preview></td>
       <td><preview class="msaDollar" object="item" property="value" type="number"></preview></td>
+      <!-- <td>{{ item.asset }}</td>
+      <td class="msaDollar">{{ item.value | number }}</td> -->
     </tr>
+
 
     <!-- Monthly budget total -->
     <tr><td><br></td></tr>
@@ -78,3 +81,11 @@
 
   </table>
 </center> <!-- End of controller scope -->
+
+
+
+
+<tr><td></td></tr>
+
+
+<td></td>
