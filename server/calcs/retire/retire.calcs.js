@@ -269,8 +269,6 @@ module.exports.retirementProjection = function(plan){
     var nowYr = result.currentDate.getFullYear();
 
     for(var i=1; i<=years; i++){
-      var retRetsTuple = monteCarloSimulation(rets);
-      //rets = retRetsTuple[1];
       variedInterest = rets[i-1]; //retRetsTuple[0];
       monthlySaveWInflateVaried[i] = (1+(result.inflation/12))*monthlySaveWInflateVaried[i-1];  // get inflation adjusted monthlySavings
       longTermMonthlySavingsVaried[i] = (1+(result.inflation/12))*longTermMonthlySavingsVaried[i-1];
