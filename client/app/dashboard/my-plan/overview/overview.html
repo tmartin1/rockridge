@@ -3,11 +3,14 @@
 <div ng-controller="OverviewViewCtrl">
   <!-- Show link to plan builder if user has not completed plan builder -->
   <div ng-show="!user.builderComplete">
-    <!-- TODO: Add link -->
+    <p>
+      Uh oh! It looks like you haven't completed plan-builder yet! Once that's complete, we can analyze the data and this will display an overview of your current financial position and long-term plan projections.
+    </p>
+    <a class="ui primary button" href="/plan-builder">Go To Plan-Builder Now</a>
   </div>
 
   <!-- Shown overview of plan if the user has completed plan-builder -->
-  <div class="ui two column centered grid" ng-show="!user.builderComplete">
+  <div class="ui two column centered grid" ng-show="!!user.builderComplete">
 
     <div class="column">
       <!-- Net worth summary -->
