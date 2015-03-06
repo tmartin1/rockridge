@@ -310,7 +310,7 @@ module.exports.retirementProjection = function(plan){
  
 //function generates all the data for the results container 
   function calculationsHome(currentMonthlySave, run){
-    var theEnd = 113;  //age the user dies
+    var theEnd = 120;  //age the user dies
     var interest = 0;
     var interestWorst = 0;
     var intrestBest = 0;
