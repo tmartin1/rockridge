@@ -1,9 +1,13 @@
 var bcrypt = require('bcrypt');
 
+var retireCalc = require('../../calcs/retire/retire.calcs').retirementProjection;
+
 // Create methods for Plans
 var Plan = function() {};
 
 Plan.prototype.create = function(userRid, planData, cb) {
+  var modifiedPlan = retireCalc(planData);
+  // console.log('plan after retire calc', modifiedPlan);
   db.query('insert into Plan (data) values (:data)',
   {
     params: {
