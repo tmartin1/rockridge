@@ -6,8 +6,8 @@ var retireCalc = require('../../calcs/retire/retire.calcs').retirementProjection
 var Plan = function() {};
 
 Plan.prototype.create = function(userRid, planData, cb) {
-  var modifiedPlan = retireCalc(planData);
-  // console.log('plan after retire calc', modifiedPlan);
+  // var modifiedPlan = retireCalc(planData);
+  //console.log('plan after retire calc', modifiedPlan);
   db.query('insert into Plan (data) values (:data)',
   {
     params: {

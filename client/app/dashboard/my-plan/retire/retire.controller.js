@@ -28,9 +28,9 @@ var getRetireProjDataArray = function(group){
 	var labels = [];
 	for(var key in group){
 		labels.push(key);
-		valuesFixed.push(group[key].totalSavingsAccts);
-		valuesBest.push(group[key].totalSavingsAcctsBest);
-		valuesWorst.push(group[key].totalSavingsAcctsWorst);
+		valuesFixed.push(group[key].totalSavingsAcctsThirtyYear);   //total saving monte
+    valuesBest.push(group[key].totalSavingsAcctsThirtyYearUpperBound);  //upper
+    valuesWorst.push(group[key].totalSavingsAcctsThirtyYearLowerBound); //lower
 
 	}
 
@@ -64,7 +64,8 @@ var tenLabel = label.slice(0,12);
 var twentyLabel = label.slice(0,22);
 
 /// call func here
-var valuesArray = getRetireProjDataArray($scope.plan.retireProjection.retireProj);
+var valuesArray = getRetireProjDataArray($scope.plan.retireProjection.retireProjThirtyYear);
+//var valuesArray = getRetireProjDataArray($scope.plan.retireProjection.retireProj);
 var valuesFixed = valuesArray[1];
 var valuesBest = valuesArray[2];
 var valuesWorst = valuesArray[3];

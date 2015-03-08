@@ -39,7 +39,7 @@ module.exports.retirementProjection = function(plan){
   result.nonRetirementAccounts = 0;    //0;  // get from code below
   result.retireAccounts =  0;      //0; // get from code below
   result.maxSaveLongTerm = 24000;  // this is for an indvidual 403b 18500, IRA 5500
-  result.curMonthlySavings = 20000; // plan.aggregateMonthlySavings this is in the TODO in plan
+  result.curMonthlySavings = 1500; // plan.aggregateMonthlySavings this is in the TODO in plan
   result.needsWithInflation = [];
   result.needsWithInflation[result.currentAge] = result.monthlyNeeds*((1+result.inflation) + (1+(result.inflation * 11/12)) + (1+(result.inflation * 10/12)) + (1+(result.inflation * 9/12)) + (1+(result.inflation * 8/12)) + (1+(result.inflation * 7/12)) + (1+(result.inflation * 6/12)) + (1+(result.inflation * 5/12)) + (1+(result.inflation * 4/12)) + (1+(result.inflation * 3/12)) + (1+(result.inflation * 2/12)) + (1+(result.inflation * 1/12)));
 

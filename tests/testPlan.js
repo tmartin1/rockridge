@@ -13,12 +13,12 @@ var testPlan = {
       { asset: 'Other Stuff', value: 10000 }
     ],
     variable: [
-      { asset: 'Brokerage Account', value: 25000, retirementAcct: false },
-      { asset: 'User 401k', value: 137000, retirementAcct: true },
+      { asset: 'Brokerage Account', value: 15000, retirementAcct: false },
+      { asset: 'User 401k', value: 37000, retirementAcct: true },
       { asset: 'Spouse 401k', value: 10000, retirementAcct: true }
     ],
   },
-  birthdate: new Date(1969, 5, 9),
+  birthdate: new Date(1987, 5, 9),
   charitableContributions: 10000,
   children: [
     { name: 'Child 1 Name', birthdate: new Date(2015, 2, 14) }
@@ -100,7 +100,7 @@ var testPlan = {
   spouseRothContribution: 5500,
   spouseStateResident: 'CA',
   stateResident: 'CA',
-  targetRetirementAge: 55,
+  targetRetirementAge: 70,
   targetRetirementIncome: 8000,
   user401kContribution: 15000,
   userAutoInsurance: 'true',
