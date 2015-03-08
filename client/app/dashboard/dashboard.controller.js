@@ -159,14 +159,14 @@ angular.module('rockridge')
         }
       },
       netIncome: 143999
-    }, 
+    },
     retireProjection: {
       retireProj:{
-        35: {amountMonthlyNeeds: 0, interest: 0.7, earlyRetireSavings: 25000, longTermSavings: 147000, 
+        35: {amountMonthlyNeeds: 0, interest: 0.7, earlyRetireSavings: 25000, longTermSavings: 147000,
             totalSavingsAccts: 172000, interestWorst: 0, earlyRetireSavingsWorst: 25000, longTermSavingsWorst: 147000,
             totalSavingsAcctsWorst: 172000, interestBest: 0, earlyRetireSavingsBest: 25000, longTermSavingsBest: 147000,
             totalSavingsAcctsBest: 172000},
-        36: {amountMonthlyNeeds: 0, interest: 0.7, earlyRetireSavings: 25000, longTermSavings: 147000, 
+        36: {amountMonthlyNeeds: 0, interest: 0.7, earlyRetireSavings: 25000, longTermSavings: 147000,
             totalSavingsAccts: 179000, interestWorst: 0, earlyRetireSavingsWorst: 25000, longTermSavingsWorst: 147000,
             totalSavingsAcctsWorst: 170000, interestBest: 0, earlyRetireSavingsBest: 25000, longTermSavingsBest: 147000,
             totalSavingsAcctsBest: 189000}
@@ -206,7 +206,7 @@ angular.module('rockridge')
         2045: { totalSavingsAcctsThirtyYear: 1234, interest: 0, earlyRetireSavingsThirtyYear: 1, longTermSavingsThirtyYear: 1}
       }
     }
-   
+
   };
   // End temporary user test code.
 
@@ -215,21 +215,20 @@ angular.module('rockridge')
 });
 
 
-  result.retireProj = {};
-  result.retireProj[result.currentAge] = {};
-  result.retireProj[result.currentAge].amountMonthlyNeeds = 0;
-  result.retireProj[result.currentAge].interest = 0;
-  result.retireProj[result.currentAge].earlyRetireSavings = result.nonRetirementAccounts;
-  result.retireProj[result.currentAge].longTermSavings = result.retireAccounts;
-  result.retireProj[result.currentAge].totalSavingsAccts = result.nonRetirementAccounts + result.retireAccounts;
-
-  result.retireProj[result.currentAge].interestWorst = 0;
-  result.retireProj[result.currentAge].earlyRetireSavingsWorst = result.nonRetirementAccounts;
-  result.retireProj[result.currentAge].longTermSavingsWorst = result.retireAccounts;
-  result.retireProj[result.currentAge].totalSavingsAcctsWorst = result.nonRetirementAccounts + result.retireAccounts;
-
-  result.retireProj[result.currentAge].interestBest = 0;
-  result.retireProj[result.currentAge].earlyRetireSavingsBest = result.nonRetirementAccounts;
-  result.retireProj[result.currentAge].longTermSavingsBest = result.retireAccounts;
-  result.retireProj[result.currentAge].totalSavingsAcctsBest = result.nonRetirementAccounts + result.retireAccounts;
-
+  // result.retireProj = {};
+  // result.retireProj[result.currentAge] = {};
+  // result.retireProj[result.currentAge].amountMonthlyNeeds = 0;
+  // result.retireProj[result.currentAge].interest = 0;
+  // result.retireProj[result.currentAge].earlyRetireSavings = result.nonRetirementAccounts;
+  // result.retireProj[result.currentAge].longTermSavings = result.retireAccounts;
+  // result.retireProj[result.currentAge].totalSavingsAccts = result.nonRetirementAccounts + result.retireAccounts;
+  //
+  // result.retireProj[result.currentAge].interestWorst = 0;
+  // result.retireProj[result.currentAge].earlyRetireSavingsWorst = result.nonRetirementAccounts;
+  // result.retireProj[result.currentAge].longTermSavingsWorst = result.retireAccounts;
+  // result.retireProj[result.currentAge].totalSavingsAcctsWorst = result.nonRetirementAccounts + result.retireAccounts;
+  //
+  // result.retireProj[result.currentAge].interestBest = 0;
+  // result.retireProj[result.currentAge].earlyRetireSavingsBest = result.nonRetirementAccounts;
+  // result.retireProj[result.currentAge].longTermSavingsBest = result.retireAccounts;
+  // result.retireProj[result.currentAge].totalSavingsAcctsBest = result.nonRetirementAccounts + result.retireAccounts;
