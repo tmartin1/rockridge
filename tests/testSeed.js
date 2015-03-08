@@ -45,7 +45,7 @@ userModel.findByEmail(email, function(user) {
 
       // Create new test plan
       planModel.create(newUserRid, JSON.stringify(testPlan), function(plan) {
-        console.log('plan created', plan['@rid']);
+        //console.log('plan created', plan['@rid']);
       });
     });
   } else {

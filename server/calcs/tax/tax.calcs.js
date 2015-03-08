@@ -54,7 +54,7 @@ module.exports.projection = function(plan) {
   result.netIncome = result.netIncome - result.projected.federal - result.projected.amt - result.projected.local - result.projected.fica.ss - result.projected.fica.medicare - result.projected.fica.addlMedicare;
 
   plan.taxProjection = result;
-  return result;
+  return plan;
 
   // Helper functions for tax calculations.
 

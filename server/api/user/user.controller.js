@@ -5,7 +5,13 @@ var Plan = require('../plan/plan.model');
 var auth = require('../../auth/auth.service');
 
 exports.me = function(req, res, next) {
-  res.json(req.user);
+  var plan = new Plan;
+  var temp = req.user['@rid'];
+  var planRid = '#' + temp['cluster'] + ':' + temp['position'];
+  plan.findByUserRid(planRid, function(plan){
+    req.user.plan = JSON.parse(plan.data);
+    res.json(req.user);
+  });
 };
 
 exports.create = function(req, res, next) {

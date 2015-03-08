@@ -3,7 +3,11 @@
 'use strict';
 
 angular.module('rockridge')
-.controller('OverviewViewCtrl', function($scope) {
+.controller('OverviewViewCtrl', function($scope, Auth, User) {
+
+  $scope.user = Auth.getCurrentUser();
+  $scope.plan = $scope.user.plan;
+  console.log('plan', $scope.plan)
 
   // Calculates and return the total of a given group.
   var sumGroup = function(group) {
@@ -168,6 +172,7 @@ angular.module('rockridge')
 
   // Calculate user age for start point.
   function calculateAge(birthday) { // birthday is a date
+    birthday = new Date(birthday);
     var ageDifMs = Date.now() - birthday.getTime();
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
