@@ -10,15 +10,15 @@
 ## General Workflow
 
 1. Fork the dev branch of the rockridge repository.
-1. From your personal fork, create a new branch for the specific issue that you are working on. The name of the branch should be preceded by the GitHub issue number, for example:
-  - "#88 Fixes flux capacitor time warp directive."
+1. From your personal fork, create a new branch for the specific issue that you are working on. The name of the branch should be representative of the feature that you are working on. For example:
+  - "nws-questions"
 1. Make commits to your issue branch. Commit frequently and with meaningful comments.
 1. When you're ready to make a pull request with your new feature or fix, please ensure the following before submitting:
   - If you are adding a new feature, make sure to have meaningful tests in the feature.spec.js file.
   - Run 'grunt test' from the command line and make sure all tests are passing.
   - Follow the style guide, located here: [STYLE-GUIDE.md](STYLE-GUIDE.md).
   - Include a relevant and meaningful description of your changes, include screen shots if appropriate.
-  - Submit a [pull request][] to the dev branch of rockridge.
+  - Submit a pull request to the dev branch of rockridge.
 1. Your pull request will be reviewed to determine if the request can be merged in. If your code reviewer requests you make a change you don't understand, please ask clarifying questions.
 1. Fix any issues raised by your code reviewer and push your fixes/changes to the appropriate branch on your personal fork.
 
@@ -42,7 +42,7 @@ These commands will help you do this:
 $ git checkout -b `dev`
 ```
 
-#### Create a new feature branch and make commits to this feature branch. 
+#### Create a new feature branch and make commits to this feature branch.
 
 ``` bash
 
@@ -83,7 +83,7 @@ make sure they work also.
 you get here again and nothing is broken and all the tests pass.
 
 ```
-$ git --rebase continue
+$ git rebase --continue
 ```
 
 ```
@@ -99,10 +99,10 @@ $ git push origin branch
 Update your local master.
 
 ```
-$ git pull upstream development
+$ git pull upstream dev
 ```
 
-  - If pull requests have been accepted to development while yours was pending, 
+  - If pull requests have been accepted to development while yours was pending,
 please repeat this step to sync your fork with the Immortal-Thunder developent branch.
 
 #### Make a pull request
@@ -127,7 +127,7 @@ Thanks for contributing!
 
 #### Commit Messages
 
-- Commit messages should be written in the present tense; e.g. "Fixes continuous
+- Commit messages should be written in the present tense; e.g. "Fix continuous
   integration script".
 - The first line of your commit message should be a brief summary of what the
   commit changes. Aim for about 70 characters max. Remember: This is a summary,

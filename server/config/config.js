@@ -9,6 +9,10 @@ module.exports = {
     user: process.env.ORIENTDB_USER,
     password: process.env.ORIENTDB_PASSWORD
   },
+  nexmo: {
+    id: process.env.NEXMO_ID,
+    secret: process.env.NEXMO_SECRET
+  },
   secrets: {
     session: 'our-secret-session'
   }

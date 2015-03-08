@@ -12,22 +12,16 @@ angular.module('rockridge')
     restrict: 'E',
     scope: {
       queries: '=',
-      plan: '='
+      plan: '=',
+      sections: '='
     },
     controller: function($scope) {
-      // By default, the first question in the series is selected.
-      $scope.queries[0].selected = true;
+      // By default, the first question in the series is opened
+      $('.ui.accordion').accordion('open', $scope.queries[0].index);
 
-      // Set selected subsection to active.
       $scope.select = function(question) {
-        angular.forEach($scope.queries, function(question) {
-          question.selected = false;
-        });
-        question.selected = true;
+        $('.ui.accordion').accordion(question.index);
       };
-
-      // TODO: Fix the 'Previous' and 'Next' buttons so that they navigate to different sub-sections
-      // if the user isn't at the first or last question.
     },
     templateUrl: './components/questions/questionsTemplate.html'
   };
@@ -41,23 +35,42 @@ angular.module('rockridge')
     transclude: true,
     scope: {
       query: '=',
-      plan: '='
+      plan: '=',
+      sections: '='
     },
     controller: function($scope) {
-      // Add new row for table type inputs.
+      // If a binding is defined for a multi question object,
+      if ($scope.query.type === 'multi' && $scope.query.bind) {
+        $scope.plan = $scope.plan[$scope.query.bind];
+      }
+
+      var makeRow = function(){
+        var row = {};
+        for(var i = 0; i < $scope.query.fields.length; i++){
+          row[$scope.query.fields[i].label] = '';
+        }
+        return row;
+      };
+
       $scope.addRow = function(property) {
         $scope.plan[property] = $scope.plan[property] || [];
-        $scope.plan[property].push({});
+        $scope.plan[property].push(makeRow());
       };
-      // Delete target row for table type inputs.
       $scope.deleteRow = function(index, property) {
         $scope.plan[property].splice(index, 1);
       };
+      $scope.isEnabled = function(title){
+        return $scope.sections.enabled[title];
+      };
+      $scope.isComplete = function(title){
+        return $scope.sections.complete[title];
+      };
+
       // If property is empty and input type is a table, start with an empty row.
       if ($scope.query.type === 'table') {
-        $scope.plan[$scope.query.bind] = $scope.plan[$scope.query.bind] || [{}];
+        $scope.plan[$scope.query.bind] = $scope.plan[$scope.query.bind] || [makeRow()];
       }
     },
     templateUrl: './components/questions/questionTemplate.html'
   };
-})
+});

@@ -1,0 +1,54 @@
+.tax-section {
+  margin: 50px auto 0px;
+}
+
+.tax-section th {
+  text-align: left;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+.tax-group td {
+  line-height: 1.5em;
+}
+
+.tax-group .label {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.tax-group .subgroup-label {
+  padding-left: 50px;
+  padding-right: 25px;
+}
+
+.tax-section .number {
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.tax-total-row {
+  border-top: 1px black solid;
+}
+
+.tax-total-row td {
+  font-weight: bold;
+  padding-bottom: 1.5em;
+}
+
+.tax-section .total:before {
+  content: "$";
+  float: left;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.tax-section-break {
+  border-top: 3px black double;
+}
+
+.tax-section-break td {
+  font-weight: bold;
+  padding-bottom: 3em;
+}

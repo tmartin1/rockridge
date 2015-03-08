@@ -1,0 +1,72 @@
+/*
+  Styles and classes for NWS view within my-plan.
+*/
+.nwsViewContainer {
+  margin: 1% auto 0px;
+}
+
+.nwsViewContainer td {
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: default;
+}
+
+.nwsSectionHeader {
+  font-size: 1.5em;
+}
+
+.nwsSectionHeader td {
+  text-align: left;
+  padding-bottom: 15px;
+}
+
+.nwsSectionBreak td {
+  padding-bottom: 50px;
+}
+
+/*
+  Styles and classes within the nwsGroupTemplate for the directive.
+*/
+.nwsGroupItemTitle {
+  text-align: left;
+  text-decoration: underline;
+}
+
+.nwsGroupItemTitle td {
+  padding-left: 25px;
+}
+
+.nwsGroupItems .nwsItemName {
+  padding-left: 50px;
+}
+
+.nwsGroupItems .nwsNumber {
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nwsGroupItems .nwsPercentage {
+  text-align: right;
+  padding: 0px 30px;
+}
+
+.nwsSectionBreak {
+  border-top: 1px solid black;
+  font-weight: bold;
+}
+
+.nwsSubtotal {
+  text-align: right;
+  padding-bottom: 25px;
+}
+
+.nwsSum:before {
+  content: "$";
+  float: left;
+  padding-right: 20px;
+}
+
+.simpleTopBorder {
+  border-top: 1px black solid;
+}

@@ -1,5 +1,5 @@
 <!-- Header -->
-<center class="ui inverted segment">
+<center class="ui green segment">
   <label>
     <h1>Plan Builder: {{heading}}</h1>
   </label>
@@ -8,31 +8,36 @@
 <div class="ui centered grid basic hidden segment">
 
   <div class="twelve wide column" style="padding-top:0px">
+
     <!-- steps -->
-    <div class="ui steps margin-bottom-md">
-      <div class="{{step.isActive}} step" ui-sref-active='active' ui-sref='{{step.key}}' ng-click='navToStep(step)' ng-repeat='step in steps' style='cursor:pointer;'>
-        <i class="{{step.icon}}"></i>
-        <div class="content">
-          <div class="title">{{step.title}}</div>
+    <center>
+      <div class="ui steps margin-bottom-md">
+        <div class="{{step.isActive}} step" ui-sref-active='active' ui-sref='{{step.key}}' ng-click='navToStep(step)' ng-repeat='step in steps' style='cursor:pointer;'>
+          <i class="{{step.icon}}"></i>
+          <div class="content">
+            <div class="title">{{step.title}}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </center>
+
     <!-- Main content (container for plan-builder states) -->
     <div ui-view></div>
   </div>
 </div>
 
-<!-- Plan builder navigation and progress bar -->
+<!-- Plan builder progress bar -->
 <div class="ui segment bottom attached">
 
   <center>
     <div class="margin-bottom-md">
+
       <!-- prev and next buttons -->
       <div class='margin-bottom-md'>
-        <a class="ui button" ng-if="!!previous" ng-href="{{previous}}">
+        <a class="ui button" ng-if="!!previous" ui-sref="{{previous}}">
           <i class="fa fa-chevron-left"></i> Previous
         </a>
-        <a class="ui button" ng-if="!!next" ng-href="{{next}}">
+        <a class="ui button" ng-if="!!next" ng-click='nextQuestion()'>
           Next <i class="fa fa-chevron-right"></i>
         </a>
         <a class="ui primary button" ng-if="!next">Submit</a>
@@ -40,13 +45,13 @@
 
       <!-- progress bar -->
       <div style='width:60%;'>
-        <div class="ui teal indicating progress" style="text-align:left;">
+        <div class="ui green indicating progress" style="text-align:left;">
           <div class="bar" style='width:{{pctComplete}}%;'>
             <div class="progress">{{ pctComplete }}%</div>
           </div>
         </div>
       </div>
-      <button class='ui button' ng-click='showModal();'>Save Progress</button>
+      <button class='ui button' ng-click='showModal()'>Save Progress</button>
     </div>
   </center>
 
@@ -75,7 +80,7 @@
       </div>
 
       <div class='margin-top-md'>
-        <button class="ui primary button" type="submit">
+        <button class="ui primary button" ng-click="savePlan" type="submit">
           Sign Up
         </button>
       </div>

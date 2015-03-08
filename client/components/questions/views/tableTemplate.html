@@ -22,9 +22,10 @@
         ng-class="{ 'three wide': field.type === 'number', 'field': true }"
         ng-repeat="field in query.fields">
         <input
-          ng-model="item[field.label]"
+          ng-model="plan[query.bind][$parent.$index][field.label]"
           type="{{field.type}}"
-          style="margin:5px auto; text-align:{{field.textAlign}}"/>
+          style="margin:5px auto; text-align:{{field.textAlign}}"
+          ng-required="{{field.required}}"/>
       </td>
       <td>
         <button

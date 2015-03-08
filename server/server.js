@@ -10,6 +10,7 @@ var methodOverride = require('method-override');
 var cookieParser   = require('cookie-parser');
 //var session        = require('express-session');
 var config         = require('./config/config');
+var oriento        = require('oriento');
 
 // set our port
 var port = config.port;
@@ -42,10 +43,17 @@ require('./routes')(app); // configure our routes
 
 // start app ===============================================
 // startup our app at http://localhost:8080
-app.listen(port, host);
+app.listen(port);
 
 // shoutout to the user
-console.log('Server running on port: ' + port);
+console.log('Server running on my port: ' + port, config.db.host);
 
 // expose app
-exports = module.exports = app;                         
+exports = module.exports = app;
+
+// connect to database
+global.db = oriento(config.db).use({
+  name: 'rockridge',
+  username: 'admin',
+  password: 'admin'
+});

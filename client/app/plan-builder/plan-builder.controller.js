@@ -2,24 +2,57 @@
 
 angular.module('rockridge')
   .controller('PlanBuilderCtrl', function($rootScope, $scope, $location, $state,
-    Auth) {
-
+    Auth, User) {
     // Define plan object that will be used and accessed by the different planning states.
-    // TODO: If plan is partially complete, this should fetch previously entered data from DB.
+
     $scope.plan = {};
+    // If user is logged in, retrieve their plan
+    User.get().$promise
+    .then(function(user) {
+      Auth.getPlan(user['@rid'])
+      .then(function(plan) {
+        $scope.plan = plan;
+        console.log(plan);
+      });
+    });
 
-    // TODO: Create method to set default values of $scope.plan if not already defined.
+    $scope.selectedSection = 0;
+    // Track what sections are complete and started
+    $scope.sections = {
+      complete: [],
+      enabled: []
+    };
 
-    $scope.previous, $scope.next;
+    // Open the first question in accordion automatically
+    var nextStep = function(){
+      setTimeout(function(){
+        var title = $($('.ui.accordion').find('.title')[0]).attr('data-title');
+        if(!$scope.sections.complete[title]){
+          $($('.ui.accordion').find('.title')[0]).removeClass('disabled');
+          $('.ui.accordion').accordion('open', 0);
+          $scope.sections.enabled[title] = true;
+        }
+      }, 1000);
+    };
+    nextStep();
+
+    $scope.previous = null;
+    $scope.next = null;
     $scope.isCollapsed = true;
-    $scope.pctComplete = 40;
+    $scope.pctComplete = 0;
+    $scope.accordionSection = 0;
     $scope.user = {};
     $scope.signup = function() {
       $('.ui.modal').modal('hide');
       Auth.createUser($scope.user)
-        .then(function(user) {
-          //TODO: save plan data to db
+      .then(function(user) {
+        User.get().$promise
+        .then(function(userOb) {
+          // Stringify plan b/c OrientDB won't allow keys/fields with spaces
+          // var plan = JSON.stringify($scope.plan);
+          Auth.savePlan(userOb['@rid'], plan);
         });
+      });
     };
 
     // Defines the order of how pages are displayed to the user.
@@ -33,7 +66,7 @@ angular.module('rockridge')
       'plan-builder.retire'
     ];
 
-    // data that controls the semantic-ui steps element
+    // Data that controls the semantic-ui steps element
     $scope.steps = [{
         icon: 'fa fa-play icon',
         title: 'start',
@@ -59,7 +92,6 @@ angular.module('rockridge')
         isComplete: false,
         key: order[3]
       },
-      //TODO: why does pie char icon not work??
       {
         icon: 'bar chart icon',
         title: 'budget',
@@ -96,24 +128,20 @@ angular.module('rockridge')
       });
     };
 
-
     // Sets the title, progress bar, and the 'previous' and 'next' links.
     var updateRelationals = function(focus) {
       $scope.heading = focus.data.title;
       var index = order.indexOf(focus.name);
       // ui-router does not currently support dynamic sref: https://github.com/angular-ui/ui-router/issues/1208
-      $scope.previous = order[index - 1] ? order[index - 1].replace('.', '/') :
-        false;
-      $scope.next = order[index + 1] ? order[index + 1].replace('.', '/') :
-        false;
-      // set all previous steps to complete
+      $scope.previous = order[index - 1] ? order[index - 1] : false;
+      $scope.next = order[index + 1] ? order[index + 1] : false;
+      // Set all previous steps to complete
       angular.forEach($scope.steps, function(item, i) {
         if (i < index) {
           item.isComplete = true;
         }
       });
       $scope.navToStep(focus);
-
     };
     updateRelationals($state.current);
 
@@ -124,12 +152,58 @@ angular.module('rockridge')
         if (order.indexOf(toState.name) >= 0) {
           updateRelationals(toState);
           $scope.navToStep(toState, fromState);
+          nextStep();
         }
       }
     );
 
-    // prompt user to signup and save
+    $scope.nextQuestion = function(){
+      var sectionComplete = true;
+
+      var len = $('.content.active').length;
+      // Make sure all required inputs are filled in before moving to next question
+      var inputs = $('.content.active').find('input, select, button');
+      inputs.each(function(index){
+        if($(this).attr('ng-required') && !$(this).val()){
+          $(this).parent().addClass('ui error');
+          sectionComplete = false;
+        }
+      });
+      // If all inputs complete, open next question or step
+      if(sectionComplete || len === 0){
+        //Remove all error classes
+        $('.content.active').find('.error').each(function(index){
+          $(this).removeClass('error');
+        });
+        var lastQuestion = $('.green.checkmark.icon').length-1;
+        // If all questions complete, move to next step
+        var title = null;
+        if($scope.selectedSection === lastQuestion || len === 0){
+          title = $('.title.active').attr('data-title');
+          if(!$scope.sections.complete[title]){
+            $scope.sections.complete[title] = true;
+            $scope.pctComplete += 20;
+          }
+          $scope.selectedSection = 0;
+          $state.go($scope.next);
+        } else { // move to next section
+          title = $('.title.active').attr('data-title');
+          $scope.sections.complete[title] = true;
+          $scope.selectedSection++;
+          title = $($('.ui.accordion')
+              .find('.title')[$scope.selectedSection]).attr('data-title');
+          $scope.sections.enabled[title] = true;
+          $('.ui.accordion').accordion('open', $scope.selectedSection);
+        }
+      }
+    };
+
+    // Prompt user to signup and save
     $scope.showModal = function() {
       $('.ui.modal').modal('show');
+    };
+
+    $scope.savePlan = function() {
+      Auth.savePlan($scope.plan);
     };
   });

@@ -2,7 +2,9 @@
 <div class="row" ng-controller="NavbarCtrl">
 
   <div class="ui menu">
+
     <a href="/" class="brand item">Rockridge</a>
+
     <a
       class="item"
       ng-repeat="item in menu"
@@ -38,18 +40,18 @@
         Login
       </a>
 
-      <a
+      <!-- <a
         class="item"
         ng-show="isLoggedIn()">
         <p class="navbar-text"> Hello {{getCurrentUser().name}} </p>
-      </a>
+      </a> -->
 
       <a
         class="item"
         ng-show="isLoggedIn()"
         ng-class="{active: isActive('settings')}"
         href="/settings">
-        <span class="glyphicon glyphicon-cog"></span>
+        <i class='setting icon'></i>
       </a>
 
       <a
@@ -67,7 +69,7 @@
   <div class="ui small modal">
     <i class="close icon"></i>
     <div class="ui two column centered grid hidden basic segment">
-      <form class="ui form" ng-submit="signup()" novalidate>
+      <form class="ui form" ng-submit="submitForm()" novalidate>
 
         <div class="required field">
           <label>Email Address</label>

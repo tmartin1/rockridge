@@ -93,7 +93,7 @@ gulp.task('browserSync', function() {
 });
 
 // Building the index file with all its dependencies injected
-gulp.task('index', function () {
+gulp.task('index', function() {
   var target = gulp.src('./client/index.html');
   var all = paths.styles.concat(paths.scripts, paths.vendors);
   // don't actual read the files (speed boost)
@@ -107,10 +107,17 @@ gulp.task('nodemon', function() {
   nodemon({'script': './server/server.js'});
 });
 
+// Creates new test user & plan in the dB
+gulp.task('seed', function() {
+  nodemon({'script': './tests/testSeed.js'});
+});
+
 // Mocha for back-end tests
 gulp.task('mocha', function() {
-  gulp.src('server/**/*.spec.js')
-  .pipe(mocha({ reporter: 'spec' }));
+  return gulp.src('server/**/*.spec.js')
+    .pipe(mocha({ reporter: 'nyan' }))
+    .once('error', function() { process.exit(); })
+    .once('end', function() { process.exit(); });
 });
 
 // Karma for front-end tests
@@ -141,14 +148,15 @@ gulp.task('build', ['test'], function() {
 
 // Run local server instance.
 gulp.task('serve', function() {
-  runSequence('test',
+  runSequence('index', // inject bower, css, and js
+              'test',
               'nodemon',
               'browserSync',
               'watch');
 });
 
 // Detects process.env and runs appropriate service.
-gulp.task('default', function(){
+gulp.task('default', function() {
   if(process.env.NODE_ENV === 'production'){
     runSequence('build');
   } else {

@@ -2,33 +2,31 @@
 
 angular.module('rockridge')
 .controller('NavbarCtrl', function($scope, $state, $location, Auth) {
+  $scope.user = {};
+  $scope.isLoggedIn = Auth.isLoggedIn;
 
   $scope.menu = [{
-    'title': 'Home',
-    'link': 'main',
-    'shown': true
-  }, {
     'title': 'About',
     'link': 'about',
     'shown': true
   }, {
+    // Link to plan-builder only shows if the user has not completed it yet.
+    'title': 'Start Planning',
+    'link': 'plan-builder.start',
+    'shown': !$scope.user.builderComplete,
+    'abstractLink': 'plan-builder'
+  }, {
+    // Link to dashboard only shows when user is logged in.
     'title': 'Dashboard',
     'link': 'dashboard',
     'shown': 'isLoggedIn()'
   }, {
-    'title': 'Start Planning',
-    'link': 'plan-builder.start',
-    'shown': '!isLoggedIn()',
-    'abstractLink': 'plan-builder'
-  }, {
     'title': 'Rockridge University',
     'class': 'fa fa-graduation-cap',
-    'link': 'university.welcome',
+    'link': 'university',
     'shown': true,
     'abstractLink': 'university'
   }];
-
-  $scope.user = {};
 
   $scope.logout = function() {
     Auth.logout();
@@ -37,18 +35,12 @@ angular.module('rockridge')
 
   $scope.signup = function() {
     $('.ui.modal').modal('hide');
-    Auth.createUser()
-    .then(function(user){});
+    Auth.createUser($scope.user);
   };
 
   $scope.login = function() {
     $('.ui.modal').modal('hide');
-    Auth.login()
-    .then(function(user){});
-  };
-
-  $scope.isLoggedIn = function() {
-    return Auth.isLoggedIn();
+    Auth.login($scope.user);
   };
 
   // Sets active class on sidebar.
@@ -56,9 +48,12 @@ angular.module('rockridge')
     return $state.includes(viewLocation);
   };
 
+  // Shows signup/login modal.
   $scope.showModal = function(type) {
     $scope.modalType = type;
     $('.ui.modal').modal('show');
+    $scope.submitForm = $scope[type]; // Set submit function to login or signup.
   };
+
 
 });

@@ -4,9 +4,12 @@
 // Pease read the Question-Directive-README.md before editing this file.
 **************************************************************************** -->
 
-<div ng-class="{ 'title': true, 'active': query.selected }">{{query.title}}</div>
+<div ng-class='{disabled: !isEnabled(query.title)}' class='ui title' data-title='{{query.title}}'>
+  <i class='green checkmark icon' ng-show='isComplete(query.title)'></i>
+  {{query.title}}
+</div>
 
-<div ng-class="{ 'content': true, 'active': query.selected }">
+<div class='content' id='{{query.index}}'>
 
   <div ng-if="plan[query.condition] === 'true' || query.condition === undefined">
     <p ng-if="query.type !== 'multi'"><label>{{query.question}}</label></p>
