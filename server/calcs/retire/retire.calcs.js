@@ -319,8 +319,8 @@ module.exports.retirementProjection = function(plan){
     var max = currentMonthlySave>(result.maxSaveLongTerm/12) ? (result.maxSaveLongTerm/12) : currentMonthlySave;
     monthlySaveWInflateVaried[0] = [currentMonthlySave];
     longTermMonthlySavingsVaried[0] = [max];
-   // console.log("monthlySaveWInflateVaried: " + monthlySaveWInflateVaried);
-   // console.log("longTermMonthlySavingsVaried: "+ longTermMonthlySavingsVaried);
+   console.log("monthlySaveWInflateVaried: " + monthlySaveWInflateVaried);
+   console.log("longTermMonthlySavingsVaried: "+ longTermMonthlySavingsVaried);
     var yearsCounter = 1;
     var variedInterest = 0;
     var stdev = calcStdev(rets);
