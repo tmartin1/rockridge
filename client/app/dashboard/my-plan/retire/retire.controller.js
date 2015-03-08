@@ -7,15 +7,18 @@ angular.module('rockridge')
   //
 
 var getDataArray = function(group){
+  var valuesUpper = [];
 	var values = [];
+  var valuesLower = [];
 	var labels = [];
 	for(var key in group){
 		labels.push(key);
-		//console.log(group[key]);
+    valuesUpper.push(group[key.totalSavingsAcctsThirtyYearUpperBound]);
+    valuesLower.push(group[key.totalSavingsAcctsThirtyYearLowerBound]);
 		values.push(group[key].totalSavingsAcctsThirtyYear);
 	}
 
-	return [labels, values];
+	return [labels, values, valuesUpper, valuesLower];
 };
 
 var getRetireProjDataArray = function(group){
@@ -25,7 +28,6 @@ var getRetireProjDataArray = function(group){
 	var labels = [];
 	for(var key in group){
 		labels.push(key);
-		//console.log(group[key]);
 		valuesFixed.push(group[key].totalSavingsAccts);
 		valuesBest.push(group[key].totalSavingsAcctsBest);
 		valuesWorst.push(group[key].totalSavingsAcctsWorst);
@@ -53,7 +55,6 @@ var aggregateAcctValue = [];
 var label = [];
 var tuple = [];
 tuple = getDataArray($scope.plan.retireProjection.retireProjThirtyYear);
-console.log('hi ',tuple);
 aggregateAcctValue = tuple[1];
 var ten = aggregateAcctValue.slice(0,12);
 var twenty = aggregateAcctValue.slice(0,22);
