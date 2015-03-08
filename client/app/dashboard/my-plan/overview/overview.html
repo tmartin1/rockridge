@@ -2,12 +2,24 @@
 
 <div ng-controller="OverviewViewCtrl">
   <!-- Show link to plan builder if user has not completed plan builder -->
-<!--   <div ng-show="{{false}}">
+  <div ng-show="!user.builderComplete">
     <p>
       Uh oh! It looks like you haven't completed plan-builder yet! Once that's complete, we can analyze the data and this will display an overview of your current financial position and long-term plan projections.
     </p>
     <a class="ui primary button" href="/plan-builder">Go To Plan-Builder Now</a>
-  </div> -->
+  </div>
+
+  <div style='text-align: center; margin: 8px;'>
+    <div class='ui red button' ng-click='linkBankAccount()'>
+      link bank account
+    </div>
+    <div class='ui green button' ng-click='textPlan()'>
+      text me my plan
+    </div>
+    <div class='ui input'>
+      <input id='phone-number' type="text" placeholder="enter # (digits only)">
+    </div>
+  </div>
 
   <!-- Shown overview of plan if the user has completed plan-builder -->
   <div class="ui two column centered grid">
