@@ -12,7 +12,7 @@ module.exports = {
   nexmo: {
     id: process.env.NEXMO_ID,
     secret: process.env.NEXMO_SECRET
-  }
+  },
   secrets: {
     session: 'our-secret-session'
   }
