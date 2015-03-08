@@ -39,16 +39,16 @@ module.exports.retirementProjection = function(plan){
   result.nonRetirementAccounts = 0;    //0;  // get from code below
   result.retireAccounts =  0;      //0; // get from code below
   result.maxSaveLongTerm = 24000;  // this is for an indvidual 403b 18500, IRA 5500
-  result.curMonthlySavings = 22800; // plan.aggregateMonthlySavings this is in the TODO in plan
+  result.curMonthlySavings = 20000; // plan.aggregateMonthlySavings this is in the TODO in plan
   result.needsWithInflation = [];
   result.needsWithInflation[result.currentAge] = result.monthlyNeeds*((1+result.inflation) + (1+(result.inflation * 11/12)) + (1+(result.inflation * 10/12)) + (1+(result.inflation * 9/12)) + (1+(result.inflation * 8/12)) + (1+(result.inflation * 7/12)) + (1+(result.inflation * 6/12)) + (1+(result.inflation * 5/12)) + (1+(result.inflation * 4/12)) + (1+(result.inflation * 3/12)) + (1+(result.inflation * 2/12)) + (1+(result.inflation * 1/12)));
 
   for(var i=0; i<plan.assets.variable.length; i++){
-    if(!!plan.assets.variable[i].retirementAcct){            //this for loop will result.run with
-      result.nonRetirementAccounts += plan.assets.variable[i].value;    //when hooked up to get result.nonRetirementAccounts
+    if(plan.assets.variable[i].retirementAcct){            //this for loop will result.run with
+      result.retireAccounts += plan.assets.variable[i].value;
     }                                                     // and result.retireAccounts
     else{
-      result.retireAccounts += plan.assets.variable[i].value;
+      result.nonRetirementAccounts += plan.assets.variable[i].value;    //when hooked up to get result.nonRetirementAccounts
     }
   }
 
@@ -56,7 +56,7 @@ module.exports.retirementProjection = function(plan){
     // result.maxSaveLongTerm  * 2
     result.maxSaveLongTerm = result.maxSaveLongTerm * 2;
     // monthly savings  plan.spouseAggregateMonthlySavings + plan.aggregateMonthlySavings
-    result.curMonthlySavings += plan.spouseAggregateMonthlySavings;
+    //result.curMonthlySavings += plan.spouseAggregateMonthlySavings;
   }
 
   result.retireProj = {};
@@ -81,8 +81,14 @@ module.exports.retirementProjection = function(plan){
   result.retireProjThirtyYear[result.currentDate.getFullYear()] = {};
   result.retireProjThirtyYear[result.currentDate.getFullYear()].interest = 0;
   result.retireProjThirtyYear[result.currentDate.getFullYear()].earlyRetireSavingsThirtyYear = result.nonRetirementAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].earlyRetireSavingsThirtyYearUpperBound = result.nonRetirementAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].earlyRetireSavingsThirtyYearLowerBound = result.nonRetirementAccounts;
   result.retireProjThirtyYear[result.currentDate.getFullYear()].longTermSavingsThirtyYear = result.retireAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].longTermSavingsThirtyYearUpperBound = result.retireAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].longTermSavingsThirtyYearLowerBound = result.retireAccounts;
   result.retireProjThirtyYear[result.currentDate.getFullYear()].totalSavingsAcctsThirtyYear = result.nonRetirementAccounts + result.retireAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].totalSavingsAcctsThirtyYearUpperBound = result.nonRetirementAccounts + result.retireAccounts;
+  result.retireProjThirtyYear[result.currentDate.getFullYear()].totalSavingsAcctsThirtyYearLowerBound = result.nonRetirementAccounts + result.retireAccounts;
 
   //call calculationsHome to get started generating the data
   calculationsHome(result.curMonthlySavings, result.run);
@@ -101,7 +107,7 @@ module.exports.retirementProjection = function(plan){
     return (SandPbest[i-result.currentAge-1])/100;
   }
 
-  function calcEarlyRetirementSavings(i, monthlySaveWithInflation, longTermMonthlySave, interest, route){
+  function calcEarlyRetirementSavings(i, monthlySaveWithInflation, longTermMonthlySave, interest, route, stdev){
     var nowYr = result.currentDate.getFullYear();
     route = route || 'fixed';
     var earlySavings = 0;
@@ -114,8 +120,15 @@ module.exports.retirementProjection = function(plan){
     else if(route === 'worst'){
       earlySavings = result.retireProj[i-1].earlyRetireSavingsWorst * (1+interest);
     }
+    else if(route === 'upper'){
+      earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsThirtyYearUpperBound * (1+(interest+(stdev*3)));
+    }
+    else if(route === 'lower'){
+      earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsThirtyYearLowerBound * (1+(interest-(stdev*3)));
+    }
     else{
-      earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsVaried * (1+interest);
+      earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsThirtyYear * (1+interest);
+      //console.log(nowYr+i-1, earlySavings);
     }
     if(i<result.retireAge){
       if((monthlySaveWithInflation[i] - longTermMonthlySave[i])<=0){ //chk if have surplus for non-retirement
@@ -151,7 +164,7 @@ module.exports.retirementProjection = function(plan){
     }
   }
 
-  function calcLongTermSavings(i, monthlySaveWithInflation, longTermMonthlySave, interest, route){
+  function calcLongTermSavings(i, monthlySaveWithInflation, longTermMonthlySave, interest, route, stdev){
     var nowYr = result.currentDate.getFullYear();
     route = route || 'fixed';
     var longSavings = 0;
@@ -164,8 +177,19 @@ module.exports.retirementProjection = function(plan){
     else if(route === 'worst'){
       longSavings = result.retireProj[i-1].longTermSavingsWorst * (1+interest);
     }
+    else if(route === 'upper'){
+      console.log('stdev ', stdev);
+      console.log('upperBound', result.retireProjThirtyYear[nowYr+i-1].longTermSavingsThirtyYearUpperBound);
+      longSavings = result.retireProjThirtyYear[nowYr+i-1].longTermSavingsThirtyYearUpperBound * (1+(interest+(stdev*3)));
+      //earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsThirtyYearUpperBound * (1+(interest+(stdev*3)));
+      console.log("upper: ", longSavings);
+    }
+    else if(route === 'lower'){
+    //  earlySavings = result.retireProjThirtyYear[nowYr+i-1].earlyRetireSavingsThirtyYearLowerBound * (1+(interest-(stdev*3)));
+      longSavings = result.retireProjThirtyYear[nowYr+i-1].longTermSavingsThirtyYearLowerBound * (1+(interest-(stdev*3)));
+    }
     else{
-      longSavings = result.retireProjThirtyYear[nowYr+i-1].longTermSavingsVaried * (1+interest);
+      longSavings = result.retireProjThirtyYear[nowYr+i-1].longTermSavingsThirtyYear * (1+interest);
     }
     if(i<result.retireAge){
       if(monthlySaveWithInflation[i]>longTermMonthlySave[i]){
@@ -189,6 +213,9 @@ module.exports.retirementProjection = function(plan){
       else if(result.switchToLongTermWorst && route === 'worst'){
         longSavings -= result.needsWithInflation[i];
         result.needsWithInflation[i] = (result.needsWithInflation[i-1]/12)*((1+result.inflation) + (1+(result.inflation * 11/12)) + (1+(result.inflation * 10/12)) + (1+(result.inflation * 9/12)) + (1+(result.inflation * 8/12)) + (1+(result.inflation * 7/12)) + (1+(result.inflation * 6/12)) + (1+(result.inflation * 5/12)) + (1+(result.inflation * 4/12)) + (1+(result.inflation * 3/12)) + (1+(result.inflation * 2/12)) + (1+(result.inflation * 1/12)));
+        if(longSavings<=0){
+          return 0;
+        }
         return longSavings;
       }
       else if(result.switchToLongTermBest && route === 'best'){
@@ -271,28 +298,53 @@ module.exports.retirementProjection = function(plan){
     return thirtyYearlyReturns;
   }
 
+  function calcStdev(rets){
+    var retsSum = 0;
+    var retsMean = 0;
+    var retsSqSum = 0;
+    for(var i=0; i<rets.length; i++){
+      retsSum += rets[i];
+    }
+    retsMean = retsSum/rets.length;
+    for(var j=0; j<rets.length; j++){
+      retsSqSum += Math.pow((rets[j]-retsMean), 2);
+    }
+    return Math.pow((retsSqSum/(rets.length-1)), 1/2);
+  }
+
   function calcProjectionsForVariedReturns(years, currentMonthlySave){
     var rets = monteCarloSimulation();
     var monthlySaveWInflateVaried = [];
     var longTermMonthlySavingsVaried = [];
     var max = currentMonthlySave>(result.maxSaveLongTerm/12) ? (result.maxSaveLongTerm/12) : currentMonthlySave;
-    monthlySaveWInflateVaried[result.currentAge] = [currentMonthlySave];
-    longTermMonthlySavingsVaried[result.currentAge] = [max];
+    monthlySaveWInflateVaried[0] = [currentMonthlySave];
+    longTermMonthlySavingsVaried[0] = [max];
+   // console.log("monthlySaveWInflateVaried: " + monthlySaveWInflateVaried);
+   // console.log("longTermMonthlySavingsVaried: "+ longTermMonthlySavingsVaried);
     var yearsCounter = 1;
     var variedInterest = 0;
+    var stdev = calcStdev(rets);
+    console.log(rets);
+    console.log(stdev);
+    /// get the stdev of the rets, store 
+
     var nowYr = result.currentDate.getFullYear();
 
     for(var i=1; i<=years; i++){
       variedInterest = rets[i-1]; //retRetsTuple[0];
       monthlySaveWInflateVaried[i] = (1+(result.inflation/12))*monthlySaveWInflateVaried[i-1];  // get inflation adjusted monthlySavings
       longTermMonthlySavingsVaried[i] = (1+(result.inflation/12))*longTermMonthlySavingsVaried[i-1];
-
       result.retireProjThirtyYear[nowYr+i] = {};
       result.retireProjThirtyYear[nowYr+i].interest = variedInterest;
       result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYear = calcEarlyRetirementSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'varied');
+      result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYearUpperBound = calcEarlyRetirementSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'upper', stdev);
+      result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYearLowerBound = calcEarlyRetirementSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'lower', stdev);
       result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYear = calcLongTermSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'varied');
-      result.retireProjThirtyYear[nowYr+i].totalSavingsAcctsThirtyYear = result.retireProjThirtyYear[nowYr+i].earlyRetireSavings + result.retireProjThirtyYear[nowYr+i].longTermSavings;
-   
+      result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYearUpperBound = calcLongTermSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'upper', stdev);
+      result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYearLowerBound = calcLongTermSavings(i, monthlySaveWInflateVaried, longTermMonthlySavingsVaried, variedInterest, 'lower', stdev);
+      result.retireProjThirtyYear[nowYr+i].totalSavingsAcctsThirtyYear = result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYear + result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYear;
+      result.retireProjThirtyYear[nowYr+i].totalSavingsAcctsThirtyYearUpperBound = result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYearUpperBound + result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYearUpperBound;
+      result.retireProjThirtyYear[nowYr+i].totalSavingsAcctsThirtyYearLowerBound = result.retireProjThirtyYear[nowYr+i].earlyRetireSavingsThirtyYearLowerBound + result.retireProjThirtyYear[nowYr+i].longTermSavingsThirtyYearLowerBound;
     }
   }
   //this function is called to find the minimum amount per month in whole dollars the user
@@ -329,11 +381,13 @@ module.exports.retirementProjection = function(plan){
     //if the amount currently saved/mo < maximum can save legally in (longTerm accts), then save all current Savings in longTerm
     var max = currentMonthlySave>(result.maxSaveLongTerm/12) ? (result.maxSaveLongTerm/12) : currentMonthlySave;
     monthlySaveWInflate[result.currentAge] = [currentMonthlySave];
+   // console.log('monthlySaveWInflate', monthlySaveWInflate);
     longTermMonthlySavings[result.currentAge] = [max];
+    //console.log('longTermMonthlySavings',longTermMonthlySavings);
 
     for(var i=result.currentAge+1; i<theEnd+1; i++){  //iterate from now till theEnd of time for user
       result.retireProj[i] = {};  // create new object for age
-      interest = 0.7;   // call interest to get this year's return
+      interest = 0.07;   // call interest to get this year's return
       interestWorst = getInterestWorst(i);
       interestBest = getInterestBest(i);
 
@@ -351,8 +405,10 @@ module.exports.retirementProjection = function(plan){
         longTermMonthlySavings[i] = (1+(result.inflation/12))*longTermMonthlySavings[i-1]; // get inflastion adjusted longTermMonthlySavings
       }
       //call appropriate functions to calc items in retireProj
-      result.retireProj[i].earlyRetireSavings = calcEarlyRetirementSavings(i, monthlySaveWInflate, longTermMonthlySavings, interest);
-      result.retireProj[i].longTermSavings = calcLongTermSavings(i, monthlySaveWInflate, longTermMonthlySavings, interest);
+      //console.log('Our Arrays', monthlySaveWInflate[i], longTermMonthlySavings[i]);
+      
+      result.retireProj[i].earlyRetireSavings = calcEarlyRetirementSavings(i, monthlySaveWInflate, longTermMonthlySavings, interest, 'fixed');
+      result.retireProj[i].longTermSavings = calcLongTermSavings(i, monthlySaveWInflate, longTermMonthlySavings, interest, 'fixed');
       result.retireProj[i].totalSavingsAccts = result.retireProj[i].earlyRetireSavings + result.retireProj[i].longTermSavings;
 
       result.retireProj[i].earlyRetireSavingsWorst = calcEarlyRetirementSavings(i, monthlySaveWInflate, longTermMonthlySavings, interestWorst, 'worst');
@@ -365,7 +421,7 @@ module.exports.retirementProjection = function(plan){
 
       if(!run){ // if this is the first time calculationsHome has been called
         if(i === theEnd && result.retireProj[i].totalSavingsAccts > 0){
-          result.endSavings = [theEnd, result.retireProj[i].totalSavingsAccts, currentMonthlySave]; // [theEndAge, savingsAccountsAmt, monthlySaving ]
+          result.retireProj.endSavings = [theEnd, result.retireProj[i].totalSavingsAccts, currentMonthlySave]; // [theEndAge, savingsAccountsAmt, monthlySaving ]
         }
         else if(i<theEnd && i>result.retireAge && result.retireProj[i].totalSavingsAccts < result.needsWithInflation[i]){
           result.switchToLongTerm = false;  //stop taking monthlyNeeds from longTermSavings, because monthlySavings are insufficient and we are going to recalculate
@@ -388,7 +444,7 @@ module.exports.retirementProjection = function(plan){
 
     if(result.searchForOptiSave){
       var suggestMonthlySave = calcMonthlySavingsToMeetGoals(currentMonthlySave);
-      result.endSavings = [theEnd, result.retireProj[theEnd].totalSavingsAccts, suggestMonthlySave]; //update results
+      result.retireProj.endSavings = [theEnd, result.retireProj[theEnd].totalSavingsAccts, suggestMonthlySave]; //update results
     } 
   }
  
