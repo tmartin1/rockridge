@@ -5,6 +5,7 @@
 module.exports = function(app) {
 
   app.use('/api/user', require('./api/user/'));
+  app.use('/api/nexmo', require('./api/nexmo/'));
   app.use('/api/plan', require('./api/plan/'));
   app.use('/auth', require('./auth/'));
 
